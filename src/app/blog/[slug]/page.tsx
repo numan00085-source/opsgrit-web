@@ -54,7 +54,11 @@ export default async function ArticlePage({ params }: { params: Params }) {
     author: { "@type": "Person", name: post.author },
     publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
     mainEntityOfPage: `${SITE.url}/blog/${post.slug}`,
-    image: post.coverImage || undefined,
+    image: post.coverImage
+      ? post.coverImage.startsWith("/")
+        ? `${SITE.url}${post.coverImage}`
+        : post.coverImage
+      : undefined,
   };
 
   return (
