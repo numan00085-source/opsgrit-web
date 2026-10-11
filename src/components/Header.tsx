@@ -25,7 +25,7 @@ export function Logo({ onDark = false }: { onDark?: boolean }) {
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-night-700 bg-night-950">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-night-950/80 shadow-[0_8px_30px_-12px_rgba(11,15,23,0.6)] backdrop-blur-xl backdrop-saturate-150">
       <div className="container-page flex h-16 items-center justify-between gap-6">
         <Link href="/" aria-label={`${SITE.name} home`}>
           <Logo onDark />
