@@ -106,7 +106,7 @@ export default function HomePage() {
         <h2 id="tools-heading" className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">Use it today, no signup</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {[
-            { href: "/tools/ops-bot", t: "OpsGrit Bot", d: "A free AI assistant for operations and automation, with pointers to the right guide." },
+            { href: "/tools/ops-bot", t: "OpsGrit Bot", d: "A free assistant that answers operations and automation questions from our guides." },
             { href: "/tools/roi-calculator", t: "Automation ROI calculator", d: "Hours saved, payback and first-year ROI from your own numbers." },
             { href: "/tools/sop-builder", t: "SOP builder", d: "Answer a few prompts, get a structured procedure to copy or download." },
             { href: "/tools/stack-audit", t: "Tech stack audit worksheet", d: "Inventory your tools, see total cost and what to merge or retire." },

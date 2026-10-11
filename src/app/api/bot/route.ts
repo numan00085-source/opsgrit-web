@@ -2,14 +2,23 @@ import Anthropic from "@anthropic-ai/sdk";
 import { analyticsConfigured, dayKey, pipeline } from "@/lib/analytics";
 import { clientIp, ipKey, sameOrigin } from "@/lib/subscribers";
 import { BOT_RULES, knowledgeIndex } from "@/lib/botKnowledge";
+import { reply as kbReply } from "@/lib/botEngine";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 const MODEL = process.env.BOT_MODEL || "claude-haiku-5-5";
 const DAILY_CAP = Number(process.env.BOT_DAILY_LIMIT || 300); // total bot messages per day across all visitors
-const PER_10_MIN = 10;
-const PER_DAY = 40;
+// AI mode costs money per message, so its limits are tight. Knowledge-base mode is free, so limits only stop abuse.
+const AI_LIMITS = { per10: 10, perDay: 40, total: DAILY_CAP };
+const KB_LIMITS = { per10: 40, perDay: 300, total: 1_000_000 };
+
+/** AI answers when an API key is set (and BOT_MODE is not "kb"); otherwise the free knowledge-base engine. */
+const botMode = (): "ai" | "kb" => (process.env.ANTHROPIC_API_KEY && process.env.BOT_MODE !== "kb" ? "ai" : "kb");
+
+export async function GET() {
+  return json({ mode: botMode() });
+}
 const MAX_USER_CHARS = 600;
 const MAX_TURNS = 8;
 
@@ -69,11 +78,10 @@ export async function POST(req: Request) {
   const messages = clean(body.messages);
   if (!messages) return json({ error: "Please type a short question." }, 400);
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return json({ error: "OpsGrit Bot is warming up and will be available soon." }, 503);
-  }
+  const mode = botMode();
+  const LIM = mode === "ai" ? AI_LIMITS : KB_LIMITS;
   const prod = process.env.NODE_ENV === "production";
-  if (prod && !analyticsConfigured()) {
+  if (mode === "ai" && prod && !analyticsConfigured()) {
     return json({ error: "OpsGrit Bot is temporarily unavailable. Please try again soon." }, 503);
   }
 
@@ -99,11 +107,16 @@ export async function POST(req: Request) {
       daily = memHit(`d:${ip}`, 86_400_000);
       total = memHit(`t:${day}`, 86_400_000);
     }
-    if (short > PER_10_MIN) return json({ error: "You are moving fast! Please wait a few minutes and try again." }, 429);
-    if (daily > PER_DAY) return json({ error: "That is the daily limit for one visitor. Come back tomorrow, and meanwhile explore the articles." }, 429);
-    if (total > DAILY_CAP) return json({ error: "OpsGrit Bot has reached today's limit. Please try again tomorrow." }, 429);
+    if (short > LIM.per10) return json({ error: "You are moving fast! Please wait a few minutes and try again." }, 429);
+    if (daily > LIM.perDay) return json({ error: "That is the daily limit for one visitor. Come back tomorrow, and meanwhile explore the articles." }, 429);
+    if (total > LIM.total) return json({ error: "OpsGrit Bot has reached today's limit. Please try again tomorrow." }, 429);
   } catch {
     return json({ error: "OpsGrit Bot is temporarily unavailable. Please try again." }, 502);
+  }
+
+  if (mode === "kb") {
+    const r = kbReply(messages);
+    return json({ mode: "kb", text: r.text, suggestions: r.suggestions });
   }
 
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, maxRetries: 1 });

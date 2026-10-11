@@ -3,7 +3,8 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-type Msg = { role: "user" | "assistant"; content: string; error?: boolean };
+type Msg = { role: "user" | "assistant"; content: string; error?: boolean; suggestions?: string[] };
+type Mode = "ai" | "kb";
 
 const STARTERS = [
   "Where should a small team start with automation?",
@@ -89,12 +90,18 @@ export default function OpsBot() {
   const [busy, setBusy] = useState(false);
   const boxRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [mode, setMode] = useState<Mode>("kb");
+
+  useEffect(() => {
+    fetch("/api/bot").then((r) => r.json()).then((j: { mode?: Mode }) => { if (j.mode === "ai" || j.mode === "kb") setMode(j.mode); }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     const el = boxRef.current;
     if (el) el.scrollTop = el.scrollHeight;
   }, [msgs]);
-  useEffect(() => () => abortRef.current?.abort(), []);
+  useEffect(() => () => { abortRef.current?.abort(); if (timerRef.current) clearInterval(timerRef.current); }, []);
 
   async function send(textIn?: string) {
     const text = (textIn ?? input).trim().slice(0, MAX);
@@ -116,6 +123,23 @@ export default function OpsBot() {
         let msg = "Something went wrong. Please try again.";
         try { msg = ((await res.json()) as { error?: string }).error || msg; } catch { /* keep default */ }
         setMsgs((cur) => [...cur.slice(0, -1), { role: "assistant", content: msg, error: true }]);
+        return;
+      }
+      if ((res.headers.get("content-type") || "").includes("application/json")) {
+        const j = (await res.json()) as { text?: string; suggestions?: string[] };
+        const full = j.text || "";
+        const sugg = j.suggestions || [];
+        // Reveal the answer quickly so long replies are easy to follow.
+        await new Promise<void>((resolve) => {
+          let n = 0;
+          const step = Math.max(6, Math.ceil(full.length / 45));
+          timerRef.current = setInterval(() => {
+            n = Math.min(full.length, n + step);
+            const done = n >= full.length;
+            setMsgs((cur) => [...cur.slice(0, -1), { role: "assistant", content: full.slice(0, n), suggestions: done ? sugg : undefined }]);
+            if (done) { if (timerRef.current) clearInterval(timerRef.current); resolve(); }
+          }, 22);
+        });
         return;
       }
       const reader = res.body.getReader();
@@ -149,12 +173,12 @@ export default function OpsBot() {
         <img src="/logo-mark.svg" alt="" className="h-10 w-10 rounded-xl" />
         <div>
           <p className="text-sm font-bold text-white">OpsGrit Bot</p>
-          <p className="text-xs text-slate-400">AI assistant for operations, automation and growth</p>
+          <p className="text-xs text-slate-400">{mode === "ai" ? "AI assistant for operations, automation and growth" : "Answers from OpsGrit's guides, glossary and Q&A"}</p>
         </div>
         {!empty && (
           <button
             type="button"
-            onClick={() => { abortRef.current?.abort(); setMsgs([]); setBusy(false); }}
+            onClick={() => { abortRef.current?.abort(); if (timerRef.current) clearInterval(timerRef.current); setMsgs([]); setBusy(false); }}
             className="ml-auto rounded-lg border border-night-700 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-gold-400/60 hover:text-gold-300"
           >
             New chat
@@ -201,6 +225,20 @@ export default function OpsBot() {
             </div>
           </div>
         ))}
+        {!busy && msgs.length > 0 && (msgs[msgs.length - 1].suggestions?.length ?? 0) > 0 && (
+          <div className="flex flex-wrap gap-2 pt-1">
+            {msgs[msgs.length - 1].suggestions!.map((x) => (
+              <button
+                key={x}
+                type="button"
+                onClick={() => send(x)}
+                className="rounded-full border border-cream-400 bg-white/70 px-3 py-1.5 text-left text-xs font-medium text-ink-700 transition hover:border-gold-500 hover:text-ink-900"
+              >
+                {x}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <form
@@ -223,10 +261,28 @@ export default function OpsBot() {
           </button>
         </div>
         <p className="mt-2 flex flex-wrap justify-between gap-x-4 text-xs text-ink-500">
-          <span>AI assistant: it can make mistakes, so check important details. Do not paste confidential data.</span>
+          <span>{mode === "ai" ? "AI assistant: it can make mistakes, so check important details. Do not paste confidential data." : "Automated assistant, not a person. It answers only from OpsGrit's published guides. Check important details."}</span>
           <span>{input.length}/{MAX}</span>
         </p>
       </form>
+      <div className="border-t border-cream-300 bg-white/50 px-5 py-4 text-xs leading-relaxed text-ink-500 sm:px-6">
+        <p className="font-semibold text-ink-700">Good to know</p>
+        <ul className="mt-1 list-disc space-y-1 pl-4">
+          {mode === "ai" ? (
+            <>
+              <li>This is an <strong>AI assistant</strong>, not a person. It can be wrong, so verify anything important, especially prices and legal or tax points.</li>
+              <li>Your messages are sent to an AI service to write the reply. OpsGrit does not save your chats. Please do not paste passwords, customer data or other confidential information.</li>
+              <li>There are daily limits so the tool stays free for everyone.</li>
+            </>
+          ) : (
+            <>
+              <li>This is an <strong>automated assistant, not a person and not a generative AI</strong>. It searches OpsGrit&apos;s published guides, glossary and a hand-written Q&amp;A, and links to the source. It only knows what OpsGrit has published.</li>
+              <li>Your messages stay on OpsGrit&apos;s own servers and are not saved. Please do not paste passwords, customer data or other confidential information.</li>
+            </>
+          )}
+          <li>It recommends OpsGrit articles first. OpsGrit may earn from ads, sponsors or affiliate links, as explained in our <Link className="underline" href="/affiliate-disclosure">disclosure</Link>.</li>
+        </ul>
+      </div>
     </div>
   );
 }

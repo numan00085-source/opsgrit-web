@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Free operations tools",
   description:
-    "Free, no-signup tools for operations teams: OpsGrit Bot (AI assistant), an automation ROI calculator, an SOP builder and a technology stack audit worksheet.",
+    "Free, no-signup tools for operations teams: OpsGrit Bot, an automation ROI calculator, an SOP builder and a technology stack audit worksheet.",
   alternates: { canonical: "/tools" },
 };
 
@@ -12,8 +12,8 @@ const TOOLS = [
   {
     href: "/tools/ops-bot",
     title: "OpsGrit Bot",
-    body: "A free AI assistant for operations and automation. Ask a question, get a clear next step and the right OpsGrit guide.",
-    tag: "AI assistant",
+    body: "A free assistant for operations and automation. Ask a question, get a clear answer from OpsGrit guides and a link to read more.",
+    tag: "Assistant",
   },
   {
     href: "/tools/roi-calculator",
@@ -42,7 +42,7 @@ export default function ToolsPage() {
       <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink-900 sm:text-5xl">Tools you can use today</h1>
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-600">
         No signup, no email gate. The calculator, SOP builder and audit worksheet run in your browser and nothing you type
-        is stored on a server. OpsGrit Bot is an AI assistant, so your messages are sent to an AI service to get a reply.
+        is stored on a server. OpsGrit Bot has its own privacy note on its page.
       </p>
       <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         {TOOLS.map((t) => (
