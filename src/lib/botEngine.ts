@@ -11,6 +11,7 @@ import { SITE } from "@/lib/site";
 export interface BotReply {
   text: string;
   suggestions: string[];
+  debug?: string;
 }
 
 /* ------------------------------ text helpers ------------------------------ */
@@ -185,7 +186,7 @@ function idx(): Index {
 
 function idf(ix: Index, t: string): number {
   const c = ix.df.get(t);
-  if (!c) return ix.maxIdf; // unknown word: treated as maximally informative, so off-topic questions score low coverage
+  if (!c) return ix.maxIdf * 0.55; // unknown word: still counts against coverage, so off-topic questions score low, but one stray word does not sink a good match
   return Math.log(1 + (ix.docs.length - c + 0.5) / (c + 0.5));
 }
 
@@ -294,7 +295,7 @@ function intent(raw: string): BotReply | null {
       suggestions: ["What is OpsGrit?", "How does OpsGrit check its facts?", ...DEFAULT_SUGGESTIONS.slice(0, 1)],
     };
   }
-  if (/\b(write|generate|create|make|build|code)\b.*\b(code|python|javascript|java|html|essay|poem|story|song|script|program|app|website|homework)\b/.test(t) || /\b(joke|weather|recipe|horoscope|lottery|bitcoin|crypto)\b/.test(t)) {
+  if (/\b(write|generate|create|make|build|code)\b.*\b(code|python|javascript|java|html|essay|poem|story|song|script|program|app|website|homework)\b/.test(t) || /\b(joke|weather|recipe|horoscope|lottery|bitcoin|crypto|homework|assignment|essay|exam|poem|lyrics)\b/.test(t)) {
     return {
       text: "That one is outside what I do here. I stick to **operations, automation and AI at work**, using OpsGrit's own guides. If there is an operations angle, for example automating a process or choosing a tool, ask me that and I will point you to the right guide.",
       suggestions: DEFAULT_SUGGESTIONS.slice(0, 3),
@@ -328,8 +329,12 @@ export function reply(history: { role: "user" | "assistant"; content: string }[]
   const hits = search(ix, qt);
   const top = hits[0];
   const used = new Set<string>();
+  if (process.env.BOT_DEBUG === "1") {
+    const dbg = hits.slice(0, 3).map((h) => `${h.doc.kind}:${h.doc.title.slice(0, 40)} score=${h.score.toFixed(1)} cov=${h.coverage.toFixed(2)}`).join(" || ");
+    console.log(`[bot] "${last}" maxIdf=${ix.maxIdf.toFixed(1)} -> ${dbg}`);
+  }
 
-  if (!top || top.coverage < 0.5) {
+  if (!top || top.coverage < 0.5 || top.score < 7) {
     return {
       text: `Hmm, I could not find that in OpsGrit's guides, and I would rather say so than guess. I only answer from what OpsGrit has published, so very specific or off-topic questions may be outside what I know.\n\nTry rephrasing, browse ${linkMd("/blog")}, or pick one of these. If you think OpsGrit should cover it, tell us on the ${linkMd("/contact")} page.`,
       suggestions: DEFAULT_SUGGESTIONS.slice(0, 4),
@@ -358,7 +363,7 @@ export function reply(history: { role: "user" | "assistant"; content: string }[]
   const seenPosts = new Set<string>();
   const picks: Hit[] = [];
   for (const h of hits) {
-    if (h.doc.kind !== "section" || h.coverage < 0.65) continue;
+    if (h.doc.kind !== "section" || h.coverage < 0.65 || h.score < Math.max(5, top.score * 0.45)) continue;
     const slug = h.doc.url.split("#")[0];
     if (seenPosts.has(slug)) continue;
     seenPosts.add(slug);
@@ -368,6 +373,13 @@ export function reply(history: { role: "user" | "assistant"; content: string }[]
   if (picks.length === 0 && top.doc.answer) {
     used.add(top.doc.title);
     return { text: `${opener} ${top.doc.answer}\n\n**Go deeper:** ${(top.doc.links || []).slice(0, 3).map(linkMd).join(" · ")}`, suggestions: related(ix, used, last) };
+  }
+
+  if (picks.length === 0) {
+    return {
+      text: `Hmm, I could not find that in OpsGrit's guides, and I would rather say so than guess. Try rephrasing, browse ${linkMd("/blog")}, or pick one of these.`,
+      suggestions: DEFAULT_SUGGESTIONS.slice(0, 4),
+    };
   }
 
   const blocks = picks.map((h) => {

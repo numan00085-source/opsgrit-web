@@ -225,7 +225,7 @@ export const FAQ2: Faq[] = [
     q: "What is iPaaS?",
     k: "ipaas integration platform as a service definition connectors hosted",
     a: "Integration platform as a service: a hosted platform for building and running integrations between applications, usually with a visual builder and prebuilt connectors. Zapier, Make and n8n are commonly grouped here.",
-    l: ["/glossary", "/blog/zapier-vs-make-vs-n8n-ops-teams"],
+    l: ["/glossary", "/blog/webhooks-apis-ipaas-integration-patterns", "/blog/zapier-vs-make-vs-n8n-ops-teams"],
   },
   {
     q: "What is RPA and when should I use it?",
