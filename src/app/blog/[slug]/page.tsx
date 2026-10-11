@@ -142,12 +142,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
             aria-label="About the author"
             className="card mt-14 flex gap-4 p-6"
           >
-            <div
-              aria-hidden
-              className="grid h-12 w-12 shrink-0 place-items-center rounded-full gold-fill text-lg font-bold text-ink-900"
-            >
-              {post.author.charAt(0)}
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-mark.svg" alt="" width={48} height={48} className="h-12 w-12 shrink-0 rounded-xl shadow-[0_2px_10px_-2px_rgba(212,175,79,0.5)]" />
             <div>
               <p className="font-semibold text-ink-900">{post.author}</p>
               <p className="mt-1 text-sm leading-relaxed text-ink-600">
