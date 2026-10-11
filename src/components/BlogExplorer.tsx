@@ -1,15 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import type { PostMeta } from "@/lib/posts";
 import PostCard from "./PostCard";
 
+// The full article list is rendered on the server (good for SEO and crawlers).
+// Filtering happens in the browser; the ?category= value is read after hydration.
 export default function BlogExplorer({ posts, categories }: { posts: PostMeta[]; categories: string[] }) {
-  const router = useRouter();
-  const params = useSearchParams();
-  const active = params.get("category") ?? "All";
+  const [active, setActive] = useState("All");
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get("category");
+    if (cat && categories.includes(cat)) setActive(cat);
+  }, [categories]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -22,11 +26,11 @@ export default function BlogExplorer({ posts, categories }: { posts: PostMeta[];
   }, [posts, active, query]);
 
   function setCategory(cat: string) {
-    const next = new URLSearchParams(params.toString());
-    if (cat === "All") next.delete("category");
-    else next.set("category", cat);
-    const qs = next.toString();
-    router.replace(qs ? `/blog?${qs}` : "/blog", { scroll: false });
+    setActive(cat);
+    const url = new URL(window.location.href);
+    if (cat === "All") url.searchParams.delete("category");
+    else url.searchParams.set("category", cat);
+    window.history.replaceState(null, "", url.pathname + url.search);
   }
 
   return (

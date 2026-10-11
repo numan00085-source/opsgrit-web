@@ -31,11 +31,17 @@ export default function Header() {
           <Logo />
         </Link>
         <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
-          {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className="text-sm text-slate-400 transition hover:text-white">
-              {n.label}
-            </Link>
-          ))}
+          {NAV.map((n) =>
+            n.href.includes("?") ? (
+              <a key={n.href} href={n.href} className="text-sm text-slate-400 transition hover:text-white">
+                {n.label}
+              </a>
+            ) : (
+              <Link key={n.href} href={n.href} className="text-sm text-slate-400 transition hover:text-white">
+                {n.label}
+              </Link>
+            ),
+          )}
         </nav>
         <Link href="/#newsletter" className="btn-primary hidden sm:inline-flex">
           Subscribe
@@ -45,15 +51,25 @@ export default function Header() {
             Menu
           </summary>
           <div className="absolute right-0 mt-2 w-56 rounded-lg border border-ink-700 bg-ink-900 p-2 shadow-xl">
-            {NAV.map((n) => (
-              <Link
-                key={n.href}
-                href={n.href}
-                className="block rounded px-3 py-2 text-sm text-slate-300 hover:bg-ink-800 hover:text-white"
-              >
-                {n.label}
-              </Link>
-            ))}
+            {NAV.map((n) =>
+              n.href.includes("?") ? (
+                <a
+                  key={n.href}
+                  href={n.href}
+                  className="block rounded px-3 py-2 text-sm text-slate-300 hover:bg-ink-800 hover:text-white"
+                >
+                  {n.label}
+                </a>
+              ) : (
+                <Link
+                  key={n.href}
+                  href={n.href}
+                  className="block rounded px-3 py-2 text-sm text-slate-300 hover:bg-ink-800 hover:text-white"
+                >
+                  {n.label}
+                </Link>
+              ),
+            )}
             <Link href="/#newsletter" className="block rounded px-3 py-2 text-sm font-semibold text-accent-soft">
               Subscribe
             </Link>
