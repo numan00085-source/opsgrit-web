@@ -55,6 +55,14 @@ export default function PrivacyPage() {
         a Do Not Track or Global Privacy Control signal.
       </p>
 
+      <h2>OpsGrit Bot (AI assistant)</h2>
+      <p>
+        When you use OpsGrit Bot, the messages you type are sent to an AI service provider (Anthropic) so it can write a
+        reply. We do not save your conversations or link them to your identity. To prevent abuse and control costs, we
+        keep short-lived usage counters tied to a one-way hash of your IP address (not the address itself) that expire
+        within about a day. Please do not enter passwords, customer data or other confidential information into the bot.
+      </p>
+
       <h2>Sharing of information</h2>
       <p>
         We do not sell your personal information. We share information only with service providers who help us run the
