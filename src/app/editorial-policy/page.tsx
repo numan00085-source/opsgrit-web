@@ -60,7 +60,7 @@ export default function EditorialPolicyPage() {
         Editorial decisions are made independently of advertisers and sponsors. Sponsored articles carry a visible
         &ldquo;Sponsored content&rdquo; notice, and links in them are marked as sponsored. If an article ever contains
         affiliate links, we will say so on that page. See <Link href="/advertise">Advertise</Link> for how sponsorship
-        works.
+        works and the <Link href="/affiliate-disclosure">affiliate and sponsorship disclosure</Link> for how OpsGrit earns money.
       </p>
 
       <h2>Updates and corrections</h2>
