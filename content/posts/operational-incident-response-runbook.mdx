@@ -1,0 +1,313 @@
+---
+title: "Incident Response Runbook: A Template for Operations Teams"
+slug: "operational-incident-response-runbook"
+category: "Process SOPs"
+excerpt: "When something breaks, the quality of your response depends on decisions made long before. This template covers severity levels, roles, communication, a step-by-step response flow and the blameless review that makes the next incident smaller."
+date: "2026-10-11"
+author: "OpsGrit Editorial"
+coverImage: "/images/operational-incident-response-runbook-cover.webp"
+featured: false
+---
+
+Every operation eventually has a bad day. A payment system stops accepting orders. A key integration silently drops records. A vendor outage takes down the tool half the team depends on. A data export goes to the wrong recipient. What separates a contained problem from a crisis is rarely the technical fault itself. It is whether people knew who was in charge, how to communicate and what to do first.
+
+An incident response runbook is the procedure for exactly those moments. It is a special kind of SOP, written for people under stress, so it must be shorter, clearer and more tested than almost any other document in your library. If you have not yet read our guide on [how to write an SOP people follow](/blog/how-to-write-an-sop-people-follow), start there, because every principle in it applies even more strongly here.
+
+This guide gives you a complete template: what counts as an incident, severity levels, roles, the response flow, communication rules, a checklist you can copy and a blameless review process. It is written for operations teams, but the structure works for IT, customer support and finance operations alike. Treat it as a starting point and adapt it to your size and your regulatory environment.
+
+## What is an incident?
+
+An **incident** is an unplanned event that disrupts, or threatens to disrupt, a normal business service or that puts data, money or customers at risk. A **problem** is the underlying cause. A **request** is a normal ask that follows a normal path.
+
+The difference matters because incidents need a different mode of working. In normal work, people optimize for quality and process. In an incident, they optimize first for restoring service and limiting harm, then for finding the cause afterwards.
+
+Examples in an operations context:
+
+- An automation that processes orders or invoices stops or starts producing wrong results.
+- A system of record becomes unavailable or shows corrupted data.
+- A vendor or platform you depend on has an outage.
+- Sensitive data is exposed, mis-sent or accessed without authorization.
+- A process failure leads to customers being charged incorrectly or not at all.
+- A supplier or logistics failure threatens a commitment to customers.
+
+If you are unsure whether something is an incident, treat it as one for the first few minutes. It is cheaper to stand down early than to start late.
+
+## Principles that shape a good runbook
+
+**Restore first, investigate later.** The first goal is to stop the harm and bring the service back, even by a temporary workaround. Root cause analysis comes after.
+
+**One person in charge.** Confusion about who decides is the most common failure. Name an incident lead for every incident.
+
+**Communicate early and on a schedule.** Silence breeds rumors and duplicate effort. Short, regular updates beat long, rare ones.
+
+**Write it down as you go.** A running timeline is invaluable during the incident and essential afterwards.
+
+**Blameless by design.** People report problems faster when they are not afraid of being punished. Focus on systems and conditions, not individuals.
+
+**Practice.** A runbook that has never been used will fail at the worst moment. Rehearse it.
+
+## Step one: define severity levels
+
+Severity levels let you scale the response to the impact. Without them, everything is either ignored or treated as an emergency. Keep the scale small and the definitions concrete. Here is an example you can adapt.
+
+| Severity | Description | Typical examples | Response expectation |
+| --- | --- | --- | --- |
+| **SEV 1: Critical** | Core service down, or significant risk to customers, money or sensitive data. No workaround. | Order intake stopped. Confirmed data exposure. Payments failing broadly. | Immediate response. Incident lead and leadership engaged. Updates at a short, fixed interval. |
+| **SEV 2: Major** | Important function degraded, or a subset of customers affected. A workaround may exist. | A key automation delayed. One region or segment affected. Reporting wrong. | Rapid response during working hours or on call. Regular updates. |
+| **SEV 3: Minor** | Limited impact, with a clear workaround. | A non-critical integration failing. A cosmetic or low-volume issue. | Handle in normal priority order. Track in the queue. |
+| **SEV 4: Informational** | No current impact, but worth recording. | A near miss. A warning from monitoring. | Log and review in the regular cadence. |
+
+Define the thresholds in terms your team can judge quickly: number of customers, revenue at risk, whether personal data is involved, regulatory exposure and whether a workaround exists. Include a rule that **anyone may raise severity**, and that the lead can lower it later. If in doubt, start higher.
+
+## Step two: define roles
+
+Roles should be named by function, not by person, and each should have a backup. In a small team one person may hold several roles, but the functions still need to be explicit.
+
+| Role | Responsibility |
+| --- | --- |
+| **Incident lead (commander)** | Owns the response. Makes decisions, assigns work, keeps focus on restoring service. Does not usually do the hands-on fixing. |
+| **Technical or operational responder(s)** | Investigate and apply fixes or workarounds. |
+| **Communications lead** | Writes and sends internal and external updates on the agreed schedule. |
+| **Scribe** | Keeps the timeline: what was observed, decided and done, and when. |
+| **Subject matter experts** | Called in for specific systems or processes. |
+| **Executive sponsor** | Informed on SEV 1, authorizes major decisions such as customer compensation or public statements. |
+| **Legal, privacy or compliance contact** | Engaged immediately if personal data, contracts or regulated information is involved. |
+
+The incident lead's authority should be agreed in advance. During an incident, they may redirect people from their normal work, and managers should have agreed to that in principle.
+
+## Step three: build the response flow
+
+The following flow works for most operational incidents. Keep it on one page.
+
+### 1. Detect and report
+
+Incidents are noticed by monitoring, by staff or by customers. Make reporting easy: one channel, one form or one phone number, known to everyone. The report should capture what was seen, when, where and who reported it.
+
+Encourage reporting without fear. A near miss that is reported teaches the organization something. One that is hidden is a future incident.
+
+### 2. Triage and classify
+
+The first person on the case, or the on-call owner, assesses the impact and assigns a preliminary severity. Ask:
+
+- What is affected, and who?
+- Is it getting worse?
+- Is money, customer data or safety at risk?
+- Is there a known workaround?
+- Is a regulatory or contractual notification possibly required?
+
+### 3. Declare and assemble
+
+For SEV 1 and SEV 2, formally **declare an incident**. Name the incident lead, open a dedicated channel or call, and notify the people in the relevant roles. A formal declaration changes the mode of working for everyone and avoids half-hearted responses.
+
+### 4. Contain
+
+Contain first. Stop the damage from spreading before you fully understand it. Typical containment actions:
+
+- Pause the failing automation or queue so that bad data stops flowing.
+- Switch to a manual or fallback process.
+- Disable a compromised account or revoke a credential.
+- Isolate a system or integration.
+- Stop outbound communications that may contain wrong information.
+
+Record what you changed, so you can undo it deliberately later.
+
+### 5. Diagnose and fix
+
+Responders investigate with a short list of hypotheses. Work on the most likely and least risky first. Resist the urge to make several changes at once, because you will not know which worked. Prefer reversible actions. When in doubt, ask the incident lead before making a change that could make things worse.
+
+Common operational causes to check early: a recent change or deployment, a credential or token that expired, a vendor outage, a rate limit, a change in an upstream data format and a permission change.
+
+### 6. Communicate throughout
+
+Follow the communication plan below. The communications lead sends updates at the agreed interval even when there is no progress, saying so plainly.
+
+### 7. Restore and verify
+
+When a fix or workaround is in place, **verify** it. Confirm with real data and, ideally, a person who experiences the service. Watch for a period to be sure the problem does not return. Then reprocess any backlog carefully, making sure the actions are safe to run twice, as covered in our guide to [integration patterns](/blog/webhooks-apis-ipaas-integration-patterns).
+
+### 8. Close and hand off
+
+The incident lead declares the incident resolved, sends a final message and records open follow-ups. Some incidents are resolved by a temporary workaround. In that case, create a tracked task for a permanent fix.
+
+### 9. Review
+
+Hold a blameless review within a few working days for SEV 1 and SEV 2 incidents, while memories are fresh. See below.
+
+## Communication rules
+
+Clear communication is half of incident response.
+
+**Internal updates**
+- Use one channel as the source of truth. Pin the current status at the top.
+- Post updates on a regular schedule, such as every thirty minutes for SEV 1 and every few hours for SEV 2. Say so at the start so people know when to expect news.
+- Use a consistent format: current status, impact, what we are doing, what we need and when the next update is.
+- Keep discussion separate from announcements, so that leaders can follow without reading a flood of messages.
+
+**Customer and partner updates**
+- Be honest, specific and calm. State what is affected, what you know, what you are doing and when you will update again.
+- Do not speculate about the cause or promise a fix time you cannot guarantee.
+- Do not blame vendors or individuals publicly.
+- Have approved templates ready, and have legal or compliance review those that cover data or contractual matters.
+
+**Regulatory and legal notification**
+- If personal data may be involved, involve your privacy or legal contact right away. Many laws and contracts include notification deadlines that start when you become aware of the incident, and the rules differ by jurisdiction and industry. This guide does not give legal advice, so confirm your obligations with qualified counsel before an incident happens, and write the answers into the runbook.
+
+### A status update template
+
+```
+INCIDENT UPDATE  |  [ID]  |  SEV [1/2/3]  |  [Time]
+
+STATUS:   [Investigating / Contained / Fix in progress / Monitoring / Resolved]
+IMPACT:   [Who or what is affected, in plain language]
+WHAT WE KNOW:   [Facts only]
+WHAT WE ARE DOING:   [Current actions and owners]
+WORKAROUND:   [If any, with steps]
+NEXT UPDATE:   [Time]
+CONTACT:   [Incident lead / channel]
+```
+
+## The runbook template
+
+Put this on a single page, store it where people can find it even when your main systems are down (for example, a printed copy, a shared drive and a mobile-accessible location), and keep the contact list current.
+
+```
+INCIDENT RESPONSE RUNBOOK  |  Version [x.x]  |  Owner: [role]  |  Reviewed: [date]
+
+1. HOW TO REPORT
+   Channel / phone / form: [details]
+   Include: what happened, when, where, who is affected, any screenshots.
+
+2. SEVERITY GUIDE
+   SEV 1 / 2 / 3 / 4 definitions and response times: [table]
+
+3. DECLARING AN INCIDENT (SEV 1 and 2)
+   [ ] Name the incident lead
+   [ ] Open the incident channel and call
+   [ ] Assign scribe and communications lead
+   [ ] Notify: [executive sponsor, legal/privacy if data involved]
+
+4. FIRST 15 MINUTES
+   [ ] Confirm impact and severity
+   [ ] Contain: pause automations / switch to fallback / revoke access
+   [ ] Post the first status update
+   [ ] Start the timeline
+
+5. ONGOING
+   [ ] Updates at the agreed interval
+   [ ] Record every change made, with time and person
+   [ ] Re-assess severity as facts change
+   [ ] Escalate if no progress within [time]
+
+6. RESTORE AND VERIFY
+   [ ] Fix or workaround applied
+   [ ] Verified with real data and a user
+   [ ] Backlog reprocessed safely
+   [ ] Monitoring period completed
+
+7. CLOSE
+   [ ] Final update sent
+   [ ] Follow-up tasks created with owners and dates
+   [ ] Review scheduled within [N] working days
+
+8. CONTACTS
+   Role | Primary | Backup | Phone | Channel
+   [list]
+
+9. KEY SYSTEMS AND FALLBACKS
+   System | Owner | Vendor support | Fallback procedure
+   [list]
+```
+
+The last section is often what saves the most time. A list of critical systems with owners, vendor support contacts and manual fallback procedures means the responder does not need to search for them mid-incident. Tie it to your [technology inventory](/blog/operations-tech-stack-audit), which is the natural source.
+
+## Special cases worth planning for
+
+**Automation and AI failures.** When an automated or AI-assisted process produces wrong outputs, the first step is usually to pause it and quarantine its recent outputs. Keep a quick way to stop each important automation, and document who can use it. If the workflow has human approval stages, as described in our guide to [human-in-the-loop approvals](/blog/human-in-the-loop-ai-approvals), check whether the control worked as intended.
+
+**Vendor outages.** You cannot fix the vendor's system, so the response is about workarounds, communication and monitoring their status page. Know your contract's support terms and escalation route in advance.
+
+**Data exposure.** Treat suspected exposure as high severity until proven otherwise. Preserve evidence, limit further access, involve privacy and legal contacts and avoid deleting logs that may be needed.
+
+**Financial errors.** For wrong payments or charges, stop further transactions, identify affected records, coordinate with finance and payment providers and plan the customer communication before reversing anything.
+
+**Out-of-hours incidents.** Decide in advance who is on call, how they are contacted and what they are authorized to do, including spending, shutting down services and waking executives.
+
+## The blameless review
+
+A review is where the incident turns into improvement. Hold it for every SEV 1 and SEV 2, and for any smaller incident that revealed something important.
+
+**Principles**
+- Focus on how the system allowed the failure and what made it hard to detect or fix. Avoid naming individuals as causes.
+- Assume everyone acted reasonably with the information they had.
+- Separate facts from interpretation.
+
+**Agenda**
+1. Reconstruct the timeline from the scribe's notes and system logs.
+2. Describe the impact: who was affected, for how long, what it cost.
+3. Explore contributing factors. A useful technique is asking "why" repeatedly until you reach a condition you can change, not a person to blame.
+4. Review what went well. Detection, teamwork or a good decision should be repeated deliberately.
+5. Identify what was confusing, slow or missing in the response itself.
+6. Agree on follow-up actions.
+
+**Output: a short written record**
+
+```
+INCIDENT REVIEW  |  [ID]  |  [Date]
+Summary:          [2-3 sentences]
+Impact:           [Customers, duration, financial or data impact]
+Timeline:         [Key events with times]
+Contributing factors:  [Systems, process, information gaps]
+What went well:   [List]
+What to improve:  [List]
+Actions:          [Action | Owner | Due date | Status]
+```
+
+The most important part is the action list. Each action needs an owner and a date, and someone must follow up. Reviews that produce a document and no change teach the team that reviews are theater.
+
+## Measuring your incident process
+
+Track a small number of indicators over time.
+
+- **Time to detect:** how long between the start of the problem and someone noticing.
+- **Time to acknowledge and to contain:** how quickly the response began and the harm stopped.
+- **Time to resolve:** total duration, by severity.
+- **Incident count by category and recurrence:** are the same failures repeating?
+- **Follow-up completion rate:** the share of review actions finished on time.
+- **Near misses reported:** a rising number can be a sign of a healthier reporting culture, not a worse operation.
+
+Use these to prioritize improvements and to demonstrate progress, not to rank individuals.
+
+## Practice before you need it
+
+Run a short **tabletop exercise** once or twice a year. Gather the people who hold the roles and walk through a realistic scenario, such as a payment automation sending incorrect amounts or a vendor outage during a peak period. Ask each person what they would do, who they would call and what they would say. You will find gaps in contact lists, unclear authority and missing fallbacks, all at no cost to customers.
+
+After each exercise, update the runbook. This is part of keeping it healthy, as described in our guide to [SOP governance, ownership and versioning](/blog/sop-governance-ownership-versioning).
+
+## Common mistakes
+
+**No clear lead.** Everyone helps, no one decides.
+
+**Diving into diagnosis before containment.** Harm continues while people hunt for the cause.
+
+**Too many changes at once.** You lose the ability to tell what worked, and you can make things worse.
+
+**Poor or irregular communication.** Stakeholders fill the silence with worry.
+
+**A runbook stored in the system that is down.** Keep an offline or independent copy.
+
+**Blame.** People hide mistakes, and you lose the information you need.
+
+**No follow-through.** Without tracked actions, the same incident returns.
+
+**Never practicing.** The first rehearsal should not be a real emergency.
+
+## Key takeaways
+
+- An incident needs a different mode of working: restore service and limit harm first, investigate afterwards.
+- Define a small set of severity levels with concrete thresholds, and let anyone raise severity.
+- Name roles by function, with backups: incident lead, responders, communications lead, scribe and sponsors.
+- Follow a simple flow: detect, triage, declare, contain, diagnose, communicate, restore, verify, close, review.
+- Communicate on a fixed schedule with a consistent template, and involve legal or privacy contacts early when data is at stake.
+- Run blameless reviews that end in owned, dated actions, and rehearse with tabletop exercises.
+
+A good runbook does not prevent every bad day. It makes sure that when one arrives, your team already knows what to do first.

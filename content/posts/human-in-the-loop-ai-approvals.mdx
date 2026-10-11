@@ -1,0 +1,181 @@
+---
+title: "Human-in-the-Loop Design: Where AI Should Ask Before It Acts"
+slug: "human-in-the-loop-ai-approvals"
+category: "AI Automation"
+excerpt: "Putting a person in the loop is not enough. This guide shows how to decide which AI actions need approval, design review steps people can actually do well, and loosen controls safely as you gather evidence."
+date: "2026-10-11"
+author: "OpsGrit Editorial"
+coverImage: "/images/human-in-the-loop-ai-approvals-cover.webp"
+featured: false
+---
+
+"We have a human in the loop" is the most reassuring sentence in AI automation and one of the least informative. It can mean a careful reviewer who reads every item and catches real problems. It can also mean someone who clicks Approve three hundred times a day without looking.
+
+Those two situations carry very different risk, yet they look identical on a slide. The difference is design. Where you place the human, what you show them, how much you ask of them and how you measure their work all determine whether the loop is a real control or a ritual.
+
+This guide covers how to decide which AI actions need approval, how to design review steps that people can do well, how to use confidence and risk to route work, and how to relax controls gradually based on evidence. It builds on the architecture choices in our guide to [AI agents versus workflows](/blog/ai-agents-vs-workflows-operations) and applies equally to the [AI workflow automation](/blog/ai-workflow-automation-operations-deep-dive) you may already be running.
+
+## What "in the loop" really means
+
+There are several distinct patterns, and teams often conflate them.
+
+**Human before action (approval).** The AI proposes, a person approves, then the system acts. Nothing happens without a yes. This is the safest pattern and the slowest.
+
+**Human after action (review).** The AI acts, and a person reviews samples or flagged items afterwards. Faster, but mistakes reach the real world before anyone sees them.
+
+**Human on exception.** The AI acts automatically on routine cases and routes unusual or uncertain ones to a person. This scales best, but only if the routing is good.
+
+**Human on the loop (monitoring).** The AI acts autonomously while people watch dashboards and alerts and can intervene or stop it. Appropriate only for low-risk, reversible actions.
+
+Choosing among these is a decision about risk, reversibility and volume. Making that decision explicitly, per action, is the most valuable thing you can do.
+
+## Classify every action by consequence
+
+Do not ask "should a human review this workflow?" Ask it for each action the workflow can take. A single process usually contains actions of very different weight.
+
+Score each action on four dimensions.
+
+**Reversibility.** Can the action be undone easily? Drafting a reply is trivial to discard. Sending it is not. Paying a supplier or deleting a record may be very hard to reverse.
+
+**Blast radius.** How many people, accounts or dollars could one mistake affect? One internal note is small. A bulk update to customer records is large.
+
+**External visibility.** Does the action leave the company? Anything customers, regulators or partners will see deserves a higher bar than internal work.
+
+**Regulatory or contractual exposure.** Does the action touch personal data, financial reporting, safety, employment decisions or contract terms? These carry obligations that "the AI did it" will not satisfy.
+
+A simple matrix turns that into a default policy.
+
+| Consequence | Example | Default pattern |
+| --- | --- | --- |
+| Low, reversible, internal | Tagging a ticket, drafting a summary | Act automatically, monitor |
+| Moderate, reversible, internal | Updating a CRM field, assigning a task | Act, with sampled review |
+| Moderate, external | Sending a standard customer email | Approval at first, then exception-based |
+| High, hard to reverse | Releasing a payment, changing contract terms | Human approval always |
+| Regulated or sensitive | Employment decisions, credit decisions, health data | Human decision, AI as input only, legal review |
+
+Write this down. When someone asks why a particular action does or does not need approval, you want a documented answer rather than a debate.
+
+## Why approval fatigue defeats the control
+
+People are not machines for vigilance. Research on monitoring tasks and our own experience agree on the basics: when a reviewer sees mostly correct items, attention drops. When volume is high, they speed up. When the interface makes approving easier than examining, they approve.
+
+This is not a character flaw to be solved with a stern reminder. It is a design problem. Warning signs that your loop has become ritual include:
+
+- Approval rates near 100 percent with very short review times.
+- Reviewers who cannot say what kinds of mistakes the AI makes.
+- A growing backlog that people clear in bulk at the end of the day.
+- Errors discovered downstream that were visible in the item the reviewer approved.
+
+If those appear, adding more reviewers will not fix it. Redesign the review.
+
+## Designing a review step people can do well
+
+Good review design makes the right action easy and the lazy action visible. These practices help.
+
+**Show the decision, the evidence and the reason together.** The reviewer should see what the AI proposes, the source material it used and a short explanation, on one screen. Forcing people to open three systems guarantees shortcuts.
+
+**Highlight what changed or what is uncertain.** Do not ask someone to proofread a whole document when the model is unsure about two fields. Point to them. Reviewers do far better with a focused question than with an open-ended "please check".
+
+**Make the default the safe choice.** If the AI is uncertain, the default option should be "needs more information" or "escalate", not "approve".
+
+**Ask for a decision, not a stamp.** Replace "Approve?" with a question that requires engagement, such as selecting the correct category from a short list or confirming the amount. Where it is appropriate, require a reason for rejections and for overrides so you can learn from them.
+
+**Limit the batch size and the pace.** Cap how many items one person reviews in a sitting, and avoid designs that reward speed. Review quality drops sharply after long sessions.
+
+**Seed known test cases.** Occasionally insert items with known problems and see whether they are caught. This is the most honest measure of whether review is real. Tell the team that this happens and why, so it reads as quality assurance and not as a trap.
+
+**Make feedback one click.** If a reviewer fixes the AI's mistake, capture the correction and feed it into your evaluation set. A review step that does not improve the system is wasted labor.
+
+## Use confidence and risk to route work
+
+Instead of sending everything to review, route by a combination of how sure the AI is and how much is at stake. This keeps people focused on the items that need them.
+
+**Confidence.** Many extraction and classification tools produce a score. Language models can be asked for a rating or checked through agreement across multiple runs. None of these are perfectly calibrated, so test them. Take a sample of past cases, record the confidence and whether the answer was right, and see whether higher confidence really means higher accuracy. Set thresholds from that evidence.
+
+**Risk.** Combine the consequence classification above with item-level factors such as amount, customer tier, new versus established supplier or data sensitivity.
+
+**Novelty.** Items unlike anything in the evaluation set deserve extra scrutiny. A new document layout or an unusual request type is a signal to slow down.
+
+A routing rule then looks like this in plain language: automatic if the confidence is high and the amount is low and the supplier is established. Otherwise, route to a reviewer. If the amount is above the policy limit, route to an approver regardless of confidence.
+
+Remember that confidence can be wrong in the most dangerous way: confidently wrong. Keep hard rules for high-consequence actions that do not depend on the model's self-assessment.
+
+## Decide what the reviewer is accountable for
+
+Ambiguity about responsibility quietly erodes review quality. If the AI proposes and a person approves, who owns a bad outcome? The answer must be clear, documented and fair.
+
+A workable principle: the approver is accountable for the decision they approve, provided the system gave them the information and the time to make it. The builder is accountable for the quality of what the system presents. The business owner is accountable for the policy. When an incident happens, ask which of those three failed, and fix that one.
+
+People review more carefully when they know their role is real and when leadership treats errors as system feedback rather than as blame. Both matter.
+
+## Measure the loop itself
+
+Track the health of the review step as a first-class metric, not only the health of the AI.
+
+- **Override rate.** How often do reviewers change or reject the AI's proposal? Zero is suspicious, and so is a very high rate.
+- **Review time distribution.** Extremely short times on complex items suggest rubber-stamping.
+- **Error escape rate.** How many mistakes passed review and were found later? This is the ultimate test.
+- **Seeded-case catch rate.** What share of planted errors are found?
+- **Queue age.** How long do items wait? Long waits push people toward bulk clearing.
+- **Reviewer agreement.** If two reviewers see the same item, do they reach the same decision? Disagreement points to unclear policy.
+
+Review these monthly with the people doing the work. They know where the tool misleads them.
+
+## Loosening controls with evidence
+
+Approval for everything forever is not the goal. The goal is to move each action to the lightest control that is still safe, based on evidence.
+
+A reasonable progression:
+
+1. **Shadow mode.** The AI proposes, people do the work as usual, and you compare. No risk, much learning.
+2. **Full approval.** Every proposal is reviewed. Measure accuracy and override patterns.
+3. **Exception-based review.** Items that meet strict criteria proceed automatically. Everything else is reviewed. Sample the automatic ones to confirm quality.
+4. **Monitored autonomy.** For low-consequence, reversible actions with long stable records, allow autonomy with dashboards, alerts and a kill switch.
+
+Set explicit graduation criteria in advance, such as a minimum number of items, an accuracy level and a period with no critical errors. And set demotion criteria as well. If quality drops, the action should automatically return to a stricter level without a debate.
+
+## Build in a stop button
+
+Every autonomous or semi-autonomous process needs a way to halt quickly. Define it before launch.
+
+- A clear switch that pauses the AI step and routes everything to people.
+- Rate limits and spending caps that stop runaway behavior.
+- Alerts on unusual patterns such as a spike in volume, a spike in rejections or an unusually high number of actions by one account.
+- A rollback plan for actions that can be reversed, with someone who knows how to run it.
+
+Test the stop button. A control nobody has practiced is a control that may not work when needed.
+
+## Communicate with the people affected
+
+Review design is partly about the humans on the other side of the automation. Customers, employees and suppliers deserve to know when AI is involved in decisions that affect them, and to have a route to a person.
+
+- Be transparent where it matters, and where it is required by law or contract.
+- Offer an easy path to reach a human for disputes and exceptions.
+- Do not use AI to make final decisions about people in areas such as hiring, credit or discipline without legal review and meaningful human judgment.
+
+This protects people and protects the business.
+
+## Common mistakes
+
+**One policy for the whole workflow.** Different actions deserve different controls.
+
+**Optimizing for throughput over review quality.** If you measure reviewers only on speed, you will get speed.
+
+**Never checking the checkers.** Seed test cases and sample approved items.
+
+**Relying on confidence scores you have not tested.** Calibrate with your own data.
+
+**Treating overrides as noise.** They are the best training data you have.
+
+**No demotion path.** Controls should tighten again when quality slips.
+
+## Key takeaways
+
+- "Human in the loop" is a design choice with four distinct patterns. Pick one per action, not per workflow.
+- Classify actions by reversibility, blast radius, external visibility and regulatory exposure.
+- Fight approval fatigue with focused review screens, safe defaults, realistic volumes and seeded test cases.
+- Route by confidence, risk and novelty, and keep hard rules for high-consequence actions.
+- Measure the review step itself, including override rate, error escape and seeded-case catch rate.
+- Loosen controls only with evidence, and define in advance when they tighten again.
+
+The most reliable AI systems are not the ones with the most humans in them. They are the ones where each human decision is placed on purpose, supported by good information, and measured honestly.

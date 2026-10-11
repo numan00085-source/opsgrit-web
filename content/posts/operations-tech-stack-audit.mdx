@@ -1,0 +1,189 @@
+---
+title: "How to Audit Your Operations Tech Stack in One Week"
+slug: "operations-tech-stack-audit"
+category: "Ops Stack"
+excerpt: "A day-by-day method for inventorying every tool your operations team depends on, uncovering overlap, hidden costs and security gaps, and turning the findings into a prioritized plan."
+date: "2026-10-11"
+author: "OpsGrit Editorial"
+coverImage: "/images/operations-tech-stack-audit-cover.webp"
+featured: false
+---
+
+Nobody plans an operations tech stack. It accumulates. A team signs up for a tool to solve an urgent problem, another team buys something similar, an integration gets built on a Friday afternoon and a contractor sets up a workflow that only they understand. Two years later the company pays for software nobody can fully list, runs processes that depend on connections nobody has documented and holds sensitive data in places nobody has reviewed.
+
+A tech stack audit fixes that. It does not have to be a quarter-long consulting project. A focused operations lead can produce a useful, honest picture in one week, and the picture pays for itself quickly through eliminated duplicates, reduced risk and clearer priorities.
+
+This guide gives you a day-by-day plan, the templates to use and the questions to ask. It also explains how to avoid the usual traps, such as turning the audit into a blame exercise or producing a beautiful report that nobody acts on.
+
+## What an audit is for
+
+Be clear about your goals before you start, because they shape what you collect. A good operations stack audit answers six questions.
+
+1. **What do we have?** Every tool, subscription, integration and automation that the business uses to run operations.
+2. **Who owns it?** A named person accountable for each system.
+3. **What does it cost?** Direct subscription cost, plus the less visible costs of administration and workarounds.
+4. **How is it used?** Who uses it, how often and for what.
+5. **Where does the data go?** Which systems hold which data, and how they are connected.
+6. **Where are the risks and the waste?** Overlap, unused licenses, security gaps, single points of failure and fragile integrations.
+
+If an activity does not help answer one of those questions, skip it. The audit is a means to a decision, not an end.
+
+## Before you start: set the ground rules
+
+**Define the scope.** "Operations" is vague. Decide which functions are in: for example finance operations, customer support, sales and revenue operations, HR operations, supply chain and IT. If the company is large, begin with one or two functions and repeat the process.
+
+**Get a sponsor.** Someone senior should say that the audit matters and that teams should cooperate. Without that, requests for information get ignored.
+
+**Frame it as discovery, not enforcement.** People hide tools when they fear being punished for using them. Say plainly that the aim is to understand and improve, and that unofficial tools found along the way will lead to a conversation about needs, not a reprimand.
+
+**Choose a home for the results.** A shared spreadsheet is fine. What matters is that it is a single source, accessible to the right people.
+
+## The inventory template
+
+Use one row per system. Keep the columns practical so that busy people can fill them in.
+
+| Field | What to capture |
+| --- | --- |
+| System name | Official product name and vendor |
+| Purpose | What business problem it solves |
+| Business owner | Person accountable for how it is used |
+| Technical owner | Person who administers it |
+| Departments using it | Who relies on it |
+| Number of users | Licensed and active |
+| Cost | Annual cost, billing cycle, renewal date, contract term |
+| Data held | Types of data, with a sensitivity level |
+| Integrations | Systems it connects to, and how |
+| Authentication | Single sign-on, password only, shared logins |
+| Criticality | What happens if it is down for a day |
+| Notes | Known issues, workarounds, plans |
+
+You will not fill every cell on day one. That is fine. The gaps themselves are findings.
+
+## Day 1: Build the first list from three sources
+
+Do not rely on memory or on a survey alone. People forget tools and surveys get partial responses. Cross-check three independent sources.
+
+**Source 1: finance records.** Review the last twelve months of expenses and card statements, accounts payable records and any procurement system. Look for recurring charges from software vendors. This catches paid tools, including those bought on individual cards.
+
+**Source 2: identity and access.** If your company uses a single sign-on or identity provider, list the connected applications. Check admin consoles for third-party app grants in your email and collaboration suites, which show apps that employees have connected using their work accounts.
+
+**Source 3: conversation.** Talk to a handful of team leads for twenty minutes each. Ask them to walk through a typical week of work and name every tool they touch. Ask what they would be unable to do if each disappeared. People mention shadow tools, spreadsheets and personal workarounds in conversation that never appear in records.
+
+Merge the three into one list. Expect duplicates and name variations. By the end of day one, you want a rough but broad inventory, not a clean one.
+
+Do not forget the unglamorous systems: shared spreadsheets that function as databases, email inboxes that function as ticketing systems and scripts that run on someone's laptop. They are part of your stack and often the riskiest part.
+
+## Day 2: Fill in ownership, cost and usage
+
+Now turn the list into a real inventory by chasing missing information.
+
+**Assign owners.** For every system, name a business owner and a technical owner. Systems with no owner are your first finding. Ask who decides if it renews and who gets called when it breaks.
+
+**Pin down costs.** Capture the annual cost, renewal date and notice period for cancellation. Renewal dates drive your timeline for any decision. Include add-ons, usage-based charges and implementation or consulting fees if known.
+
+**Measure real usage.** Pull license counts and last-login data from each system's admin console. Compare paid seats with active users. Unused licenses are a common source of immediate savings, but be careful: a person who logs in only at quarter-end may still depend on the tool.
+
+**Note the contract terms.** Auto-renewal clauses, minimum commitments and data export rights matter later, when you need to change something.
+
+At the end of day two, you should be able to sort your stack by cost and by usage and see the obvious outliers.
+
+## Day 3: Map the data flows and integrations
+
+This is the day that produces the most insight, and the one most teams skip. A list of tools is not a picture of your operation. The connections are what make it work, and what make it fragile.
+
+For each core process, trace how data moves. Pick a few critical journeys, such as quote to cash, procure to pay, hire to onboard and ticket to resolution. For each journey, draw the systems in order and the connections between them.
+
+For every connection, record:
+
+- **Direction.** Does data flow one way or both?
+- **Method.** Native integration, middleware or automation platform, custom code, file export and import, or manual copy and paste?
+- **Frequency.** Real time, scheduled or on demand?
+- **Owner.** Who maintains it and who knows how it works?
+- **Failure behavior.** What happens when it breaks? Does anyone notice?
+
+Pay special attention to manual steps. Every place where a person copies data between systems is a place for delay, error and knowledge that lives only in someone's head.
+
+Also identify your **systems of record**, the authoritative source for each type of data such as customers, products, employees and contracts. Where two systems both claim to be the source of truth for the same data, you have a conflict that will cause pain. Our guide to [choosing a system of record](/blog/system-of-record-source-of-truth) goes deeper on this.
+
+## Day 4: Assess overlap, risk and fit
+
+With the inventory and the flow maps in hand, analyze them. Use a short, consistent set of lenses.
+
+**Overlap and redundancy.** Which tools do similar jobs? Two project trackers, three survey tools and multiple e-signature products are typical. Overlap is not always bad, since different teams may have different needs, but each instance deserves a deliberate decision.
+
+**Utilization.** Which tools have low adoption relative to cost? Is the problem the tool, the training or the original need?
+
+**Risk.** For each critical or data-heavy system, check:
+- Is single sign-on enabled and multi-factor authentication enforced?
+- Are there shared logins or former employees with access?
+- Who has administrator rights, and is that list appropriate?
+- Where does sensitive data, such as customer, employee or financial information, reside, and is that appropriate?
+- Does the vendor meet your security and compliance expectations, and have you reviewed their documentation?
+- Is there a backup or export path if the vendor fails or you leave?
+
+**Single points of failure.** Which workflows depend on one person, one laptop, one personal credential or one fragile script? These deserve urgent attention.
+
+**Fit.** Does the tool still match how the team works? Systems that people work around are telling you something.
+
+**Debt.** Where are the manual workarounds, duplicate data entry and spreadsheet shadows that exist because a system does not do what is needed?
+
+Score each system on simple scales, for example value, risk and effort to change. A rough high, medium or low is enough. The purpose is to prioritize, not to be precise.
+
+## Day 5: Decide, prioritize and communicate
+
+Turn analysis into a plan. This is the day many audits stall, so be disciplined.
+
+**Group the findings into actions.** Typical categories:
+
+- **Quick wins.** Remove unused licenses, cancel clearly redundant subscriptions before renewal, assign missing owners and turn on multi-factor authentication where it is missing.
+- **Risk fixes.** Remove departed users, tighten admin access, document single-person dependencies and set up alerts for critical integrations.
+- **Consolidation candidates.** Overlapping tools where standardizing would save money or reduce complexity. These need a proper evaluation, so schedule them.
+- **Integration and automation projects.** Manual handoffs that deserve automation, ranked by effort and benefit.
+- **Gaps.** Needs that are being met poorly or not at all.
+
+**Prioritize with a simple grid.** Plot actions by impact and effort. Do the high-impact, low-effort items first, and plan the large ones deliberately.
+
+**Attach owners and dates.** An action without a person and a date is a wish. Tie decisions to renewal dates, since that is when leverage and options are greatest.
+
+**Write a short readout.** One or two pages: what you found, what it costs, what the biggest risks are, what you recommend and what you need from leadership. Lead with the decisions you need made. Appendices can hold the detail.
+
+**Share it with the people who helped.** Thank them, show what you learned and explain what happens next. This builds trust for the next audit.
+
+## What good looks like afterwards
+
+A successful audit leaves you with more than a report.
+
+- A living inventory that someone owns and updates.
+- A simple rule for new tools: who approves purchases, what security review is required and where they must be logged.
+- A calendar of renewal dates with reminders far enough ahead to act.
+- A short list of the processes most dependent on fragile connections, with a plan for each.
+- Clear ownership for every system.
+
+Schedule a lighter review every six months and a full pass annually. The first audit is the hardest. After that, it is maintenance.
+
+## Common mistakes
+
+**Making it a cost-cutting witch hunt.** Savings are a welcome result, but if people think the goal is to take their tools away, they will hide them.
+
+**Auditing only paid software.** Spreadsheets, scripts and free tiers can hold your most critical data and processes.
+
+**Listing tools without mapping data flows.** The risk and the waste often live in the connections.
+
+**Ignoring the humans.** Adoption, training and process fit matter as much as features.
+
+**Producing a report and stopping.** Without owners, dates and a sponsor, findings fade.
+
+**Trying to fix everything at once.** Pick the few changes that matter most and finish them.
+
+**Forgetting renewals.** Missing a notice window can lock you in for another year.
+
+## Key takeaways
+
+- An operations stack audit can be done in a week by combining finance records, identity data and conversations with the people doing the work.
+- Capture owner, cost, usage, data held, integrations, authentication and criticality for every system.
+- Map the data flows for critical processes, and look hard at manual handoffs and fragile connections.
+- Assess overlap, utilization, risk, single points of failure and fit.
+- Turn findings into prioritized actions with owners, dates and ties to renewal deadlines.
+- Keep the inventory alive with clear ownership, a purchasing rule and regular reviews.
+
+You cannot improve a stack you cannot see. One focused week of looking turns a tangle of tools into a system you can manage on purpose.
