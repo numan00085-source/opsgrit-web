@@ -26,7 +26,7 @@ export default function PrivacyPage() {
       <h2>How we use information</h2>
       <ul>
         <li>To operate, secure and improve the Site and our content.</li>
-        <li>To send the newsletter you requested. You can unsubscribe at any time.</li>
+        <li>To send the newsletter you requested. Your address is stored with our database provider (Upstash) and is never sold. You can unsubscribe at any time on our <a href="/unsubscribe">unsubscribe page</a>.</li>
         <li>To respond to your enquiries.</li>
         <li>To measure performance and, where applicable, to show advertising.</li>
       </ul>

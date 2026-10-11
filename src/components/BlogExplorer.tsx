@@ -45,8 +45,8 @@ export default function BlogExplorer({ posts, categories }: { posts: PostMeta[];
               onClick={() => setCategory(c)}
               className={`rounded-full border px-4 py-1.5 text-sm transition ${
                 active === c
-                  ? "border-accent bg-accent text-ink-950 font-semibold"
-                  : "border-ink-600 text-slate-300 hover:border-accent hover:text-white"
+                  ? "border-gold-500 gold-fill font-semibold text-ink-900"
+                  : "border-cream-400 bg-white/60 text-ink-700 hover:border-gold-500 hover:text-ink-900"
               }`}
             >
               {c}
@@ -61,12 +61,12 @@ export default function BlogExplorer({ posts, categories }: { posts: PostMeta[];
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search articles…"
-            className="w-full rounded-lg border border-ink-600 bg-ink-900 px-4 py-2 text-sm text-white placeholder:text-slate-500 focus:border-accent focus:outline-none"
+            className="w-full rounded-lg border border-cream-400 bg-white px-4 py-2 text-sm text-ink-900 placeholder:text-ink-500/70 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-300"
           />
         </div>
       </div>
 
-      <p className="mt-6 text-sm text-slate-500" aria-live="polite">
+      <p className="mt-6 text-sm text-ink-500" aria-live="polite">
         {filtered.length} {filtered.length === 1 ? "article" : "articles"}
       </p>
 
@@ -77,7 +77,7 @@ export default function BlogExplorer({ posts, categories }: { posts: PostMeta[];
           ))}
         </div>
       ) : (
-        <div className="mt-8 rounded-xl border border-dashed border-ink-600 p-12 text-center text-slate-400">
+        <div className="mt-8 rounded-xl border border-dashed border-cream-400 p-12 text-center text-ink-600">
           No articles match your search yet.
         </div>
       )}

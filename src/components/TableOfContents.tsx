@@ -25,14 +25,14 @@ export default function TableOfContents({ headings }: { headings: { id: string; 
 
   return (
     <nav aria-label="Table of contents" className="text-sm">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">On this page</p>
-      <ul className="space-y-2 border-l border-ink-700">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-ink-500">On this page</p>
+      <ul className="space-y-2 border-l border-cream-300">
         {headings.map((h) => (
           <li key={h.id} className={h.level === 3 ? "pl-7" : "pl-4"}>
             <a
               href={`#${h.id}`}
               className={`block leading-snug transition ${
-                active === h.id ? "text-accent-soft" : "text-slate-400 hover:text-white"
+                active === h.id ? "font-semibold text-gold-700" : "text-ink-600 hover:text-ink-900"
               }`}
             >
               {h.text}

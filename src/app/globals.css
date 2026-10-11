@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html {
@@ -11,27 +11,65 @@ html {
 }
 
 body {
-  background-color: #0b0f17;
-  color: #cbd5e1;
+  background-color: #faf5e9;
+  background-image: radial-gradient(70% 38% at 50% 0%, rgba(212, 175, 79, 0.1), transparent 70%);
+  background-repeat: no-repeat;
+  color: #45423a;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: rgba(124, 131, 245, 0.35);
+  background: rgba(212, 175, 79, 0.4);
+}
+
+/* Gold sheen: a slow highlight that glides across gold surfaces, always on. */
+@keyframes gold-sheen {
+  from { background-position: 0% 50%; }
+  to { background-position: 200% 50%; }
 }
 
 @layer components {
   .container-page {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
+
+  .gold-text {
+    background-image: linear-gradient(100deg, #7a5b10 0%, #a67c1c 22%, #c79d36 42%, #e6c568 50%, #c79d36 58%, #a67c1c 78%, #7a5b10 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gold-sheen 5s linear infinite;
+  }
+
+  .gold-fill {
+    background-image: linear-gradient(100deg, #c9a03a 0%, #e0bd5c 25%, #f6e3a3 50%, #e0bd5c 75%, #c9a03a 100%);
+    background-size: 200% 100%;
+    animation: gold-sheen 5s linear infinite;
+  }
+
+  .gold-tile {
+    @apply gold-fill shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_2px_8px_-2px_rgba(156,118,24,0.55)];
+  }
+
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d4af4f, transparent);
+  }
+
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-ink-950 transition hover:bg-accent-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft;
+    @apply gold-fill inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_6px_16px_-8px_rgba(156,118,24,0.7)] transition hover:brightness-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-600 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-100 disabled:opacity-60;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-lg border border-ink-600 px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-accent hover:text-white;
+    @apply inline-flex items-center justify-center rounded-lg border border-ink-900/20 bg-white/50 px-5 py-2.5 text-sm font-semibold text-ink-800 transition hover:border-gold-500 hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-600;
   }
   .chip {
-    @apply inline-flex items-center rounded-full border border-ink-600 bg-ink-800 px-2.5 py-0.5 text-xs font-medium text-accent-soft;
+    @apply inline-flex items-center rounded-full border border-gold-400/50 bg-gold-100/70 px-2.5 py-0.5 text-xs font-semibold text-gold-700;
+  }
+  .card {
+    @apply rounded-2xl border border-cream-300 bg-white/70 shadow-[0_1px_0_rgba(255,255,255,0.8)_inset,0_10px_30px_-18px_rgba(122,91,16,0.35)] transition hover:border-gold-400 hover:shadow-[0_14px_34px_-16px_rgba(156,118,24,0.45)];
   }
 }
 
@@ -39,5 +77,15 @@ body {
   scroll-margin-top: 6rem;
 }
 .prose pre {
-  @apply border border-ink-700;
+  @apply border border-ink-800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-text,
+  .gold-fill {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

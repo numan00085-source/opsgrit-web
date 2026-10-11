@@ -11,66 +11,50 @@ const NAV = [
 
 export function Logo() {
   return (
-    <span className="flex items-center gap-2 text-lg font-bold tracking-tight text-white">
+    <span className="flex items-center gap-2.5">
       <span
         aria-hidden
-        className="grid h-7 w-7 place-items-center rounded-md bg-accent text-sm font-black text-ink-950"
+        className="gold-tile grid h-8 w-8 place-items-center rounded-lg text-base font-extrabold text-ink-900"
       >
         O
       </span>
-      {SITE.name}
+      <span className="gold-text text-xl font-extrabold tracking-tight">{SITE.name}</span>
     </span>
   );
 }
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-ink-700 bg-ink-950/85 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-cream-300 bg-cream-100/85 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-6">
         <Link href="/" aria-label={`${SITE.name} home`}>
           <Logo />
         </Link>
-        <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
-          {NAV.map((n) =>
-            n.href.includes("?") ? (
-              <a key={n.href} href={n.href} className="text-sm text-slate-400 transition hover:text-white">
-                {n.label}
-              </a>
-            ) : (
-              <Link key={n.href} href={n.href} className="text-sm text-slate-400 transition hover:text-white">
-                {n.label}
-              </Link>
-            ),
-          )}
+        <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
+          {NAV.map((n) => (
+            <a key={n.href} href={n.href} className="text-sm font-medium text-ink-600 transition hover:text-ink-900">
+              {n.label}
+            </a>
+          ))}
         </nav>
         <Link href="/#newsletter" className="btn-primary hidden sm:inline-flex">
           Subscribe
         </Link>
         <details className="relative md:hidden">
-          <summary className="cursor-pointer list-none rounded-md border border-ink-600 px-3 py-1.5 text-sm text-slate-200">
+          <summary className="cursor-pointer list-none rounded-md border border-ink-900/20 bg-white/60 px-3 py-1.5 text-sm font-medium text-ink-800">
             Menu
           </summary>
-          <div className="absolute right-0 mt-2 w-56 rounded-lg border border-ink-700 bg-ink-900 p-2 shadow-xl">
-            {NAV.map((n) =>
-              n.href.includes("?") ? (
-                <a
-                  key={n.href}
-                  href={n.href}
-                  className="block rounded px-3 py-2 text-sm text-slate-300 hover:bg-ink-800 hover:text-white"
-                >
-                  {n.label}
-                </a>
-              ) : (
-                <Link
-                  key={n.href}
-                  href={n.href}
-                  className="block rounded px-3 py-2 text-sm text-slate-300 hover:bg-ink-800 hover:text-white"
-                >
-                  {n.label}
-                </Link>
-              ),
-            )}
-            <Link href="/#newsletter" className="block rounded px-3 py-2 text-sm font-semibold text-accent-soft">
+          <div className="absolute right-0 mt-2 w-56 rounded-xl border border-cream-300 bg-cream-50 p-2 shadow-xl">
+            {NAV.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="block rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-cream-200 hover:text-ink-900"
+              >
+                {n.label}
+              </a>
+            ))}
+            <Link href="/#newsletter" className="block rounded-lg px-3 py-2 text-sm font-semibold text-gold-700">
               Subscribe
             </Link>
           </div>

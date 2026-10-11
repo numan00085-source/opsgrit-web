@@ -64,8 +64,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
   return (
     <div className="container-page py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-slate-500">
-        <Link href="/" className="hover:text-white">Home</Link> / <Link href="/blog" className="hover:text-white">Articles</Link>
+      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-ink-500">
+        <Link href="/" className="hover:text-gold-700">Home</Link> / <Link href="/blog" className="hover:text-gold-700">Articles</Link>
       </nav>
 
       <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_16rem]">
@@ -75,10 +75,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
               <Link href={`/blog?category=${encodeURIComponent(post.category)}`} className="chip">{post.category}</Link>
               <span className="chip" aria-label={`Read time ${post.readTime}`}>⏱ {post.readTime}</span>
             </div>
-            <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">{post.title}</h1>
-            {post.excerpt && <p className="mt-5 text-xl leading-relaxed text-slate-400">{post.excerpt}</p>}
-            <p className="mt-6 text-sm text-slate-500">
-              By <span className="text-slate-300">{post.author}</span> · {formatDate(post.date)}
+            <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-5xl">{post.title}</h1>
+            {post.excerpt && <p className="mt-5 text-xl leading-relaxed text-ink-600">{post.excerpt}</p>}
+            <p className="mt-6 text-sm text-ink-500">
+              By <span className="font-medium text-ink-800">{post.author}</span> · {formatDate(post.date)}
             </p>
           </header>
 
@@ -87,11 +87,11 @@ export default async function ArticlePage({ params }: { params: Params }) {
             <img
               src={post.coverImage}
               alt=""
-              className="mt-10 aspect-[16/9] w-full rounded-xl border border-ink-700 object-cover"
+              className="mt-10 aspect-[16/9] w-full rounded-2xl border border-cream-300 object-cover shadow-[0_18px_40px_-24px_rgba(122,91,16,0.5)]"
             />
           )}
 
-          <div className="prose prose-lg prose-invert mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
+          <div className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
             <MDXRemote
               source={post.content}
               options={{
@@ -105,17 +105,17 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
           <aside
             aria-label="About the author"
-            className="mt-14 flex gap-4 rounded-xl border border-ink-700 bg-ink-900 p-6"
+            className="card mt-14 flex gap-4 p-6"
           >
             <div
               aria-hidden
-              className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-accent-deep text-lg font-bold text-white"
+              className="grid h-12 w-12 shrink-0 place-items-center rounded-full gold-fill text-lg font-bold text-ink-900"
             >
               {post.author.charAt(0)}
             </div>
             <div>
-              <p className="font-semibold text-white">{post.author}</p>
-              <p className="mt-1 text-sm leading-relaxed text-slate-400">
+              <p className="font-semibold text-ink-900">{post.author}</p>
+              <p className="mt-1 text-sm leading-relaxed text-ink-600">
                 Writes about AI workflows, enterprise automation and operational excellence for {SITE.name}. Content is
                 researched, edited and reviewed by our editorial team before publication.
               </p>
@@ -132,16 +132,16 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
       {related.length > 0 && (
         <section className="mt-16" aria-labelledby="related">
-          <h2 id="related" className="text-xl font-bold text-white">Keep reading</h2>
+          <h2 id="related" className="text-xl font-extrabold text-ink-900">Keep reading</h2>
           <ul className="mt-4 grid gap-4 sm:grid-cols-2">
             {related.map((r) => (
               <li key={r.slug}>
                 <Link
                   href={`/blog/${r.slug}`}
-                  className="block rounded-xl border border-ink-700 bg-ink-900 p-5 transition hover:border-accent/60"
+                  className="card block p-5"
                 >
-                  <span className="text-xs text-slate-500">{r.readTime}</span>
-                  <span className="mt-1 block font-semibold text-white">{r.title}</span>
+                  <span className="text-xs text-ink-500">{r.readTime}</span>
+                  <span className="mt-1 block font-semibold text-ink-900">{r.title}</span>
                 </Link>
               </li>
             ))}
