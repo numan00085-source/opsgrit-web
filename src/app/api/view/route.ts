@@ -1,4 +1,4 @@
-import { analyticsConfigured, dayKey, pipeline, visitorId } from "@/lib/analytics";
+import { VISIT_WINDOW_SECONDS, analyticsConfigured, dayKey, pipeline, visitId, visitorId } from "@/lib/analytics";
 
 export const runtime = "nodejs";
 
@@ -55,10 +55,21 @@ export async function POST(req: Request) {
       ["PFADD", `og:uv:${day}`, vid],
       ["EXPIRE", `og:uv:${day}`, 60 * 60 * 24 * 120],
     );
-    const ref = typeof body.ref === "string" ? body.ref.toLowerCase() : "";
-    if (ref && HOST.test(ref)) cmds.push(["HINCRBY", "og:ref", ref, 1]);
-    const country = (req.headers.get("x-vercel-ip-country") || "").toUpperCase();
-    if (/^[A-Z]{2}$/.test(country)) cmds.push(["HINCRBY", "og:country", country, 1]);
+    // A "visitor" = one person (IP + browser) per 5 hours, however many pages they open.
+    let isNewVisit = false;
+    try {
+      const [set] = await pipeline([["SET", `og:vs:${visitId(ip, ua)}`, 1, "NX", "EX", VISIT_WINDOW_SECONDS]]);
+      isNewVisit = set === "OK";
+    } catch {
+      /* fall through: count as a page view only */
+    }
+    if (isNewVisit) {
+      cmds.push(["INCR", "og:visits"], ["HINCRBY", "og:vdays", day, 1], ["HINCRBY", "og:vpaths", path, 1]);
+      const ref = typeof body.ref === "string" ? body.ref.toLowerCase() : "";
+      if (ref && HOST.test(ref)) cmds.push(["HINCRBY", "og:ref", ref, 1]);
+      const country = (req.headers.get("x-vercel-ip-country") || "").toUpperCase();
+      if (/^[A-Z]{2}$/.test(country)) cmds.push(["HINCRBY", "og:country", country, 1]);
+    }
   }
 
   try {

@@ -33,3 +33,14 @@ export function visitorId(ip: string, ua: string, day: string): string {
   const salt = process.env.ANALYTICS_SALT || "opsgrit";
   return createHash("sha256").update(`${salt}|${day}|${ip}|${ua}`).digest("hex").slice(0, 16);
 }
+
+/**
+ * Visit id: one-way hash of IP + user agent (no day). The same person is counted as ONE visitor
+ * for 5 hours, no matter how many pages they open. The IP itself is never stored.
+ */
+export function visitId(ip: string, ua: string): string {
+  const salt = process.env.ANALYTICS_SALT || "opsgrit";
+  return createHash("sha256").update(`${salt}|visit|${ip}|${ua}`).digest("hex").slice(0, 20);
+}
+
+export const VISIT_WINDOW_SECONDS = 5 * 60 * 60;
