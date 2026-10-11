@@ -44,6 +44,17 @@ body {
     animation: gold-sheen 5s linear infinite;
   }
 
+  /* Brighter sheen for use on the dark navy areas */
+  .gold-text-light {
+    background-image: linear-gradient(100deg, #c79d36 0%, #e2bd5c 30%, #f8e6a6 50%, #e2bd5c 70%, #c79d36 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gold-sheen 5s linear infinite;
+  }
+
   .gold-fill {
     background-image: linear-gradient(100deg, #c9a03a 0%, #e0bd5c 25%, #f6e3a3 50%, #e0bd5c 75%, #c9a03a 100%);
     background-size: 200% 100%;
@@ -82,6 +93,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .gold-text,
+  .gold-text-light,
   .gold-fill {
     animation: none;
   }

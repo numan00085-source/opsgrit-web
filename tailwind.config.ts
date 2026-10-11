@@ -32,6 +32,14 @@ const config: Config = {
           600: "#9C7618",
           700: "#7A5B10",
         },
+        // The original deep navy, kept for footer, sidebar and feature bands
+        night: {
+          950: "#0B0F17",
+          900: "#111827",
+          800: "#161D2B",
+          700: "#1E2738",
+          600: "#2A3447",
+        },
         // The original indigo, kept as a small secondary accent (links, focus)
         accent: {
           DEFAULT: "#5B63D6",

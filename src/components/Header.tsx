@@ -9,7 +9,7 @@ const NAV = [
   { href: "/about", label: "About" },
 ];
 
-export function Logo() {
+export function Logo({ onDark = false }: { onDark?: boolean }) {
   return (
     <span className="flex items-center gap-2.5">
       <span
@@ -18,7 +18,7 @@ export function Logo() {
       >
         O
       </span>
-      <span className="gold-text text-xl font-extrabold tracking-tight">{SITE.name}</span>
+      <span className={`${onDark ? "gold-text-light" : "gold-text"} text-xl font-extrabold tracking-tight`}>{SITE.name}</span>
     </span>
   );
 }

@@ -67,20 +67,20 @@ export default function HomePage() {
         )}
       </section>
 
-      <section className="border-y border-cream-300 bg-cream-200/50 py-20" aria-labelledby="why-heading">
+      <section className="bg-night-950 py-20" aria-labelledby="why-heading">
         <div className="container-page">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-700">The OpsGrit standard</p>
-          <h2 id="why-heading" className="mt-2 max-w-2xl text-3xl font-extrabold tracking-tight text-ink-900">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-300">The OpsGrit standard</p>
+          <h2 id="why-heading" className="mt-2 max-w-2xl text-3xl font-extrabold tracking-tight text-white">
             Useful first. Everything else second.
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {PILLARS.map((p, i) => (
-              <div key={p.title} className="card p-7">
+              <div key={p.title} className="rounded-2xl border border-night-700 bg-night-800 p-7 transition hover:border-gold-400/60">
                 <span className="gold-tile grid h-9 w-9 place-items-center rounded-lg text-sm font-extrabold text-ink-900">
                   {i + 1}
                 </span>
-                <h3 className="mt-5 text-lg font-bold text-ink-900">{p.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-600">{p.body}</p>
+                <h3 className="mt-5 text-lg font-bold text-white">{p.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">{p.body}</p>
               </div>
             ))}
           </div>
