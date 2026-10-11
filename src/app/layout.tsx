@@ -4,6 +4,7 @@ import { SITE } from "@/lib/site";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Script from "next/script";
+import IntroSplash from "@/components/IntroSplash";
 import PageViewTracker from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
@@ -29,8 +30,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Play the intro once per browser session: later page loads skip it. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('og_intro')){document.documentElement.classList.add('no-intro')}else{sessionStorage.setItem('og_intro','1')}}catch(e){}",
+          }}
+        />
+      </head>
       <body className="min-h-screen font-sans">
+        <IntroSplash />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-gold-300 focus:px-3 focus:py-2 focus:text-ink-900"
