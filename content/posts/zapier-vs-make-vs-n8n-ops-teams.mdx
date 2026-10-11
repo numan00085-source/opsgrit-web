@@ -137,9 +137,29 @@ List your must-have systems: your CRM, ERP or accounting tool, ticketing system,
 
 Most mature teams end up using the generic HTTP capability more than they expect. A platform with excellent HTTP, authentication and data-handling tools can compensate for a missing connector. A platform that handles only the happy path of prebuilt connectors can leave you stuck.
 
-## A comparison grid for your team
+## How the three meter your usage (checked October 11, 2026)
 
-Fill this in yourself using current vendor information. Score each criterion by importance first, then by how each tool performs.
+Pricing pages change often, so treat this as a snapshot and verify it. What matters more than the price tags is the **unit each platform charges for**, because it decides how your bill grows as workflows get longer or busier.
+
+| | Zapier | Make | n8n Cloud |
+| --- | --- | --- | --- |
+| What is metered | Tasks. Only successful action steps count. Triggers, filters and paths do not. | Credits. For most apps one operation is one credit. Some AI and advanced features use dynamic credits based on tokens, file size or run time. | Executions. One execution is one full workflow run, however many steps it has. |
+| What drives cost | The number of action steps per run, times runs | The number of operations per run, times runs | The number of runs |
+| Self-hosting | Not offered | Not offered | A self-hosted Community Edition exists. Read n8n's license terms before using it commercially. |
+
+Sources: [Zapier Help](https://help.zapier.com/hc/en-us/articles/8496196837261-Tasks-in-Zapier), [Make Help](https://help.make.com/credits) and [n8n pricing](https://n8n.io/pricing/).
+
+### An illustration, not a quote
+
+Take one workflow with six action steps that runs 1,000 times a month, with every step succeeding. On a per-step meter such as Zapier tasks, that is about 6,000 billable units. On Make it is roughly 6,000 operations if each module counts as one. On n8n Cloud it is 1,000 executions. Now add four more steps for formatting and notifications. The first two meters grow by about 4,000. The third does not move.
+
+That is why long, multi-step workflows tend to favor execution-based pricing, and why short, simple automations across many apps can be cheaper on a per-step meter at low volume. It also means the cheapest plan on the pricing page is rarely the cheapest for your workflows. Count your real steps and runs first.
+
+On n8n's pricing page at the time of writing, Cloud plans were listed at about 20 euros a month for 2,500 executions (Starter) and about 50 euros a month for 10,000 executions (Pro), on annual billing, with unlimited users and workflows. Business-tier features on self-hosted instances require a license key. Check the current page before you decide.
+
+## A scoring grid for your own team
+
+The grid below is a worksheet on purpose. Only you know your weights. Fill it in using your pilot results and current vendor information, scoring each criterion by importance first and then by how each tool performed.
 
 | Criterion | Weight for us | Zapier | Make | n8n |
 | --- | --- | --- | --- | --- |
@@ -205,3 +225,11 @@ This is also where the broader question of your stack matters. If you have not y
 - Verify current features and pricing yourself, then run a two-week pilot with real workflows before committing.
 
 The best automation platform is the one your team will actually maintain, at a cost you can predict, with failures you can see and fix.
+
+## Sources and further reading
+
+Links were checked on October 11, 2026. Pricing, limits and rules change, so confirm on the source before you act.
+
+- [Zapier Help: Tasks in Zapier](https://help.zapier.com/hc/en-us/articles/8496196837261-Tasks-in-Zapier). States that only successful action steps count as tasks; triggers, filters and paths do not.
+- [Make Help: Credits](https://help.make.com/credits). Explains that for most apps one operation equals one credit, with dynamic credits for some AI and advanced features.
+- [n8n pricing](https://n8n.io/pricing/). Shows that n8n Cloud meters whole-workflow executions, and lists current plans and limits.
