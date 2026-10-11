@@ -20,22 +20,12 @@ export default function OgImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
-          <div
-            style={{
-              width: 84,
-              height: 84,
-              borderRadius: 20,
-              background: "linear-gradient(135deg, #C9A03A, #F6E3A3)",
-              color: "#1E1C17",
-              fontSize: 52,
-              fontWeight: 800,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            O
-          </div>
+          <svg width="84" height="84" viewBox="0 0 64 64">
+            <rect width="64" height="64" rx="15" fill="#161D2B" />
+            <path d="M43.49 22.36 A15 15 0 1 0 47 32" fill="none" stroke="#E2BD5C" strokeWidth="6.5" strokeLinecap="round" />
+            <path d="M47 32 H34" fill="none" stroke="#D9B04A" strokeWidth="6.5" />
+            <circle cx="32" cy="32" r="4.6" fill="#D9B04A" />
+          </svg>
           <div style={{ marginLeft: 24, fontSize: 64, fontWeight: 800, color: "#E2BD5C" }}>OpsGrit</div>
         </div>
         <div style={{ marginTop: 56, fontSize: 76, fontWeight: 800, color: "#FFFFFF", lineHeight: 1.08, display: "flex" }}>

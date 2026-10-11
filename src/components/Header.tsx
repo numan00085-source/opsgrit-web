@@ -12,12 +12,8 @@ const NAV = [
 export function Logo({ onDark = false }: { onDark?: boolean }) {
   return (
     <span className="flex items-center gap-2.5">
-      <span
-        aria-hidden
-        className="gold-tile grid h-8 w-8 place-items-center rounded-lg text-base font-extrabold text-ink-900"
-      >
-        O
-      </span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/logo-mark.svg" alt="" width={34} height={34} className="h-[34px] w-[34px] rounded-[9px] shadow-[0_2px_10px_-2px_rgba(212,175,79,0.5)]" />
       <span className={`${onDark ? "gold-text-light" : "gold-text"} text-xl font-extrabold tracking-tight`}>{SITE.name}</span>
     </span>
   );
