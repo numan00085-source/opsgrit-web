@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     url: SITE.url,
   },
   twitter: { card: "summary_large_image", title: SITE.name, description: SITE.description },
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", types: { "application/rss+xml": "/feed.xml" } },
 };
 
 export const viewport: Viewport = {

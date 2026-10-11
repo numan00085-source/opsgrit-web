@@ -25,14 +25,14 @@ export function Logo({ onDark = false }: { onDark?: boolean }) {
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-cream-300 bg-cream-100/85 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-night-700 bg-night-950">
       <div className="container-page flex h-16 items-center justify-between gap-6">
         <Link href="/" aria-label={`${SITE.name} home`}>
-          <Logo />
+          <Logo onDark />
         </Link>
         <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
           {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="text-sm font-medium text-ink-600 transition hover:text-ink-900">
+            <a key={n.href} href={n.href} className="text-sm font-medium text-slate-300 transition hover:text-gold-300">
               {n.label}
             </a>
           ))}
@@ -41,20 +41,20 @@ export default function Header() {
           Subscribe
         </Link>
         <details className="relative md:hidden">
-          <summary className="cursor-pointer list-none rounded-md border border-ink-900/20 bg-white/60 px-3 py-1.5 text-sm font-medium text-ink-800">
+          <summary className="cursor-pointer list-none rounded-md border border-night-600 bg-night-800 px-3 py-1.5 text-sm font-medium text-slate-200">
             Menu
           </summary>
-          <div className="absolute right-0 mt-2 w-56 rounded-xl border border-cream-300 bg-cream-50 p-2 shadow-xl">
+          <div className="absolute right-0 mt-2 w-56 rounded-xl border border-night-700 bg-night-900 p-2 shadow-xl">
             {NAV.map((n) => (
               <a
                 key={n.href}
                 href={n.href}
-                className="block rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-cream-200 hover:text-ink-900"
+                className="block rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-night-800 hover:text-white"
               >
                 {n.label}
               </a>
             ))}
-            <Link href="/#newsletter" className="block rounded-lg px-3 py-2 text-sm font-semibold text-gold-700">
+            <Link href="/#newsletter" className="block rounded-lg px-3 py-2 text-sm font-semibold text-gold-300">
               Subscribe
             </Link>
           </div>
