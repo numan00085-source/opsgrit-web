@@ -11,6 +11,7 @@ import { formatDate } from "@/components/PostCard";
 import TableOfContents from "@/components/TableOfContents";
 import NewsletterCard from "@/components/NewsletterCard";
 import AdUnit from "@/components/AdUnit";
+import ReadingProgress from "@/components/ReadingProgress";
 
 function SponsoredLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   const external = typeof props.href === "string" && /^https?:\/\//i.test(props.href);
@@ -40,6 +41,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       authors: [post.author],
       images: post.coverImage ? [post.coverImage] : undefined,
     },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: post.coverImage ? [post.coverImage] : undefined,
+    },
   };
 }
 
@@ -58,7 +65,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
-    author: { "@type": "Person", name: post.author },
+    dateModified: post.updated,
+    author: { "@type": "Organization", name: post.author, url: `${SITE.url}/editorial-policy` },
     publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
     mainEntityOfPage: `${SITE.url}/blog/${post.slug}`,
     image: post.coverImage
@@ -70,6 +78,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
   return (
     <div className="container-page py-12">
+      <ReadingProgress />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <nav aria-label="Breadcrumb" className="mb-8 text-sm text-ink-500">
         <Link href="/" className="hover:text-gold-700">Home</Link> / <Link href="/blog" className="hover:text-gold-700">Articles</Link>
@@ -85,7 +94,12 @@ export default async function ArticlePage({ params }: { params: Params }) {
             <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-5xl">{post.title}</h1>
             {post.excerpt && <p className="mt-5 text-xl leading-relaxed text-ink-600">{post.excerpt}</p>}
             <p className="mt-6 text-sm text-ink-500">
-              By <span className="font-medium text-ink-800">{post.author}</span> · {formatDate(post.date)}
+              By <Link href="/editorial-policy" className="font-medium text-ink-800 underline decoration-gold-500 underline-offset-2">{post.author}</Link> · Published {formatDate(post.date)}
+              {post.updated !== post.date && <> · Updated {formatDate(post.updated)}</>}
+            </p>
+            <p className="mt-1 text-xs text-ink-500">
+              AI-assisted research and drafting, reviewed by the OpsGrit editor.{" "}
+              <Link href="/editorial-policy" className="underline underline-offset-2">How we make articles</Link>
             </p>
           </header>
 
@@ -104,12 +118,12 @@ export default async function ArticlePage({ params }: { params: Params }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={post.coverImage}
-              alt=""
+              alt={`Illustration for ${post.title}`}
               className="mt-10 aspect-[16/9] w-full rounded-2xl border border-cream-300 object-cover shadow-[0_18px_40px_-24px_rgba(122,91,16,0.5)]"
             />
           )}
 
-          <div className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
+          <div id="article-body" className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
             <MDXRemote
               source={post.content}
               components={post.sponsored ? { a: SponsoredLink } : undefined}
@@ -137,8 +151,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
             <div>
               <p className="font-semibold text-ink-900">{post.author}</p>
               <p className="mt-1 text-sm leading-relaxed text-ink-600">
-                Writes about AI workflows, enterprise automation and operational excellence for {SITE.name}. Content is
-                researched, edited and reviewed by our editorial team before publication.
+                A team byline, not an individual. Articles are researched from primary sources with AI assistance and
+                reviewed by the OpsGrit editor before publication. Prices and features change, so check the vendor before
+                you buy. See our <Link className="font-semibold underline decoration-gold-500 underline-offset-2" href="/editorial-policy">editorial policy</Link>{" "}
+                or <Link className="font-semibold underline decoration-gold-500 underline-offset-2" href="/contact">report an error</Link>.
               </p>
             </div>
           </aside>

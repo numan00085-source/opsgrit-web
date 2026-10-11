@@ -6,6 +6,7 @@ const NAV = [
   { href: "/blog?category=AI%20Automation", label: "AI Automation" },
   { href: "/blog?category=Ops%20Stack", label: "Ops Stack" },
   { href: "/blog?category=Process%20SOPs", label: "Process SOPs" },
+  { href: "/tools", label: "Free tools" },
   { href: "/about", label: "About" },
 ];
 

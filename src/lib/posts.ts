@@ -12,6 +12,7 @@ export interface PostMeta {
   excerpt: string;
   category: string;
   date: string;
+  updated: string;
   author: string;
   coverImage: string;
   readTime: string;
@@ -62,7 +63,9 @@ function parse(file: string): Post {
     excerpt: String(data.excerpt ?? ""),
     category: String(data.category ?? "Ops Stack"),
     date,
-    author: String(data.author ?? "OpsGrit Editorial"),
+    updated:
+      data.updated instanceof Date ? data.updated.toISOString().slice(0, 10) : String(data.updated ?? date),
+    author: String(data.author ?? "OpsGrit Research Desk"),
     coverImage: String(data.coverImage ?? ""),
     readTime: readingTime(content).text.replace("read", "").trim(),
     featured: Boolean(data.featured),
