@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     url: SITE.url,
   },
   twitter: { card: "summary_large_image", title: SITE.name, description: SITE.description },
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } : undefined,
   alternates: { canonical: "/", types: { "application/rss+xml": "/feed.xml" } },
 };
 
