@@ -27,6 +27,7 @@ export default function PostCard({ post }: { post: PostMeta }) {
         <div className="flex flex-1 flex-col p-6">
           <div className="flex items-center gap-3">
             <span className="chip">{post.category}</span>
+            {post.sponsored && <span className="rounded-full border border-ink-900/20 bg-white px-2.5 py-0.5 text-xs font-semibold text-ink-700">Sponsored</span>}
             <span className="text-xs text-ink-500">{post.readTime}</span>
           </div>
           <h3 className="mt-3 text-lg font-bold leading-snug tracking-tight text-ink-900 group-hover:text-gold-700">

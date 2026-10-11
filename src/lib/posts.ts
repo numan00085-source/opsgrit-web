@@ -16,6 +16,8 @@ export interface PostMeta {
   coverImage: string;
   readTime: string;
   featured: boolean;
+  sponsored: boolean;
+  sponsor: string;
 }
 
 export interface Post extends PostMeta {
@@ -64,6 +66,8 @@ function parse(file: string): Post {
     coverImage: String(data.coverImage ?? ""),
     readTime: readingTime(content).text.replace("read", "").trim(),
     featured: Boolean(data.featured),
+    sponsored: Boolean(data.sponsored),
+    sponsor: String(data.sponsor ?? ""),
     content,
     headings: extractHeadings(content),
   };

@@ -10,6 +10,13 @@ import { SITE } from "@/lib/site";
 import { formatDate } from "@/components/PostCard";
 import TableOfContents from "@/components/TableOfContents";
 import NewsletterCard from "@/components/NewsletterCard";
+import AdUnit from "@/components/AdUnit";
+
+function SponsoredLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const external = typeof props.href === "string" && /^https?:\/\//i.test(props.href);
+  // eslint-disable-next-line jsx-a11y/anchor-has-content
+  return external ? <a {...props} rel="sponsored noopener noreferrer" target="_blank" /> : <a {...props} />;
+}
 
 type Params = Promise<{ slug: string }>;
 
@@ -82,6 +89,17 @@ export default async function ArticlePage({ params }: { params: Params }) {
             </p>
           </header>
 
+          {post.sponsored && (
+            <aside
+              aria-label="Sponsored content notice"
+              className="mt-8 rounded-xl border border-gold-400/60 bg-gold-100/60 p-4 text-sm leading-relaxed text-ink-700"
+            >
+              <strong className="text-ink-900">Sponsored content.</strong>{" "}
+              {post.sponsor ? `This article was sponsored by ${post.sponsor}. ` : "This article was sponsored. "}
+              Sponsors do not influence our independent coverage. <a className="font-semibold underline decoration-gold-500 underline-offset-2" href="/advertise">Learn more</a>.
+            </aside>
+          )}
+
           {post.coverImage && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -94,6 +112,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <div className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
             <MDXRemote
               source={post.content}
+              components={post.sponsored ? { a: SponsoredLink } : undefined}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
@@ -102,6 +121,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
               }}
             />
           </div>
+
+          <AdUnit slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE} />
 
           <aside
             aria-label="About the author"
@@ -126,6 +147,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
         <div className="hidden lg:block">
           <div className="sticky top-24">
             <TableOfContents headings={post.headings} />
+            <AdUnit slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR} className="!my-6" />
           </div>
         </div>
       </div>

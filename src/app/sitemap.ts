@@ -3,7 +3,7 @@ import { getAllPostMeta } from "@/lib/posts";
 import { SITE } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/blog", "/about", "/contact", "/privacy-policy", "/terms-of-service"].map((p) => ({
+  const staticRoutes = ["", "/blog", "/about", "/advertise", "/contact", "/privacy-policy", "/terms-of-service"].map((p) => ({
     url: `${SITE.url}${p}`,
     lastModified: new Date(),
   }));
