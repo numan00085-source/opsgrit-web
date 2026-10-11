@@ -24,7 +24,7 @@ export default function Footer() {
           <ul className="mt-4 space-y-2 text-sm">
             {CATEGORIES.map((c) => (
               <li key={c.slug}>
-                <a className="hover:text-gold-300" href={`/blog?category=${encodeURIComponent(c.name)}`}>
+                <a className="hover:text-gold-300" href={`/topics/${c.slug}`}>
                   {c.name}
                 </a>
               </li>

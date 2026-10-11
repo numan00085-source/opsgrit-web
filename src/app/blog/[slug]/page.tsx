@@ -5,13 +5,14 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getAllPosts, getPost } from "@/lib/posts";
+import { getAllPosts, getPost, getTakeaways } from "@/lib/posts";
 import { SITE } from "@/lib/site";
 import { formatDate } from "@/components/PostCard";
 import TableOfContents from "@/components/TableOfContents";
 import NewsletterCard from "@/components/NewsletterCard";
 import AdUnit from "@/components/AdUnit";
 import ReadingProgress from "@/components/ReadingProgress";
+import ShareBar from "@/components/ShareBar";
 
 function SponsoredLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   const external = typeof props.href === "string" && /^https?:\/\//i.test(props.href);
@@ -55,9 +56,19 @@ export default async function ArticlePage({ params }: { params: Params }) {
   const post = getPost(slug);
   if (!post) notFound();
 
-  const related = getAllPosts()
-    .filter((p) => p.slug !== post.slug && p.category === post.category)
-    .slice(0, 2);
+  const others = getAllPosts().filter((p) => p.slug !== post.slug);
+  const related = [...others.filter((p) => p.category === post.category), ...others.filter((p) => p.category !== post.category)].slice(0, 4);
+  const takeaways = getTakeaways(post.content);
+  const topicSlug = post.category.toLowerCase().replace(/\s+/g, "-");
+  const crumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
+      { "@type": "ListItem", position: 2, name: post.category, item: `${SITE.url}/topics/${topicSlug}` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE.url}/blog/${post.slug}` },
+    ],
+  };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -80,15 +91,16 @@ export default async function ArticlePage({ params }: { params: Params }) {
     <div className="container-page py-12">
       <ReadingProgress />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }} />
       <nav aria-label="Breadcrumb" className="mb-8 text-sm text-ink-500">
-        <Link href="/" className="hover:text-gold-700">Home</Link> / <Link href="/blog" className="hover:text-gold-700">Articles</Link>
+        <Link href="/" className="hover:text-gold-700">Home</Link> / <Link href={`/topics/${topicSlug}`} className="hover:text-gold-700">{post.category}</Link>
       </nav>
 
       <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_16rem]">
         <article className="min-w-0">
           <header>
             <div className="flex flex-wrap items-center gap-3">
-              <Link href={`/blog?category=${encodeURIComponent(post.category)}`} className="chip">{post.category}</Link>
+              <Link href={`/topics/${topicSlug}`} className="chip">{post.category}</Link>
               <span className="chip" aria-label={`Read time ${post.readTime}`}>⏱ {post.readTime}</span>
             </div>
             <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-5xl">{post.title}</h1>
@@ -123,6 +135,17 @@ export default async function ArticlePage({ params }: { params: Params }) {
             />
           )}
 
+          {takeaways.length > 0 && (
+            <aside aria-label="In short" className="mt-10 rounded-2xl border border-gold-400/50 bg-gold-100/50 p-6">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-700">In short</p>
+              <ul className="mt-3 space-y-2 text-[15px] leading-relaxed text-ink-800">
+                {takeaways.map((t) => (
+                  <li key={t} className="flex gap-3"><span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500" /><span>{t}</span></li>
+                ))}
+              </ul>
+            </aside>
+          )}
+
           <div id="article-body" className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
             <MDXRemote
               source={post.content}
@@ -135,6 +158,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
               }}
             />
           </div>
+
+          <ShareBar url={`${SITE.url}/blog/${post.slug}`} title={post.title} />
 
           <AdUnit slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE} />
 

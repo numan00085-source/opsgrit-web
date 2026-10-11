@@ -3,9 +3,9 @@ import { SITE } from "@/lib/site";
 
 const NAV = [
   { href: "/blog", label: "Articles" },
-  { href: "/blog?category=AI%20Automation", label: "AI Automation" },
-  { href: "/blog?category=Ops%20Stack", label: "Ops Stack" },
-  { href: "/blog?category=Process%20SOPs", label: "Process SOPs" },
+  { href: "/topics/ai-automation", label: "AI Automation" },
+  { href: "/topics/ops-stack", label: "Ops Stack" },
+  { href: "/topics/process-sops", label: "Process SOPs" },
   { href: "/tools", label: "Free tools" },
   { href: "/about", label: "About" },
 ];

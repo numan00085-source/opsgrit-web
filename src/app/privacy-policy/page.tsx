@@ -49,8 +49,8 @@ export default function PrivacyPage() {
       <h2>Analytics</h2>
       <p>
         We use a simple first-party page-view counter to understand which articles are read. It records the page
-        visited, the referring website and the visitor&apos;s country, and counts unique visitors using a one-way
-        hash that changes every day, so individuals cannot be identified or tracked across days. It sets no cookies,
+        visited, the referring website and the visitor&apos;s country, and counts a visitor once per five hours using a one-way hash of the IP address and browser details. That hash is
+        kept for five hours so repeat page views are not counted as new visitors, then it expires. It sets no cookies,
         stores nothing on your device and does not save your IP address. We do not count visitors whose browsers send
         a Do Not Track or Global Privacy Control signal.
       </p>

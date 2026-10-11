@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES, SITE } from "@/lib/site";
-import { getFeaturedPosts } from "@/lib/posts";
+import { getAllPostMeta, getFeaturedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import NewsletterCard from "@/components/NewsletterCard";
 
@@ -21,6 +21,8 @@ const PILLARS = [
 
 export default function HomePage() {
   const featured = getFeaturedPosts(3);
+  const all = getAllPostMeta();
+  const latest = all.filter((p) => !featured.some((f) => f.slug === p.slug)).slice(0, 6);
 
   return (
     <>
@@ -67,6 +69,18 @@ export default function HomePage() {
         )}
       </section>
 
+      {latest.length > 0 && (
+        <section className="container-page pb-20" aria-labelledby="latest-heading">
+          <div className="flex items-end justify-between gap-4">
+            <h2 id="latest-heading" className="text-3xl font-extrabold tracking-tight text-ink-900">Latest guides</h2>
+            <Link href="/blog" className="text-sm font-semibold text-gold-700 hover:underline">All {all.length} articles →</Link>
+          </div>
+          <div className="mt-8 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+            {latest.map((p) => <PostCard key={p.slug} post={p} />)}
+          </div>
+        </section>
+      )}
+
       <section className="bg-night-950 py-20" aria-labelledby="why-heading">
         <div className="container-page">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-300">The OpsGrit standard</p>
@@ -112,7 +126,7 @@ export default function HomePage() {
           {CATEGORIES.map((c) => (
             <Link
               key={c.slug}
-              href={`/blog?category=${encodeURIComponent(c.name)}`}
+              href={`/topics/${c.slug}`}
               className="card group p-7"
             >
               <h3 className="text-lg font-bold text-ink-900 group-hover:text-gold-700">{c.name}</h3>

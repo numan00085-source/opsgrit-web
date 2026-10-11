@@ -95,3 +95,18 @@ export function getFeaturedPosts(limit = 3): PostMeta[] {
   const featured = all.filter((p) => p.featured);
   return (featured.length >= limit ? featured : [...featured, ...all.filter((p) => !p.featured)]).slice(0, limit);
 }
+
+/** Bullets from the "Key takeaways" section, shown as a summary at the top of the article. */
+export function getTakeaways(content: string): string[] {
+  const m = /^##\s+Key takeaways\s*$/im.exec(content);
+  if (!m) return [];
+  const rest = content.slice(m.index + m[0].length);
+  const end = rest.search(/^##\s+/m);
+  const block = end === -1 ? rest : rest.slice(0, end);
+  return block
+    .split("\n")
+    .map((l) => /^\s*[-*]\s+(.*)$/.exec(l)?.[1]?.trim())
+    .filter((x): x is string => Boolean(x))
+    .map((x) => x.replace(/\*\*(.+?)\*\*/g, "$1").replace(/\[(.+?)\]\(.+?\)/g, "$1").replace(/`/g, ""))
+    .slice(0, 5);
+}
