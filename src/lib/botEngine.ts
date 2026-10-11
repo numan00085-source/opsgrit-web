@@ -400,4 +400,14 @@ export function botStats(): { qa: number; terms: number; sections: number; words
   };
 }
 
+/** What the bot currently knows, so the page can show that it is up to date. */
+export function knowledgeSummary() {
+  const posts = [...getAllPosts()].sort((a, b) => (a.date < b.date ? 1 : -1));
+  const latest = posts[0];
+  return {
+    articles: posts.length,
+    latest: latest ? { title: latest.title, slug: latest.slug, date: latest.date } : null,
+  };
+}
+
 export const CONTACT_EMAIL = SITE.email;

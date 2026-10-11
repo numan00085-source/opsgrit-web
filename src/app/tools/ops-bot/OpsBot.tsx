@@ -5,6 +5,7 @@ import Link from "next/link";
 
 type Msg = { role: "user" | "assistant"; content: string; error?: boolean; suggestions?: string[] };
 type Mode = "ai" | "kb";
+type Know = { articles: number; latest: { title: string; slug: string; date: string } | null };
 
 const STARTERS = [
   "Where should a small team start with automation?",
@@ -92,9 +93,10 @@ export default function OpsBot() {
   const abortRef = useRef<AbortController | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [mode, setMode] = useState<Mode>("kb");
+  const [know, setKnow] = useState<Know | null>(null);
 
   useEffect(() => {
-    fetch("/api/bot").then((r) => r.json()).then((j: { mode?: Mode }) => { if (j.mode === "ai" || j.mode === "kb") setMode(j.mode); }).catch(() => {});
+    fetch("/api/bot").then((r) => r.json()).then((j: { mode?: Mode } & Partial<Know>) => { if (j.mode === "ai" || j.mode === "kb") setMode(j.mode); if (typeof j.articles === "number") setKnow({ articles: j.articles, latest: j.latest ?? null }); }).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -266,6 +268,15 @@ export default function OpsBot() {
         </p>
       </form>
       <div className="border-t border-cream-300 bg-white/50 px-5 py-4 text-xs leading-relaxed text-ink-500 sm:px-6">
+        {know && (
+          <p className="mb-3 rounded-lg border border-gold-400/40 bg-gold-100/50 px-3 py-2 text-ink-700">
+            <strong>Always up to date:</strong> I read every published OpsGrit article ({know.articles} right now).
+            {know.latest && (
+              <> Newest: <Link className="font-semibold underline" href={`/blog/${know.latest.slug}`}>{know.latest.title.split(":")[0]}</Link>.</>
+            )}{" "}
+            New articles are added automatically a minute or two after they are published.
+          </p>
+        )}
         <p className="font-semibold text-ink-700">Good to know</p>
         <ul className="mt-1 list-disc space-y-1 pl-4">
           {mode === "ai" ? (

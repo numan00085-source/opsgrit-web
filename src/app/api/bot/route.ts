@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { analyticsConfigured, dayKey, pipeline } from "@/lib/analytics";
 import { clientIp, ipKey, sameOrigin } from "@/lib/subscribers";
 import { BOT_RULES, knowledgeIndex } from "@/lib/botKnowledge";
-import { reply as kbReply } from "@/lib/botEngine";
+import { reply as kbReply, knowledgeSummary } from "@/lib/botEngine";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -17,7 +17,7 @@ const KB_LIMITS = { per10: 40, perDay: 300, total: 1_000_000 };
 const botMode = (): "ai" | "kb" => (process.env.ANTHROPIC_API_KEY && process.env.BOT_MODE !== "kb" ? "ai" : "kb");
 
 export async function GET() {
-  return json({ mode: botMode() });
+  return json({ mode: botMode(), ...knowledgeSummary() });
 }
 const MAX_USER_CHARS = 600;
 const MAX_TURNS = 8;
