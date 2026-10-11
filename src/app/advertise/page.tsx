@@ -37,7 +37,7 @@ const STEPS = [
   { title: "We publish and report", body: "Your campaign goes live with clear labeling, and we send a results summary afterwards." },
 ];
 
-const mail = `mailto:${SITE.email}?subject=${encodeURIComponent("Sponsorship enquiry")}&body=${encodeURIComponent(
+const mail = `mailto:${SITE.email}?subject=${encodeURIComponent("Media kit request")}&body=${encodeURIComponent(
   "Company:\nWebsite:\nWhat you would like to promote:\nPreferred timing:\n",
 )}`;
 
@@ -53,7 +53,7 @@ export default function AdvertisePage() {
           {SITE.name} is a B2B publication on AI workflows, enterprise automation and operations. Our readers are
           evaluating tools, building processes and deciding where to spend.
         </p>
-        <a href={mail} className="btn-primary mt-9 !px-7 !py-3">Start a conversation</a>
+        <a href={mail} className="btn-primary mt-9 !px-7 !py-3">Request our media kit</a>
       </section>
 
       <section className="container-page pb-16" aria-labelledby="aud">
