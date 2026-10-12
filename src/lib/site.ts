@@ -5,7 +5,7 @@ export const SITE = {
     "OpsGrit is a B2B publication on AI workflows, enterprise automation and operations. Practical playbooks, tool breakdowns and SOPs for operators.",
   // Canonical site URL. An env var can override it (handy for previews); otherwise the real domain is used.
   url: (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://www.getopsgrit.com").replace(/\/$/, ""),
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@getopsgrit.com",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "opsgrit.com@gmail.com",
   updated: "October 11, 2026",
 };
 
