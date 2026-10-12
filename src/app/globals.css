@@ -75,6 +75,27 @@ html::before {
   html::before { animation: none; }
 }
 
+/* Slow band of warm light that crosses the page, like sun moving across a window. Behind all content. */
+@keyframes light-sweep {
+  0% { transform: translate3d(-60%, 0, 0); }
+  100% { transform: translate3d(60%, 0, 0); }
+}
+html::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  top: -10%;
+  bottom: -10%;
+  left: -20%;
+  width: 70%;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 250, 235, 0.34) 50%, transparent 70%);
+  animation: light-sweep 90s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  html::after { animation: none; opacity: 0.5; }
+}
+
 ::selection {
   background: rgba(212, 175, 79, 0.4);
 }

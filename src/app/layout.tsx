@@ -3,6 +3,7 @@ import "./globals.css";
 import { SITE } from "@/lib/site";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AmbientDust from "@/components/AmbientDust";
 import Script from "next/script";
 import IntroSplash from "@/components/IntroSplash";
 import PageViewTracker from "@/components/PageViewTracker";
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen font-sans">
+        <AmbientDust />
         <IntroSplash />
         <a
           href="#main"
