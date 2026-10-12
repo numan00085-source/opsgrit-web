@@ -11,6 +11,7 @@ import { formatDate } from "@/components/PostCard";
 import TableOfContents from "@/components/TableOfContents";
 import NewsletterCard from "@/components/NewsletterCard";
 import AdUnit from "@/components/AdUnit";
+import { adsenseClient, getSettings } from "@/lib/settings";
 import ReadingProgress from "@/components/ReadingProgress";
 import ShareBar from "@/components/ShareBar";
 
@@ -161,7 +162,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
           <ShareBar url={`${SITE.url}/blog/${post.slug}`} title={post.title} />
 
-          <AdUnit slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE} />
+          <AdUnit client={adsenseClient()} slot={getSettings().adsense.slotArticle} />
 
           <aside
             aria-label="About the author"
@@ -184,7 +185,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
         <div className="hidden lg:block">
           <div className="sticky top-24">
             <TableOfContents headings={post.headings} />
-            <AdUnit slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR} className="!my-6" />
+            <AdUnit client={adsenseClient()} slot={getSettings().adsense.slotSidebar} className="!my-6" />
           </div>
         </div>
       </div>

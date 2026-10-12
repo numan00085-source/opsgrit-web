@@ -1,8 +1,10 @@
-// Serves /ads.txt for Google AdSense once NEXT_PUBLIC_ADSENSE_CLIENT (ca-pub-XXXX) is set.
-export const dynamic = "force-dynamic";
+// Serves /ads.txt for Google AdSense once the publisher id (ca-pub-XXXX) is saved in Admin > Settings.
+import { getSettings } from "@/lib/settings";
+
+export const dynamic = "force-static";
 
 export function GET() {
-  const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "";
+  const client = getSettings().adsense.client;
   const m = /^ca-(pub-\d{8,20})$/.exec(client);
   if (!m) return new Response("Not found", { status: 404 });
   return new Response(`google.com, ${m[1]}, DIRECT, f08c47fec0942fa0\n`, {

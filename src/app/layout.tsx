@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SITE } from "@/lib/site";
+import { adsenseClient, getSettings } from "@/lib/settings";
+import AnnouncementBar from "@/components/AnnouncementBar";
+
+const SETTINGS = getSettings();
+const ADS_CLIENT = adsenseClient(SETTINGS);
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AmbientDust from "@/components/AmbientDust";
@@ -24,7 +29,7 @@ export const metadata: Metadata = {
     title: `${SITE.name}: AI workflow, automation and operations guides`,
     description: SITE.description,
   },
-  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } : undefined,
+  verification: SETTINGS.googleVerification ? { google: SETTINGS.googleVerification } : undefined,
   alternates: { canonical: "/", types: { "application/rss+xml": "/feed.xml" } },
 };
 
@@ -44,7 +49,7 @@ const SITE_SCHEMA = [
     logo: `${SITE.url}/apple-icon.png`,
     description: SITE.description,
     email: SITE.email,
-    sameAs: ["https://x.com/OpsGrit"],
+    sameAs: [SETTINGS.social.x, SETTINGS.social.linkedin].filter(Boolean),
   },
   {
     "@context": "https://schema.org",
@@ -81,15 +86,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <AnnouncementBar />
         <Header />
         <main id="main">{children}</main>
         <Footer />
         <PageViewTracker />
-        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
+        {ADS_CLIENT && (
           <Script
             async
             strategy="afterInteractive"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`}
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS_CLIENT}`}
             crossOrigin="anonymous"
           />
         )}

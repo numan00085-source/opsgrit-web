@@ -9,8 +9,7 @@ declare global {
 }
 
 // Renders one Google AdSense unit. Renders nothing until AdSense is configured, so there are no empty gaps before approval.
-export default function AdUnit({ slot, className = "" }: { slot?: string; className?: string }) {
-  const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+export default function AdUnit({ client, slot, className = "" }: { client?: string; slot?: string; className?: string }) {
   const pushed = useRef(false);
 
   useEffect(() => {

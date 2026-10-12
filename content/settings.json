@@ -1,0 +1,16 @@
+{
+  "adsense": { "client": "", "slotArticle": "", "slotSidebar": "", "enabled": true },
+  "googleVerification": "",
+  "contactEmail": "opsgrit.com@gmail.com",
+  "social": { "x": "https://x.com/OpsGrit", "linkedin": "" },
+  "announcement": { "enabled": false, "text": "", "link": "" },
+  "home": {
+    "heroEyebrow": "B2B Operations · AI Workflows · Enterprise Automation",
+    "heroTitle": "Run operations with *grit*, not guesswork.",
+    "heroSubtitle": "OpsGrit publishes practical guides, decision frameworks and SOP templates for the people who keep operations running, with free tools you can use today.",
+    "featuredSlugs": [],
+    "showSponsorBand": true,
+    "sponsorTitle": "Reach the people who run operations",
+    "sponsorText": "Sponsor an evergreen guide, a display placement or the weekly brief. Every placement is clearly labeled and kept separate from our editorial."
+  }
+}

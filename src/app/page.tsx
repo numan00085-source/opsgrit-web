@@ -1,8 +1,24 @@
 import Link from "next/link";
-import { CATEGORIES, SITE } from "@/lib/site";
+import { CATEGORIES } from "@/lib/site";
 import { getAllPostMeta, getFeaturedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import NewsletterCard from "@/components/NewsletterCard";
+import { getSettings } from "@/lib/settings";
+
+// "Run *grit*" style markup: the word between asterisks is shown in gold.
+function GoldTitle({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(\*[^*]+\*)/g).map((part, i) =>
+        part.startsWith("*") && part.endsWith("*") && part.length > 2 ? (
+          <span key={i} className="gold-text">{part.slice(1, -1)}</span>
+        ) : (
+          <span key={i}>{part}</span>
+        ),
+      )}
+    </>
+  );
+}
 
 const PILLARS = [
   {
@@ -20,8 +36,10 @@ const PILLARS = [
 ];
 
 export default function HomePage() {
-  const featured = getFeaturedPosts(3);
+  const home = getSettings().home;
   const all = getAllPostMeta();
+  const picked = home.featuredSlugs.map((s) => all.find((p) => p.slug === s)).filter((p): p is NonNullable<typeof p> => Boolean(p));
+  const featured = picked.length ? picked.slice(0, 3) : getFeaturedPosts(3);
   const latest = all.filter((p) => !featured.some((f) => f.slug === p.slug)).slice(0, 6);
 
   return (
@@ -32,13 +50,12 @@ export default function HomePage() {
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(212,175,79,0.22),transparent)]"
         />
         <div className="container-page relative py-24 text-center sm:py-32">
-          <span className="chip">B2B Operations · AI Workflows · Enterprise Automation</span>
+          <span className="chip">{home.heroEyebrow}</span>
           <h1 className="mx-auto mt-7 max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight text-ink-900 sm:text-7xl">
-            Run operations with <span className="gold-text">grit</span>, not guesswork.
+            <GoldTitle text={home.heroTitle} />
           </h1>
           <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-ink-600 sm:text-xl">
-            {SITE.name} publishes practical guides, decision frameworks and SOP templates for the people who keep
-            operations running, with free tools you can use today.
+            {home.heroSubtitle}
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/blog" className="btn-primary !px-7 !py-3">Read the latest</Link>
@@ -142,21 +159,22 @@ export default function HomePage() {
         <NewsletterCard />
       </section>
 
+      {home.showSponsorBand && (
       <section className="container-page pb-20 pt-6" aria-labelledby="partner-heading">
         <div className="card flex flex-col items-start justify-between gap-5 p-8 sm:flex-row sm:items-center">
           <div className="max-w-2xl">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-700">For vendors and partners</p>
             <h2 id="partner-heading" className="mt-2 text-2xl font-extrabold tracking-tight text-ink-900">
-              Reach the people who run operations
+              {home.sponsorTitle}
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-600">
-              Sponsor an evergreen guide, a display placement or the weekly brief. Every placement is clearly labeled and
-              kept separate from our editorial.
+              {home.sponsorText}
             </p>
           </div>
           <Link href="/advertise" className="btn-primary !px-6 !py-3 shrink-0">See sponsor options</Link>
         </div>
       </section>
+      )}
     </>
   );
 }
