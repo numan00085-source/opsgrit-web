@@ -31,7 +31,7 @@ function inline(text: string, keyPrefix: string) {
       const lm = /^\[([^\]]+)\]\(([^)\s]+)\)$/.exec(tok)!;
       const label = lm[1];
       const href = lm[2];
-      const cls = "font-semibold text-gold-700 underline underline-offset-2 hover:text-gold-600";
+      const cls = "font-semibold text-gold-300 underline underline-offset-2 hover:text-gold-200";
       if (href.startsWith("/") && !href.startsWith("//")) {
         parts.push(<Link key={`${keyPrefix}-${i}`} href={href} className={cls}>{label}</Link>);
       } else if (/^https:\/\//i.test(href)) {
@@ -55,7 +55,7 @@ function Rich({ text }: { text: string }) {
     if (!list) return;
     const Tag = list.ordered ? "ol" : "ul";
     blocks.push(
-      <Tag key={`l${blocks.length}`} className={`my-2 space-y-1 pl-5 ${list.ordered ? "list-decimal" : "list-disc"} marker:text-gold-600`}>
+      <Tag key={`l${blocks.length}`} className={`my-2 space-y-1 pl-5 ${list.ordered ? "list-decimal" : "list-disc"} marker:text-gold-400`}>
         {list.items.map((it, k) => <li key={k}>{inline(it, `li${blocks.length}-${k}`)}</li>)}
       </Tag>,
     );
@@ -76,7 +76,7 @@ function Rich({ text }: { text: string }) {
     if (!line.trim()) return;
     const h = /^#{1,4}\s+(.*)$/.exec(line);
     if (h) {
-      blocks.push(<p key={`h${idx}`} className="mt-3 font-bold text-ink-900">{inline(h[1], `h${idx}`)}</p>);
+      blocks.push(<p key={`h${idx}`} className="mt-3 font-bold text-white">{inline(h[1], `h${idx}`)}</p>);
     } else {
       blocks.push(<p key={`p${idx}`} className="my-1.5">{inline(line, `p${idx}`)}</p>);
     }
@@ -169,8 +169,8 @@ export default function OpsBot() {
   const empty = msgs.length === 0;
 
   return (
-    <div className="card mt-8 overflow-hidden">
-      <div className="flex items-center gap-3 border-b border-cream-300 bg-night-950 px-5 py-4">
+    <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-night-950/55 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.85)] backdrop-blur-md">
+      <div className="flex items-center gap-3 border-b border-white/10 bg-night-950/70 px-5 py-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo-mark.svg" alt="" className="h-10 w-10 rounded-xl" />
         <div>
@@ -191,8 +191,8 @@ export default function OpsBot() {
       <div ref={boxRef} className="max-h-[60vh] min-h-[340px] space-y-4 overflow-y-auto px-4 py-5 sm:px-6" aria-live="polite">
         {empty && (
           <div className="py-4">
-            <p className="text-lg font-bold text-ink-900">Ready to run operations with grit?</p>
-            <p className="mt-1 text-sm leading-relaxed text-ink-600">
+            <p className="text-lg font-bold text-white">Ready to run operations with grit?</p>
+            <p className="mt-1 text-sm leading-relaxed text-slate-300">
               Ask me about automation, SOPs, tools, AI at work or how to get a messy process under control. I will give you
               a clear next step and point you to the right OpsGrit guide.
             </p>
@@ -202,7 +202,7 @@ export default function OpsBot() {
                   key={s}
                   type="button"
                   onClick={() => send(s)}
-                  className="rounded-full border border-cream-400 bg-white/70 px-4 py-2 text-left text-sm font-medium text-ink-700 transition hover:border-gold-500 hover:text-ink-900"
+                  className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-left text-sm font-medium text-slate-200 transition hover:border-gold-400 hover:bg-white/10 hover:text-white"
                 >
                   {s}
                 </button>
@@ -215,12 +215,12 @@ export default function OpsBot() {
             <div
               className={
                 m.role === "user"
-                  ? "max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-night-950 px-4 py-2.5 text-sm leading-relaxed text-white"
-                  : `max-w-[92%] rounded-2xl rounded-bl-md border px-4 py-2.5 text-sm leading-relaxed ${m.error ? "border-red-200 bg-red-50 text-red-800" : "border-cream-300 bg-white text-ink-700"}`
+                  ? "max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-gradient-to-br from-gold-300 to-gold-500 px-4 py-2.5 text-sm font-medium leading-relaxed text-ink-900 shadow-[0_6px_20px_-8px_rgba(212,175,79,0.6)]"
+                  : `max-w-[92%] rounded-2xl rounded-bl-md border px-4 py-2.5 text-sm leading-relaxed ${m.error ? "border-red-400/40 bg-red-950/80 text-red-200" : "border-white/10 bg-[#0e1527]/90 text-slate-100"}`
               }
             >
               {m.role === "assistant" ? (
-                m.content ? <Rich text={m.content} /> : <span className="text-ink-500">Thinking<span className="animate-pulse">...</span></span>
+                m.content ? <Rich text={m.content} /> : <span className="text-slate-400">Thinking<span className="animate-pulse">...</span></span>
               ) : (
                 m.content
               )}
@@ -234,7 +234,7 @@ export default function OpsBot() {
                 key={x}
                 type="button"
                 onClick={() => send(x)}
-                className="rounded-full border border-cream-400 bg-white/70 px-3 py-1.5 text-left text-xs font-medium text-ink-700 transition hover:border-gold-500 hover:text-ink-900"
+                className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-left text-xs font-medium text-slate-200 transition hover:border-gold-400 hover:bg-white/10 hover:text-white"
               >
                 {x}
               </button>
@@ -244,7 +244,7 @@ export default function OpsBot() {
       </div>
 
       <form
-        className="border-t border-cream-300 bg-cream-50/60 p-3 sm:p-4"
+        className="border-t border-white/10 bg-night-950/70 p-3 sm:p-4"
         onSubmit={(e) => { e.preventDefault(); void send(); }}
       >
         <div className="flex items-end gap-2">
@@ -256,28 +256,28 @@ export default function OpsBot() {
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void send(); } }}
             rows={2}
             placeholder="Ask about automation, SOPs, tools..."
-            className="min-h-[3rem] flex-1 resize-none rounded-xl border border-cream-400 bg-white px-4 py-2.5 text-sm text-ink-800 placeholder:text-ink-400 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/30"
+            className="min-h-[3rem] flex-1 resize-none rounded-xl border border-white/15 bg-[#0b1220]/90 px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/30"
           />
           <button type="submit" disabled={busy || !input.trim()} className="btn-primary !px-5 !py-3 shrink-0">
             {busy ? "..." : "Send"}
           </button>
         </div>
-        <p className="mt-2 flex flex-wrap justify-between gap-x-4 text-xs text-ink-500">
+        <p className="mt-2 flex flex-wrap justify-between gap-x-4 text-xs text-slate-500">
           <span>{mode === "ai" ? "AI assistant: it can make mistakes, so check important details. Do not paste confidential data." : "Automated assistant, not a person. It answers only from OpsGrit's published guides. Check important details."}</span>
           <span>{input.length}/{MAX}</span>
         </p>
       </form>
-      <div className="border-t border-cream-300 bg-white/50 px-5 py-4 text-xs leading-relaxed text-ink-500 sm:px-6">
+      <div className="border-t border-white/10 bg-black/25 px-5 py-4 text-xs leading-relaxed text-slate-400 sm:px-6">
         {know && (
-          <p className="mb-3 rounded-lg border border-gold-400/40 bg-gold-100/50 px-3 py-2 text-ink-700">
+          <p className="mb-3 rounded-lg border border-gold-400/30 bg-gold-400/10 px-3 py-2 text-slate-200">
             <strong>Always up to date:</strong> I read every published OpsGrit article ({know.articles} right now).
             {know.latest && (
-              <> Newest: <Link className="font-semibold underline" href={`/blog/${know.latest.slug}`}>{know.latest.title.split(":")[0]}</Link>.</>
+              <> Newest: <Link className="font-semibold text-gold-300 underline" href={`/blog/${know.latest.slug}`}>{know.latest.title.split(":")[0]}</Link>.</>
             )}{" "}
             New articles are added automatically a minute or two after they are published.
           </p>
         )}
-        <p className="font-semibold text-ink-700">Good to know</p>
+        <p className="font-semibold text-slate-200">Good to know</p>
         <ul className="mt-1 list-disc space-y-1 pl-4">
           {mode === "ai" ? (
             <>
@@ -291,7 +291,7 @@ export default function OpsBot() {
               <li>Your messages stay on OpsGrit&apos;s own servers and are not saved. Please do not paste passwords, customer data or other confidential information.</li>
             </>
           )}
-          <li>It recommends OpsGrit articles first. OpsGrit may earn from ads, sponsors or affiliate links, as explained in our <Link className="underline" href="/affiliate-disclosure">disclosure</Link>.</li>
+          <li>It recommends OpsGrit articles first. OpsGrit may earn from ads, sponsors or affiliate links, as explained in our <Link className="text-gold-300 underline" href="/affiliate-disclosure">disclosure</Link>.</li>
         </ul>
       </div>
     </div>
