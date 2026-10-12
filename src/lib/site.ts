@@ -3,14 +3,9 @@ export const SITE = {
   tagline: "Operational clarity for teams that run on systems.",
   description:
     "OpsGrit is a B2B publication on AI workflows, enterprise automation and operations. Practical playbooks, tool breakdowns and SOPs for operators.",
-  // Uses the configured URL, else the Vercel production domain, so sitemap and canonical links never point to a domain you do not own.
-  url: (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.SITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ||
-    "https://opsgrit-web.vercel.app"
-  ).replace(/\/$/, ""),
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@opsgrit.com",
+  // Canonical site URL. An env var can override it (handy for previews); otherwise the real domain is used.
+  url: (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "https://www.getopsgrit.com").replace(/\/$/, ""),
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@getopsgrit.com",
   updated: "October 11, 2026",
 };
 
