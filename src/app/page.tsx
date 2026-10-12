@@ -85,7 +85,7 @@ export default function HomePage() {
         <div className="container-page">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-300">The OpsGrit standard</p>
           <h2 id="why-heading" className="mt-2 max-w-2xl text-3xl font-extrabold tracking-tight text-white">
-            Useful first. Everything else second.
+            Operations guides that are useful first
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {PILLARS.map((p, i) => (
@@ -140,6 +140,22 @@ export default function HomePage() {
 
       <section className="container-page">
         <NewsletterCard />
+      </section>
+
+      <section className="container-page pb-20 pt-6" aria-labelledby="partner-heading">
+        <div className="card flex flex-col items-start justify-between gap-5 p-8 sm:flex-row sm:items-center">
+          <div className="max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-700">For vendors and partners</p>
+            <h2 id="partner-heading" className="mt-2 text-2xl font-extrabold tracking-tight text-ink-900">
+              Reach the people who run operations
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-ink-600">
+              Sponsor an evergreen guide, a display placement or the weekly brief. Every placement is clearly labeled and
+              kept separate from our editorial.
+            </p>
+          </div>
+          <Link href="/advertise" className="btn-primary !px-6 !py-3 shrink-0">See sponsor options</Link>
+        </div>
       </section>
     </>
   );

@@ -10,16 +10,20 @@ import PageViewTracker from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: `${SITE.name} — AI Workflows & Enterprise Operations`, template: `%s | ${SITE.name}` },
+  title: { default: `${SITE.name} — AI Workflows, Automation & Operations Guides`, template: `%s | ${SITE.name}` },
   description: SITE.description,
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: SITE.name,
+    title: `${SITE.name}: AI workflow, automation and operations guides`,
     description: SITE.description,
     url: SITE.url,
   },
-  twitter: { card: "summary_large_image", title: SITE.name, description: SITE.description },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE.name}: AI workflow, automation and operations guides`,
+    description: SITE.description,
+  },
   verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } : undefined,
   alternates: { canonical: "/", types: { "application/rss+xml": "/feed.xml" } },
 };
@@ -29,6 +33,29 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
+
+// Site-wide structured data: tells search engines who publishes the site and that it has a search-able catalog.
+const SITE_SCHEMA = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE.name,
+    url: SITE.url,
+    logo: `${SITE.url}/apple-icon.png`,
+    description: SITE.description,
+    email: SITE.email,
+    sameAs: ["https://x.com/OpsGrit"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.name,
+    url: SITE.url,
+    description: SITE.description,
+    inLanguage: "en-US",
+    publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
+  },
+];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -43,6 +70,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen font-sans">
+        {SITE_SCHEMA.map((s) => (
+          <script key={s["@type"]} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }} />
+        ))}
         <AmbientDust />
         <IntroSplash />
         <a
