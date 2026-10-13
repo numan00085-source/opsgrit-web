@@ -1,1 +1,33 @@
-{ "ads": [] }
+{
+  "ads": [
+    {
+      "id": "ad-mv795y7phzk",
+      "name": "ZeluxUs",
+      "sponsor": "ZeluxUs",
+      "images": [
+        {
+          "src": "/images/zelux-box-300x250-mv794qdf.webp",
+          "alt": "",
+          "w": 600,
+          "h": 500
+        },
+        {
+          "src": "/images/zelux-wide-970x250-mv794v8k.webp",
+          "alt": "",
+          "w": 1600,
+          "h": 412
+        }
+      ],
+      "link": "https://zeluxus.com",
+      "placements": [
+        "article-end",
+        "home",
+        "sidebar",
+        "article-top"
+      ],
+      "enabled": true,
+      "start": "2026-10-13",
+      "end": "2026-10-19"
+    }
+  ]
+}
