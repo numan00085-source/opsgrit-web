@@ -5,12 +5,18 @@ import adsFile from "../../content/ads.json";
 export const PLACEMENTS = ["sidebar", "article-top", "article-end", "home"] as const;
 export type Placement = (typeof PLACEMENTS)[number];
 
+export interface AdImage {
+  src: string; // /images/... or https://...
+  alt: string;
+  w: number; // pixel size, used to match an image to a place; 0 if unknown
+  h: number;
+}
+
 export interface SponsorAdData {
   id: string;
   name: string; // internal name, never shown
   sponsor: string; // shown in the "Sponsored by" label
-  image: string; // /images/... or https://...
-  alt: string;
+  images: AdImage[]; // one or more pictures; several rotate gently
   link: string; // https://...
   placements: Placement[];
   enabled: boolean;
@@ -29,16 +35,24 @@ export function normalizeAds(raw: unknown): SponsorAdData[] {
     const a = (r ?? {}) as Record<string, unknown>;
     const id = s(a.id, 40);
     const link = s(a.link, 600);
-    const image = s(a.image, 400);
     if (!/^[a-z0-9][a-z0-9-]{3,39}$/.test(id) || !/^https:\/\/[^\s]+$/.test(link)) continue;
-    if (!/^(\/images\/[^\s]+|https:\/\/[^\s]+)$/.test(image)) continue;
+    // Older ads stored a single "image" and "alt"; they are read as a one-picture list.
+    const rawImages = Array.isArray(a.images) ? a.images : a.image ? [{ src: a.image, alt: a.alt }] : [];
+    const images: AdImage[] = [];
+    for (const ri of rawImages.slice(0, 6)) {
+      const im = (ri ?? {}) as Record<string, unknown>;
+      const src = s(im.src, 400);
+      if (!/^(\/images\/[^\s]+|https:\/\/[^\s]+)$/.test(src)) continue;
+      const dim = (v: unknown) => (typeof v === "number" && v > 0 && v < 20000 ? Math.round(v) : 0);
+      images.push({ src, alt: s(im.alt, 160), w: dim(im.w), h: dim(im.h) });
+    }
+    if (images.length === 0) continue;
     const placements = (Array.isArray(a.placements) ? a.placements : []).filter((p): p is Placement => (PLACEMENTS as readonly string[]).includes(p as string));
     out.push({
       id,
       name: s(a.name, 80) || s(a.sponsor, 80) || id,
       sponsor: s(a.sponsor, 80),
-      image,
-      alt: s(a.alt, 160),
+      images,
       link,
       placements: Array.from(new Set(placements)),
       enabled: a.enabled !== false,
@@ -68,4 +82,11 @@ export function pickAd(placement: Placement, seed = ""): SponsorAdData | null {
 
 export function getAd(id: string): SponsorAdData | null {
   return allAds().find((a) => a.id === id) ?? null;
+}
+
+/** The pictures of an ad that suit a place: wide banners for wide places, box shapes for the sidebar. Falls back to all of them. */
+export function imagesFor(ad: SponsorAdData, placement: Placement): AdImage[] {
+  const wantWide = placement !== "sidebar";
+  const fits = ad.images.filter((im) => (im.w && im.h ? (im.w / im.h >= 1.8) === wantWide : true));
+  return fits.length ? fits : ad.images;
 }
