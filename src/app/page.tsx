@@ -3,6 +3,7 @@ import { CATEGORIES } from "@/lib/site";
 import { getAllPostMeta, getFeaturedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import NewsletterCard from "@/components/NewsletterCard";
+import HeroScene from "@/components/HeroScene";
 import { getSettings } from "@/lib/settings";
 
 // "Run *grit*" style markup: the word between asterisks is shown in gold.
@@ -11,7 +12,7 @@ function GoldTitle({ text }: { text: string }) {
     <>
       {text.split(/(\*[^*]+\*)/g).map((part, i) =>
         part.startsWith("*") && part.endsWith("*") && part.length > 2 ? (
-          <span key={i} className="gold-text">{part.slice(1, -1)}</span>
+          <span key={i} className="gold-text-light">{part.slice(1, -1)}</span>
         ) : (
           <span key={i}>{part}</span>
         ),
@@ -44,26 +45,26 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(212,175,79,0.22),transparent)]"
-        />
-        <div className="container-page relative py-24 text-center sm:py-32">
-          <span className="chip">{home.heroEyebrow}</span>
-          <h1 className="mx-auto mt-7 max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight text-ink-900 sm:text-7xl">
-            <GoldTitle text={home.heroTitle} />
-          </h1>
-          <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-ink-600 sm:text-xl">
-            {home.heroSubtitle}
-          </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/blog" className="btn-primary !px-7 !py-3">Read the latest</Link>
-            <Link href="/tools" className="btn-ghost !px-7 !py-3">Try the free tools</Link>
-          </div>
+      <HeroScene>
+        <span className="inline-flex items-center rounded-full border border-gold-400/40 bg-white/5 px-3 py-1 text-xs font-semibold text-gold-200">
+          {home.heroEyebrow}
+        </span>
+        <h1 className="mx-auto mt-7 max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-7xl">
+          <GoldTitle text={home.heroTitle} />
+        </h1>
+        <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
+          {home.heroSubtitle}
+        </p>
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Link href="/blog" className="btn-primary !px-7 !py-3">Read the latest</Link>
+          <Link
+            href="/tools"
+            className="inline-flex items-center justify-center rounded-lg border border-white/25 px-7 py-3 text-sm font-semibold text-white transition hover:border-gold-300/70 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-300"
+          >
+            Try the free tools
+          </Link>
         </div>
-        <div className="gold-rule" />
-      </section>
+      </HeroScene>
 
       <section className="container-page py-20" aria-labelledby="featured-heading">
         <div className="flex items-end justify-between gap-4">
