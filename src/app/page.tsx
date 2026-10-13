@@ -4,6 +4,7 @@ import { getAllPostMeta, getFeaturedPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import NewsletterCard from "@/components/NewsletterCard";
 import HeroScene from "@/components/HeroScene";
+import SponsorAd from "@/components/SponsorAd";
 import { getSettings } from "@/lib/settings";
 
 // "Run *grit*" style markup: the word between asterisks is shown in gold.
@@ -98,6 +99,10 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
+      <div className="container-page">
+        <SponsorAd placement="home" className="mx-auto max-w-3xl !mt-0 !mb-16" />
+      </div>
 
       <section className="bg-night-950 py-20" aria-labelledby="why-heading">
         <div className="container-page">

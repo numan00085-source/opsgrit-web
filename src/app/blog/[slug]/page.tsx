@@ -11,6 +11,7 @@ import { formatDate } from "@/components/PostCard";
 import TableOfContents from "@/components/TableOfContents";
 import NewsletterCard from "@/components/NewsletterCard";
 import AdUnit from "@/components/AdUnit";
+import SponsorAd from "@/components/SponsorAd";
 import { adsenseClient, getSettings } from "@/lib/settings";
 import ReadingProgress from "@/components/ReadingProgress";
 import ShareBar from "@/components/ShareBar";
@@ -147,6 +148,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
             </aside>
           )}
 
+          <SponsorAd placement="article-top" seed={post.slug} />
+
           <div id="article-body" className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
             <MDXRemote
               source={post.content}
@@ -161,6 +164,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
           </div>
 
           <ShareBar url={`${SITE.url}/blog/${post.slug}`} title={post.title} />
+
+          <SponsorAd placement="article-end" seed={post.slug} />
 
           <AdUnit client={adsenseClient()} slot={getSettings().adsense.slotArticle} />
 
@@ -185,6 +190,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
         <div className="hidden lg:block">
           <div className="sticky top-24">
             <TableOfContents headings={post.headings} />
+            <SponsorAd placement="sidebar" seed={post.slug} />
             <AdUnit client={adsenseClient()} slot={getSettings().adsense.slotSidebar} className="!my-6" />
           </div>
         </div>
