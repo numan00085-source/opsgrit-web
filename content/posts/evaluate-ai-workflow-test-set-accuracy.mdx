@@ -1,0 +1,294 @@
+---
+title: "How to Evaluate an AI Workflow: Building a Test Set and Measuring Accuracy"
+slug: "evaluate-ai-workflow-test-set-accuracy"
+category: "AI Automation"
+excerpt: "Demos look great and production disagrees. Here is a spreadsheet method any operator can run: collect 50 real cases, write expected answers, score with a simple rubric and agree on a pass rule before you test."
+date: "2026-10-13"
+author: "OpsGrit Research Desk"
+coverImage: "/images/evaluate-ai-workflow-test-set-accuracy-cover.webp"
+featured: false
+---
+
+A team launches an AI step in a workflow. It sorts support tickets, pulls fields from invoices or drafts replies. The demo went well. The first week looks fine. Then someone notices that a refund request went to the wrong queue, an invoice total was misread and a draft promised something the company does not offer. Nobody can say how often this happens, whether it is getting better or worse, or whether the last prompt change helped.
+
+The missing piece is evaluation. Not a research project and not a data science team, just a repeatable way to answer one question: how good is this step on the work we actually do?
+
+This guide shows you how to build that answer in a spreadsheet. You will collect real cases, write the answers you expect, score the output with a clear rubric, agree on a pass rule before you look at results and re-run the test every time something changes. The method works for classification, extraction and drafting, and it needs no code.
+
+## Why demos mislead
+
+Demos fail as evidence for four reasons.
+
+**They use friendly examples.** Whoever builds the demo picks cases that work. Real traffic includes typos, missing fields, odd formats, angry customers and requests that fit no category.
+
+**They are tiny.** Five good results tell you almost nothing about how the step behaves across hundreds of different inputs. A step that is right four times out of five looks perfect in a sample of five and unacceptable at scale.
+
+**They are judged by feel.** People remember the impressive answer and forget the quiet mistakes. Without a written standard, every reviewer applies a different one.
+
+**They do not stay true.** Models, prompts, data and business rules change. A result from last month says little about today. If you cannot re-run the check in an hour, you will stop doing it.
+
+Evaluation replaces impressions with a number you can compare over time. It also gives you a practical benefit: when someone proposes a change, you can test it before it reaches customers. This is the same discipline you would use for any other process change, and it connects directly to deciding [where a human should stay in the loop](/blog/human-in-the-loop-ai-approvals).
+
+## What you are actually measuring
+
+Before you collect anything, decide what "good" means for this step. Different jobs fail in different ways.
+
+| Job type | Example | What "wrong" looks like |
+| --- | --- | --- |
+| Classification | Route a ticket to billing, shipping or technical | The wrong label |
+| Extraction | Pull invoice number, date and total | A missing, wrong or invented value |
+| Drafting | Write a reply to a customer | Incorrect facts, wrong tone, missing required content |
+| Decision support | Recommend approve or review | A recommendation that would lead to a bad decision |
+
+Write one sentence that defines success for your step. For example: "Every ticket is routed to the correct queue, and urgent tickets are flagged." If you cannot write that sentence, the workflow is not ready to be evaluated, and probably not ready to be automated. The prioritization method in [what to automate first](/blog/what-to-automate-first-process-prioritization) can help you check that the job is well defined.
+
+## Step 1: Collect real cases
+
+Your test set is a table of real inputs. Aim for 50 to start. That is large enough to see patterns and small enough that one person can finish the expected answers in an afternoon.
+
+**Pull from real history.** Export recent tickets, invoices, requests or whatever the step handles. Use actual data from the last few months, not examples someone invented.
+
+**Sample, do not cherry-pick.** If you have 3,000 tickets, do not take the first 50 or the interesting ones. Choose at random, for example every sixtieth row after sorting by date. A random sample reflects reality, including its boring majority.
+
+**Cover the variety.** After sampling, check that you have each category, each channel and each common format. If one rare but important type is missing, add a few on purpose. Mark those as added so you remember the set is no longer purely random.
+
+**Include the awkward.** Add cases where a careful human would hesitate: unclear requests, missing information, two issues in one message, a language you do not usually support. These are where mistakes concentrate.
+
+**Remove or mask sensitive data.** Test sets live in spreadsheets that get shared. Strip names, account numbers and anything confidential, or work in a restricted location. Follow your data-handling rules.
+
+Give every case an ID, a source and a date. You will need them later.
+
+## Step 2: Write the expected answers
+
+For each case, write down the correct output before you run the AI. This is the "gold" answer, and it is the most valuable part of the exercise.
+
+**Use the person who knows the work.** The expected answer should come from an experienced operator, not from the person who built the workflow. If two experts disagree on a case, that is a finding: your rule is unclear, and the AI cannot be held to a standard that humans cannot agree on. Resolve the rule, then record the answer.
+
+**Be specific.** "Billing" is a good label. "Something about money" is not. For extraction, record the exact values. For drafting, write down the required facts and the forbidden ones rather than a full model reply.
+
+**Record the reason.** A short note such as "Customer asks for a refund on an order older than the policy window, so it goes to Exceptions" makes later review fast and trains the next person who touches the test.
+
+**Keep a "should not answer" label.** If the correct behavior for some inputs is "send to a human" or "ask for more information," include those cases. An AI step that always answers confidently is dangerous, and this is how you find out.
+
+A simple evaluation sheet looks like this:
+
+| Case ID | Input (or link) | Expected output | Reason | Category tag | Source |
+| --- | --- | --- | --- | --- | --- |
+| T-001 | Ticket 8841 | Billing, not urgent | Duplicate charge, no deadline | Normal | Random sample |
+| T-002 | Ticket 8902 | Escalate to human | Legal threat | Hostile | Added on purpose |
+| T-003 | Ticket 9013 | Shipping, urgent | Package lost, event date soon | Edge case | Random sample |
+
+Add columns later for the actual output, the score and notes. Keep the expected output column locked once testing starts so nobody adjusts it to fit the results.
+
+## Step 3: Choose a scoring rubric
+
+A rubric says how to score each output. Keep it simple enough that two people would give the same score.
+
+### Classification
+
+Score each case as correct or incorrect. Count the results in a small table, sometimes called a confusion table, that shows what was predicted against what was expected.
+
+| | Predicted billing | Predicted shipping | Predicted technical |
+| --- | --- | --- | --- |
+| **Actually billing** | 18 | 1 | 1 |
+| **Actually shipping** | 2 | 14 | 0 |
+| **Actually technical** | 0 | 1 | 13 |
+
+Read it row by row. Of 20 real billing tickets, 18 were labeled correctly. Of 16 shipping tickets, 14 were right, and 2 went to billing. The pattern of errors matters as much as the total: here shipping tickets drift toward billing, which points to a specific fix in the instructions.
+
+### Extraction
+
+Score each field separately, because a step can be excellent at invoice numbers and weak at totals. Use three outcomes per field:
+
+- **Correct:** the value matches exactly.
+- **Wrong:** a value was returned but it is incorrect.
+- **Missing:** nothing was returned.
+
+Separate "wrong" from "missing." A missing value is usually safe because a person fills it in. A wrong value that looks plausible is the dangerous one, because it passes through unnoticed. Track them separately and weight wrong values as worse.
+
+### Drafting
+
+Drafts cannot be marked right or wrong by matching text. Use a short checklist scored per draft:
+
+| Criterion | Score |
+| --- | --- |
+| Facts are correct and nothing is invented | Pass or fail |
+| Includes every required point | Pass or fail |
+| Follows policy and promises nothing we do not offer | Pass or fail |
+| Tone matches the guidelines | 0, 1 or 2 |
+| Could be sent with no edits | Yes or no |
+
+The first three are gates. A draft that invents a fact fails no matter how pleasant it sounds. Tone is scored on a small scale, and "sent with no edits" tells you how much time the step actually saves.
+
+### Keep the rubric written down
+
+Put the rubric in the same file as the test set. When a new person scores a case, they should be able to read it and reach the same answer you would. If scorers disagree often, tighten the wording.
+
+## Step 4: Precision and recall in plain words
+
+Two measures come up whenever the AI is deciding whether something belongs in a category, such as "urgent" or "needs review." They are simple once you drop the jargon.
+
+**Precision** asks: when the AI says "urgent," how often is it right? If it flags 20 tickets as urgent and 15 truly are, precision is 15 out of 20, or 75 percent. Low precision means people waste time on false alarms.
+
+**Recall** asks: of all the truly urgent tickets, how many did the AI catch? If there were 25 urgent tickets and it caught 15, recall is 15 out of 25, or 60 percent. Low recall means real problems slip through.
+
+The two pull against each other. If you tell the AI to flag more things, recall goes up and precision goes down. Which one matters more depends on the cost of a mistake:
+
+- For safety, fraud or legal issues, missing one is costly, so favor recall and accept more false alarms.
+- For a task where each flag consumes expensive human time, favor precision.
+
+Decide this before you test. It is a business choice, not a technical one, and it belongs in your pass rule.
+
+## Step 5: Agree on the pass rule first
+
+This step is the one teams skip, and it is the one that keeps the exercise honest. Before you run the test, write down what result counts as passing.
+
+A pass rule has three parts.
+
+**A target.** For example: "At least 90 percent of tickets routed correctly."
+
+**A floor for the dangerous cases.** For example: "No hostile or legal cases may be auto-answered. Zero tolerance." Overall accuracy can hide a serious failure inside a small category, so name the cases that must be perfect.
+
+**An action for each outcome.** For example: "Pass means launch to 10 percent of traffic. Between 80 and 90 percent means fix and re-test. Under 80 percent means stop."
+
+Why write it first? Because once you see the results, it is tempting to adjust the target to fit. A 78 percent score suddenly looks acceptable. Deciding beforehand removes that pressure. If the stakeholders cannot agree on a target in advance, that is useful information too.
+
+Pick the number by thinking about the cost of errors, not by chasing a round figure. Compare it to the current process. If humans route tickets correctly 92 percent of the time, an AI at 85 percent is a step backward unless it is only a first draft that humans review. The [human-in-the-loop guide](/blog/human-in-the-loop-ai-approvals) explains how review steps change what accuracy you need.
+
+## Step 6: Run the test
+
+Now run every case through the workflow exactly as it will run in production. Several practical points keep the result trustworthy.
+
+**Use the real setup.** Same instructions, same model, same tools, same data sources. Testing a simplified version tells you about the simplified version.
+
+**Do not tune on the test set.** If you change the instructions after each failure and re-run the same 50 cases, you will eventually pass, but you will have taught the step to answer those 50 cases. Split your cases: use about 30 to improve the workflow and keep 20 untouched as a final check. Think of the untouched group as the exam.
+
+**Run it more than once.** AI output can vary between runs. For important steps, run each case two or three times and note any that change. Inconsistent answers on the same input are a signal that the instructions are too loose.
+
+**Record everything.** For each case, store the output, the score, the date and which version of the workflow produced it.
+
+**Score blind where you can.** If a person is scoring drafts, hide which version produced which output. This avoids favoring the version you hope is better.
+
+## Step 7: Build an edge-case and hostile set
+
+Your random sample tells you how the step performs on normal work. A second, smaller set tells you how it behaves when things go wrong. Build 15 to 20 cases on purpose.
+
+**Messy input:** typos, all-caps messages, pasted email chains, screenshots described in text, mixed languages.
+
+**Missing information:** an invoice without a total, a ticket with no order number, a form with blank fields.
+
+**Conflicts:** two requests in one message, or an input that contradicts the records.
+
+**Out of scope:** questions the workflow was never meant to answer. The right behavior is to decline or hand off.
+
+**Hostile or manipulative input:** text that tries to change the AI's instructions, asks it to reveal internal rules or tries to push it into an action it should not take. If your workflow reads text from outside the company, this set is not optional. The risks and defenses are covered in [securing AI workflows against prompt injection](/blog/securing-ai-workflows-prompt-injection-operations), and the OWASP project maintains a widely used list of risks for applications built on language models.
+
+For this set, pass or fail is often more useful than a percentage. The question is simple: did it behave safely? Any failure here goes straight to the top of the fix list.
+
+## Step 8: Re-test after every change
+
+An evaluation is not a gate you pass once. It is a regression check. Anything that changes the step can change its quality:
+
+- Editing the instructions or prompt
+- Switching to a different model or a new model version
+- Changing the data or documents the step can look up
+- Altering the business rules it is supposed to follow
+- Connecting a new input channel
+
+After any of these, re-run the whole set and compare against the last result. Keep a simple log:
+
+| Date | Change | Version | Overall score | Hostile set | Notes |
+| --- | --- | --- | --- | --- | --- |
+| 2026-09-15 | Initial launch | v1 | 88% | 17 of 20 safe | Shipping mislabeled as billing |
+| 2026-09-29 | Added routing rule for shipping | v2 | 93% | 17 of 20 safe | Fixed the shipping drift |
+| 2026-10-10 | Switched model | v3 | 90% | 19 of 20 safe | Slightly worse routing, safer overall |
+
+A log like this turns arguments into evidence. It also makes it clear when a change helped one measure while hurting another, which happens often. Treat every change as a proposal that must show its numbers.
+
+Link the log to your change process. The change request template in [SOP templates every operations team needs](/blog/sop-templates-every-ops-team-needs) has a place for the test result and the rollback plan, which is exactly what an AI change needs.
+
+## Reading results honestly
+
+Collecting numbers is easier than interpreting them. Some habits help.
+
+**Look at errors, not just the score.** Read every failed case. Group them by cause: unclear instructions, missing information, a rule the AI does not know, ambiguous input. The grouping tells you what to fix.
+
+**Beware small samples.** With 50 cases, a result of 90 percent could plausibly reflect true performance anywhere in a fairly wide range. One or two cases moving between runs can shift the score several points. Do not celebrate a two-point gain from one test. Look for consistent movement across runs, and grow the set over time.
+
+**Break results down by segment.** Overall accuracy can hide uneven performance. Check it by category, by channel, by customer type and by language. A step that works for English email and fails for chat is not 90 percent accurate. It is excellent in one place and unacceptable in another.
+
+**Separate severity.** A wrong tone and a wrong refund amount are not equal. Score severity alongside correctness so that one serious failure outweighs several small ones.
+
+**Check what the humans would have scored.** Run a few cases past two people. If they disagree with each other often, the measured accuracy of the AI cannot exceed the agreement between your own experts.
+
+**Do not average away the dangerous case.** A pass rule with a floor for critical cases exists for this reason.
+
+**Compare to the baseline.** The right question is rarely "is the AI perfect?" It is "is this better than what we do now, and is it safe enough?" Measure the current process with the same rubric so you have a fair comparison.
+
+## Keep evaluating after launch
+
+A test set gets you to launch. Monitoring keeps you honest afterward, because real traffic drifts away from any sample.
+
+**Sample live output weekly.** Pull 20 to 30 real cases from production, score them with the same rubric and add the interesting failures to your test set. Your set should grow from real mistakes.
+
+**Track overrides.** If humans review the output, count how often they change it. A rising override rate is an early warning.
+
+**Watch complaints and exceptions.** Customer replies such as "that is not what I asked" and reopened tickets often point to problems before a review does.
+
+**Set a review cadence.** Monthly is reasonable for most steps. Put the review in the weekly operations rhythm, using the review template if you have one.
+
+**Name an owner.** Every AI step needs one person accountable for its test set, its score log and its review schedule. Without that, evaluation fades after launch. The ownership rules from [SOP governance](/blog/sop-governance-ownership-versioning) apply here as well, and for broader guidance on the whole family of risks, the NIST AI Risk Management Framework describes measuring and managing AI risk as ongoing activities rather than one-time checks.
+
+## A worked example
+
+Consider a team that uses an AI step to read inbound supplier emails and assign each to accounts payable, purchasing or "needs a person." This follows the same pattern described in the guides on [invoice processing](/blog/ai-invoice-processing-accounts-payable) and [ticket triage](/blog/ai-ticket-triage-support-operations).
+
+1. **Define success.** Every supplier email goes to the right team, and anything involving a dispute or a legal term goes to a person.
+2. **Collect.** The team samples 50 emails from the last quarter, adds 10 awkward ones on purpose and removes personal details.
+3. **Expected answers.** An experienced AP specialist labels each email and writes a one-line reason. Two ambiguous cases lead to a clarified rule.
+4. **Rubric.** Correct or incorrect for routing. Separate "dispute handling" as a must-be-perfect category.
+5. **Pass rule.** At least 90 percent routed correctly overall, and zero disputes auto-routed to AP or purchasing.
+6. **Split.** Thirty cases for improvement, twenty held back.
+7. **First run.** Overall accuracy is 84 percent. Two disputes were routed to purchasing. Reading the errors shows that the instructions never defined "dispute."
+8. **Fix.** The team adds a definition and a few examples, then re-runs the improvement set and gets 92 percent.
+9. **Exam.** On the held-back 20, the score is 90 percent with no disputes missed. The pass rule is met.
+10. **Launch.** The step goes live for a portion of the mailbox with humans reviewing the "needs a person" pile. The team logs the result and schedules a weekly 20-case spot check.
+
+Nothing in that example required code, statistics training or a special platform. It needed real cases, written answers and a rule agreed beforehand.
+
+## Common mistakes
+
+**Testing on made-up examples.** Invented cases are cleaner than real ones. Use real history.
+
+**Letting the builder write the answers.** The person who built the workflow tends to write the answers the workflow would give. Use an independent expert.
+
+**Tuning on the whole set.** If every case has been used to improve the step, you have no honest test left. Hold some back.
+
+**Setting the pass rule after seeing results.** It becomes a justification, not a standard.
+
+**Chasing one overall number.** Break it down by segment and by severity.
+
+**Ignoring the hostile cases.** The failures that hurt most often live there.
+
+**Testing once and moving on.** Every change and every month is a reason to test again.
+
+**Skipping the baseline.** Without a measurement of the current process, you cannot tell whether the AI is an improvement.
+
+**Leaving no owner.** Evaluation that belongs to everyone belongs to no one.
+
+## Key takeaways
+
+- Demos mislead because they use friendly, tiny, unscored samples. Evaluation replaces impressions with a repeatable number.
+- Build a test set from about 50 real cases, sampled at random, plus awkward and hostile cases added on purpose.
+- Have an independent expert write the expected answers and reasons before you run anything.
+- Score with a written rubric that fits the job: correct or incorrect for classification, correct, wrong or missing per field for extraction and a short checklist with gates for drafts.
+- Understand precision (how often a flag is right) and recall (how many true cases were caught), and choose which matters more based on the cost of a mistake.
+- Agree on the pass rule, including a floor for critical cases, before you look at results.
+- Hold back part of the set so you are not tuning on the exam, and re-run the whole set after every change.
+- Keep monitoring after launch with weekly samples, override counts and a named owner.
+
+You do not need to trust an AI step on faith, and you do not need a laboratory to check one. A spreadsheet, fifty real cases and a rule you wrote in advance will tell you most of what you need to know, and they will keep telling you as the work changes.
+
+## A note on sources
+
+This is a framework article. It is built on common operating practice and does not cite outside statistics or studies. The example numbers are illustrative, not measurements. For broader background, see the [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework), which treats measurement as an ongoing function of managing AI risk, and the [OWASP Top 10 for Large Language Model Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/). Check the current versions of both before you rely on them. If you spot something that looks wrong, [tell us](/contact).

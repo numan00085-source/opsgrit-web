@@ -1,0 +1,590 @@
+---
+title: "SOP Templates: 10 Templates Every Operations Team Needs"
+slug: "sop-templates-every-ops-team-needs"
+category: "Process SOPs"
+excerpt: "Ten copy-and-paste templates for the documents operations teams write most: SOP, checklist, runbook, handoff note, decision record, vendor intake, access request, incident report, change request and weekly review. Each comes with a filled-in example and the one mistake it prevents."
+date: "2026-10-13"
+author: "OpsGrit Research Desk"
+coverImage: "/images/sop-templates-every-ops-team-needs-cover.webp"
+featured: false
+---
+
+Most operations documents never get written, and the reason is rarely laziness. It is the blank page. Someone opens an empty document, wonders what a good procedure is supposed to look like, writes three paragraphs of context, runs out of energy and closes the tab. The process stays in one person's head, and the team pays for that later.
+
+Templates remove the blank page. A good template tells you what to write, in what order and how much, so the work becomes filling in answers rather than inventing a format. It also makes documents consistent, which matters more than it sounds: when every runbook looks the same, a tired person at two in the morning knows where to look.
+
+This guide gives you ten templates that cover most of what an operations team needs to document. Each one has a short explanation, a copy-and-paste block, a filled-in example and the single mistake the template is designed to prevent. You can use them as they are or adapt them. If you want the deeper craft behind procedures themselves, read [how to write an SOP people actually follow](/blog/how-to-write-an-sop-people-follow) first, then come back here to build your library.
+
+## Why templates beat blank pages
+
+Three things happen when a team adopts templates.
+
+**Documents get written.** A template turns a vague job ("document the refund process") into a short list of questions. Questions are easy to answer. Essays are not.
+
+**Documents get read.** People learn where things live inside a familiar layout. The owner is always at the top, the steps are always numbered, the escalation path is always at the bottom. Readers stop hunting and start doing.
+
+**Documents get maintained.** A template with an owner, a version and a review date built in makes upkeep visible. A document without those fields silently rots. For the full system around that, see [SOP governance: ownership, versioning and review](/blog/sop-governance-ownership-versioning).
+
+Templates also have a cost. They can turn into box-ticking, where people fill in every field with filler to satisfy the format. The fix is to keep each template short and to delete any field nobody uses. If a section is empty most of the time, it does not belong.
+
+## What every template must contain
+
+Whatever the document type, six things should always be present. Put them at the top of every template so the metadata is the first thing a reader sees.
+
+| Field | Why it matters |
+| --- | --- |
+| Title | Says what the document is for, using the words people would search |
+| Owner | One named person or role who keeps it accurate |
+| Version and date | Tells the reader how fresh it is |
+| Purpose | One sentence on the outcome the document protects |
+| Scope | Who it applies to and when it applies |
+| Related documents | Links to what comes before and after |
+
+Everything else depends on the document type. The ten templates below add the parts that matter for each job.
+
+## Template 1: The standard operating procedure
+
+**Use it for:** any repeatable task where the order of steps matters and a mistake has a cost.
+
+**The mistake it prevents:** steps that describe what to think about instead of what to do.
+
+```
+SOP: [Task name]
+Owner: [Name or role]      Version: [1.0]      Last reviewed: [Date]
+Purpose: [One sentence: the outcome this protects]
+Scope: [Who does this, and when it applies. Also when it does NOT apply.]
+
+Before you start
+- [Access, tools or information needed]
+- [Anything that must already be true]
+
+Steps
+1. [Verb first. One action. One result.]
+2. [Verb first. One action. One result.]
+3. [If X, do A. If Y, do B.]
+
+How you know it worked
+- [Observable check]
+
+If something goes wrong
+- [What to do, who to ask, how fast]
+
+Related: [Links]
+```
+
+**Filled-in example (abridged):**
+
+```
+SOP: Issue a customer refund
+Owner: Support Operations Lead      Version: 1.2      Last reviewed: 2026-10-01
+Purpose: Return the correct amount to the customer once, and record why.
+Scope: Support agents handling refund requests under the approval limit.
+Refunds over the limit follow the Escalated Refund SOP.
+
+Before you start
+- Access to the billing system and the ticket
+- The original order number
+
+Steps
+1. Open the ticket and confirm the order number matches the customer's email.
+2. Check the refund policy for the product category.
+3. If the request is within policy, issue the refund for the paid amount in the billing system.
+4. If it is outside policy, add the note "Needs exception" and assign to the Support Lead.
+5. Write the reason code in the ticket.
+6. Reply to the customer using the Refund Confirmed macro.
+
+How you know it worked
+- The billing system shows status "Refunded" and the ticket shows a reason code.
+
+If something goes wrong
+- Billing error: post in the support-ops channel with the order number.
+```
+
+Notice the verbs: open, check, issue, write, reply. Each step is one action with a visible result. Thinking steps such as "consider the customer's history" belong in a decision record or training, not in a procedure.
+
+## Template 2: The checklist
+
+**Use it for:** short, high-stakes routines where people know the work but forget a step, such as opening a shift, closing the month or releasing a change.
+
+**The mistake it prevents:** turning a checklist into a long procedure with explanations that no one reads under pressure.
+
+```
+Checklist: [Name]
+Owner: [Name]      Version: [1.0]      Use when: [Trigger]
+
+Before
+[ ] [Item]
+[ ] [Item]
+
+During
+[ ] [Item]
+
+After
+[ ] [Item]
+[ ] [Item]
+
+Done when: [Single condition]
+```
+
+The rule for a checklist is brevity. Aim for no more than nine items per list and one line per item. If an item needs a paragraph to explain, link to the SOP that holds the detail and keep the checklist as the reminder.
+
+**Filled-in example:**
+
+```
+Checklist: Month-end close, accounts payable
+Owner: Finance Operations Lead      Version: 2.0      Use when: Last business day
+
+Before
+[ ] All invoices received this month are entered
+[ ] Open purchase orders reviewed with budget owners
+
+During
+[ ] Accruals posted for received-not-invoiced items
+[ ] Vendor statements reconciled for the top ten vendors by spend
+
+After
+[ ] Aging report exported and filed
+[ ] Period locked in the ledger
+
+Done when: Controller has signed off in the close tracker
+```
+
+Checklists work because they offload memory, not judgment. Keep the judgment in the SOP.
+
+## Template 3: The runbook
+
+**Use it for:** responding to a specific event or failure, usually under time pressure. A runbook starts from a symptom, not a task.
+
+**The mistake it prevents:** writing background and theory when the reader needs the next command or the next phone number.
+
+```
+Runbook: [Symptom or alert name]
+Owner: [Name]      Version: [1.0]      Severity if unresolved: [Low/Med/High]
+
+What this looks like
+- [How you will notice. Alert text, error message, customer complaint.]
+
+First five minutes
+1. [Confirm the problem is real: one quick check]
+2. [Contain it: the safest action that stops the damage]
+3. [Tell people: who and where]
+
+Diagnose
+- If [observation], the cause is likely [cause]. Go to [step].
+- If [observation], the cause is likely [cause]. Go to [step].
+
+Fix
+1. [Action]
+2. [Action]
+
+Confirm it is fixed
+- [Check]
+
+Escalate when
+- [Condition] to [Name or on-call role], by [channel]
+
+After
+- Write an incident report within [time].
+```
+
+For larger events, pair this with a proper response process. The [operational incident response runbook](/blog/operational-incident-response-runbook) covers roles, severity levels and communication in depth.
+
+**Filled-in example (abridged):**
+
+```
+Runbook: Orders not syncing to warehouse system
+Owner: Operations Systems Lead      Version: 1.1
+
+What this looks like
+- The sync dashboard shows "Failed" for more than 15 minutes, or the warehouse reports missing orders.
+
+First five minutes
+1. Open the sync dashboard and confirm the last successful run time.
+2. Pause the automatic retry so duplicates are not created.
+3. Post in the ops-incidents channel: "Order sync failing since [time]. Investigating."
+
+Diagnose
+- If the error says "authentication failed", the API key has likely expired. Go to Fix, step 1.
+- If the error says "timeout", check the warehouse system status page. Go to Fix, step 3.
+
+Fix
+1. Generate a new API key and update it in the integration settings.
+2. Run the sync once manually and check one order end to end.
+3. If the warehouse system is down, wait and re-run when it returns.
+
+Escalate when
+- Orders have been missing for more than two hours: call the Operations Director.
+```
+
+## Template 4: The handoff note
+
+**Use it for:** passing work between people, shifts, teams or time zones. This is where information is most often lost.
+
+**The mistake it prevents:** assuming the next person knows what you know.
+
+```
+Handoff: [Work item or shift]
+From: [Name]      To: [Name]      Date and time: [When]
+
+Current status
+- [One sentence: where things stand]
+
+What is done
+- [Item]
+
+What is in progress
+- [Item, with the exact next step]
+
+What is waiting on someone else
+- [Item, who, since when, what happens if they do not reply]
+
+Risks and surprises
+- [Anything that could go wrong or is odd]
+
+Where things are
+- [Links to tickets, files, dashboards]
+
+Questions I could not answer
+- [Open question]
+
+Reachable: [How to contact me, and when]
+```
+
+The most valuable sections are "waiting on someone else" and "risks and surprises." Those are the things the next person cannot see from the system and will otherwise discover the hard way. Handoffs are also where many process failures hide, which is why they show up so often in [what to automate first](/blog/what-to-automate-first-process-prioritization): a handoff that needs a long note is often a good automation candidate.
+
+**Filled-in example:**
+
+```
+Handoff: Overnight support queue
+From: Priya      To: Marcus      Date and time: 2026-10-13 06:00
+
+Current status
+- Queue is at 14 open tickets. One high priority.
+
+What is in progress
+- Ticket 4812 (shipping delay, VIP customer). Next step: confirm new delivery date with the carrier.
+
+What is waiting on someone else
+- Ticket 4790 waits on Finance for a refund approval, since 22:00. If no reply by 09:00, ping the Finance lead.
+
+Risks and surprises
+- The carrier tracking page is slow. Check the status in the carrier portal instead.
+
+Reachable: Message me until 07:00, then I am offline until 14:00.
+```
+
+## Template 5: The decision record
+
+**Use it for:** capturing why a significant choice was made, so nobody has to reconstruct the reasoning a year later.
+
+**The mistake it prevents:** re-arguing settled questions because nobody remembers the context.
+
+```
+Decision: [Short title]
+Date: [Date]      Decision owner: [Name]      Status: [Proposed / Accepted / Replaced]
+
+Context
+- [What situation forced a decision]
+
+Options considered
+1. [Option and a line on its upside and downside]
+2. [Option and a line on its upside and downside]
+3. [Option and a line on its upside and downside]
+
+Decision
+- [What we chose, in one sentence]
+
+Why
+- [The reasons that mattered most]
+
+What we are accepting
+- [Known downsides or risks we chose to live with]
+
+Revisit when
+- [Date or trigger]
+```
+
+The "what we are accepting" field is the most honest part. Every decision has a cost, and writing it down stops people from later treating a known trade-off as a surprise defect. A record like this pairs well with the framework in [build vs buy for operations software](/blog/build-vs-buy-operations-software), where the reasoning behind a choice is exactly what teams forget.
+
+**Filled-in example:**
+
+```
+Decision: Use a shared inbox tool instead of individual mailboxes for support
+Date: 2026-09-20      Decision owner: Support Operations Lead      Status: Accepted
+
+Context
+- Customers email several addresses and requests were being missed during absences.
+
+Options considered
+1. Keep individual mailboxes with forwarding rules. Cheap, but fragile.
+2. Shared inbox tool. Clear ownership and tracking, adds a subscription.
+3. Full helpdesk platform. Most features, longest setup.
+
+Decision
+- Adopt a shared inbox tool.
+
+Why
+- Fixes missed requests quickly and avoids a heavy rollout.
+
+What we are accepting
+- Limited reporting. We will export data monthly until we outgrow it.
+
+Revisit when
+- Ticket volume passes what one team can handle in a shared view, or in six months.
+```
+
+## Template 6: The vendor intake form
+
+**Use it for:** the first request when a team wants to buy or start using a new vendor or tool.
+
+**The mistake it prevents:** discovering after signing that the vendor handles sensitive data, has no owner or duplicates an existing tool.
+
+```
+Vendor intake: [Vendor and product]
+Requested by: [Name]      Date: [Date]      Business owner: [Name]
+
+What problem does it solve?
+- [Plain description]
+
+What do we use today for this?
+- [Existing tool or manual process]
+
+Who will use it, and how many people?
+- [Teams and approximate count]
+
+What data will it touch?
+- [Data types. Mark any customer, employee, financial or confidential data.]
+
+How will it connect to our other systems?
+- [Integrations, logins, single sign-on]
+
+Cost and term
+- [Annual cost, billing cycle, contract length, renewal date, cancellation notice]
+
+What happens if it is unavailable for a day?
+- [Impact]
+
+Alternatives considered
+- [At least one]
+
+Review needed from
+[ ] Security   [ ] Finance   [ ] Legal   [ ] IT   [ ] Data owner
+
+Decision: [Approved / Rejected / Needs more information]   By: [Name]   Date: [Date]
+```
+
+Keep this form to one page. If it takes an hour to fill in, people will route around it. For the full process that comes after intake, including due diligence and onboarding, see the [vendor onboarding SOP for procurement](/blog/vendor-onboarding-sop-procurement).
+
+## Template 7: The access request
+
+**Use it for:** granting, changing or removing access to systems and data.
+
+**The mistake it prevents:** access that grows quietly and never gets removed.
+
+```
+Access request
+Requester: [Name]      Date: [Date]      Manager: [Name]
+
+System: [Name]
+Access level: [Role or permission, as specific as possible]
+Reason: [Business need in one sentence]
+Duration: [Permanent / until date]
+Data involved: [Types, sensitivity]
+
+Approvals
+[ ] Manager      [ ] System owner      [ ] Security (if sensitive)
+
+Completed by: [Name]      Date: [Date]
+Review date: [When this access will be checked again]
+```
+
+The two fields that make this template valuable are "Duration" and "Review date." Temporary access that has an end date gets removed. Access without one lasts forever. Pair the template with a rule that removes access automatically when someone changes roles or leaves, as described in the [employee onboarding SOP](/blog/employee-onboarding-sop-30-60-90).
+
+**Filled-in example:**
+
+```
+Access request
+Requester: Dana Reyes      Date: 2026-10-12      Manager: Chris Lee
+
+System: Billing platform
+Access level: Read-only on invoices and payments
+Reason: Reconcile vendor payments during the quarterly audit
+Duration: Until 2026-11-30
+Data involved: Financial records, moderate sensitivity
+
+Approvals
+[x] Manager   [x] System owner   [ ] Security (not required for read-only)
+
+Review date: 2026-11-30
+```
+
+## Template 8: The incident report
+
+**Use it for:** recording what happened after something went wrong, so the team learns rather than repeats.
+
+**The mistake it prevents:** blame-focused write-ups that hide the real causes.
+
+```
+Incident report: [Short title]
+Date and time: [Start to end]      Severity: [Low / Med / High]
+Report owner: [Name]      Status: [Draft / Reviewed]
+
+Summary
+- [Two sentences: what happened and the impact]
+
+Timeline (times in one time zone)
+- [Time] [Event]
+- [Time] [Event]
+- [Time] [Detection]
+- [Time] [Fix]
+
+Impact
+- [Who or what was affected, and for how long]
+
+Why it happened
+- [Contributing factors, including process and system gaps. Name no one as the cause.]
+
+What went well
+- [Item]
+
+What we will change
+| Action | Owner | Due |
+| --- | --- | --- |
+| [Specific change] | [Name] | [Date] |
+
+How we will know it worked
+- [Measure or check]
+```
+
+Write the report about the system and the process, not about a person. A report that says "an employee made an error" teaches nothing. A report that says "the form allowed an invalid value and nothing checked it" gives you a fix. The action table at the end is the point: if no action has an owner and a date, the report is a story, not an improvement.
+
+## Template 9: The change request
+
+**Use it for:** altering a system, process or configuration that other people depend on.
+
+**The mistake it prevents:** changes that surprise the teams who rely on the thing being changed.
+
+```
+Change request: [Title]
+Requester: [Name]      Date: [Date]      Planned for: [Date and time]
+
+What is changing?
+- [Plain description]
+
+Why?
+- [Reason and expected benefit]
+
+Who and what is affected?
+- [Teams, systems, customers]
+
+Risk
+- [What could go wrong] Level: [Low / Med / High]
+
+Test
+- [How it was tested, or will be, before going live]
+
+Rollback plan
+- [Exact steps to undo it, and who decides]
+
+Communication
+- [Who is told, when, and how]
+
+Approvals
+[ ] Change owner   [ ] Affected team lead   [ ] Technical reviewer
+
+Result after change: [Success / Rolled back / Partial]   Notes: [Text]
+```
+
+The rollback plan is the field people skip, and it is the one that saves you. If you cannot describe how to undo a change, you are not ready to make it. This matters especially when automations or AI steps are involved, where a small prompt or rule change can alter behavior across many cases. Link every change to a test. For AI changes in particular, see [how to evaluate an AI workflow with a test set](/blog/evaluate-ai-workflow-test-set-accuracy).
+
+## Template 10: The weekly operations review
+
+**Use it for:** a short, regular meeting that keeps the whole system honest. It is the template that keeps the other nine alive.
+
+**The mistake it prevents:** status meetings that report activity without producing decisions.
+
+```
+Weekly operations review
+Week of: [Date]      Facilitator: [Name]      Length: 30 minutes
+
+1. Numbers (5 min)
+- [Three to five measures, with this week vs last week]
+- Anything outside the normal range?
+
+2. What broke (5 min)
+- [Incidents or near misses. Link to reports.]
+
+3. What is stuck (5 min)
+- [Work waiting on someone. Name the person and the date.]
+
+4. Decisions needed (10 min)
+- [Decision, owner, deadline]
+
+5. Document check (3 min)
+- [Which SOP, checklist or runbook did we use or find wrong this week?]
+
+6. Actions (2 min)
+| Action | Owner | Due |
+| --- | --- | --- |
+```
+
+Item five is the quiet hero. Asking "did any document fail us this week?" gives people a regular, low-pressure way to report outdated steps, and that feeds your review cycle without a separate project.
+
+## How to pick which template to write first
+
+You do not need all ten by Friday. Start with the pain.
+
+1. **Look at the last three things that went wrong.** If a customer got the wrong answer, write an SOP. If an outage took too long to fix, write a runbook. If work was dropped between shifts, write a handoff note.
+2. **Look at the highest-risk routine.** Anything involving money, customer data or compliance deserves a checklist and an SOP first.
+3. **Look at what you ask the same question about every week.** Repeated questions signal missing documents.
+4. **Write one document per week.** A steady cadence beats a documentation sprint that fizzles.
+
+A sensible first month for a typical team is the SOP for the most error-prone task, a runbook for the most common failure, the handoff note template and the weekly review. Add the rest as the need appears.
+
+## How to store and version your templates
+
+Where you keep the library matters nearly as much as what is in it.
+
+**Keep one home.** Choose one place, whether a wiki, a shared drive or a documentation tool, and make it the only place. Scattered copies guarantee that people use old ones.
+
+**Make templates easy to start from.** Store each template as a document people can duplicate in one click, with the field prompts in place. If using the template takes more effort than writing from scratch, nobody will use it.
+
+**Name things predictably.** Use a pattern such as "SOP: Issue a customer refund" or "Runbook: Orders not syncing." People search by the words in the title.
+
+**Put the owner and review date on every document.** Then run a simple review: each month, list documents past their review date and ask the owner to confirm or update them. This is the heart of governance, covered in depth in [SOP governance](/blog/sop-governance-ownership-versioning).
+
+**Version with intent.** Use a major number for changes that alter what people do (2.0) and a minor number for wording fixes (1.1). Keep a one-line change note at the bottom of the document so readers can see what changed and why.
+
+**Retire, do not delete.** When a procedure is replaced, mark it "Replaced by [link]" and move it to an archive. People who have an old link bookmarked will land on a pointer instead of a dead page.
+
+## Common mistakes
+
+**Writing for auditors instead of doers.** A procedure that nobody can follow in the moment fails its main job, no matter how complete it looks.
+
+**Letting templates grow.** Every added field has a cost. Delete fields that stay empty.
+
+**Skipping the owner.** A document without an owner is an orphan. It will be wrong within months.
+
+**Writing everything in one huge document.** Split by task. One procedure, one document, so it can be found and updated alone.
+
+**Documenting the ideal process, not the real one.** Watch someone do the work first, then write what actually happens, then improve it deliberately.
+
+**Never testing the document.** Ask someone who has never done the task to follow it while you watch. Every place they hesitate is a gap in the text.
+
+**Writing it once.** A document is a living part of the process. Build the review into the calendar, not into good intentions.
+
+## Key takeaways
+
+- Templates remove the blank page, so documents actually get written, read and maintained.
+- Every template should start with title, owner, version and date, purpose, scope and related documents.
+- The ten core templates are the SOP, checklist, runbook, handoff note, decision record, vendor intake, access request, incident report, change request and weekly review.
+- Each template is built to prevent one failure, such as steps that describe thinking instead of action or access that is never removed.
+- Start with the document that would have prevented your most recent problem, and write about one a week.
+- Store templates in one place, name them predictably, version them with intent and review them on a schedule.
+- Test every document by watching someone new follow it.
+
+A small library of well-built templates is one of the cheapest improvements an operations team can make. You do not need special software or a long project. You need a few good formats, an owner for each document and the habit of using them.
+
+## A note on sources
+
+This is a framework article. It is built on common operating practice and does not cite outside statistics or studies. The templates are starting points, so test them with your own team and adapt them before you rely on them. For general background on documenting processes, the American Society for Quality publishes [introductory material on process documentation](https://asq.org). If you spot something that looks wrong, [tell us](/contact).
