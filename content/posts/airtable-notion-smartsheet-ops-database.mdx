@@ -1,0 +1,241 @@
+---
+title: "Airtable vs. Notion vs. Smartsheet: Which Should Run Your Operations Database?"
+slug: "airtable-notion-smartsheet-ops-database"
+category: "Ops Stack"
+excerpt: "Spreadsheets break at the exact moment operations gets busy. Here is how to compare Airtable, Notion and Smartsheet on the things that matter: data model, permissions, automation, reporting, cost and exit, with a two-week pilot you can run before you commit."
+date: "2026-10-14"
+author: "OpsGrit Research Desk"
+coverImage: "/images/airtable-notion-smartsheet-ops-database-cover.webp"
+featured: false
+---
+
+Almost every operations team starts in a spreadsheet. A vendor list, an onboarding tracker, an order exception log, a request queue. It works while one person owns it and the rows are few. Then a second team needs access, a manager wants a weekly view, someone overwrites a column and nobody can say which version is right. The spreadsheet has become the system, and it was never built to be one.
+
+This is the moment teams search for "Airtable vs Notion" or "Smartsheet alternatives". The comparison pages they find mostly list features. Features are not the problem. The problem is picking a tool whose strengths match the shape of your work and whose weak points you can live with.
+
+This guide compares Airtable, Notion and Smartsheet as an operations database: the place where requests, vendors, tasks, assets and decisions live as structured records. It does not crown a winner, because there is none. It gives you the questions that decide the choice, an honest description of where each tool leans, five common scenarios with a recommendation for each and a two-week pilot you can run before anyone signs a contract.
+
+## What "an operations database" actually means
+
+A database, in plain terms, is a set of tables where each row is a record and each record can point to records in other tables. A vendor record points to its contracts. A contract points to the person who owns it. An onboarding task points to the employee and the checklist it came from.
+
+A spreadsheet can imitate this with lookups and copy-paste, but it does not enforce it. A real operations database gives you:
+
+- **Typed fields.** A date is a date, a person is a person from your directory and a status can only be one of the values you allow.
+- **Links between tables.** Change a vendor's name once and it changes everywhere it is referenced.
+- **Multiple views of the same data.** The same records as a list for the analyst, a board for the team lead and a calendar for the person who cares about due dates.
+- **Permissions.** Some people can edit, some can comment and some can only see.
+- **Automation.** When a status changes, something happens without a human remembering to do it.
+- **History.** You can see who changed what and when.
+
+All three tools in this article offer a version of these. They differ in which ones they treat as the core and which ones they treat as extras. That difference is what you are choosing between.
+
+## The one-sentence version of each tool
+
+Keep these in mind as you read the details. They describe what each product was built around, and the rest of its design follows from that.
+
+**Airtable is a relational database with a friendly face.** Its center of gravity is structured records, linked tables and many views of the same data. Its sweet spot is work that is naturally a set of related lists.
+
+**Notion is a workspace where documents and databases live together.** Its center of gravity is the page. Databases are powerful, but they sit alongside notes, wikis and docs. Its sweet spot is work where explanation and data need to sit side by side.
+
+**Smartsheet is a spreadsheet that grew into work management.** Its center of gravity is the grid, with scheduling, dependencies, forms, reports and administrative controls built around it. Its sweet spot is work that looks like a project plan or a managed process, in organizations that want central control.
+
+Feature lists on each vendor's site change often, and all three companies keep adding capabilities. The center of gravity changes much more slowly. When you are unsure which way to lean, return to it.
+
+## Step 1: Describe your work before you look at tools
+
+Most bad tool choices happen because the comparison started with the tool. Spend an hour on this instead.
+
+Write down, on one page:
+
+1. **The records.** What are the things you track? Vendors, requests, assets, employees, orders, incidents. Aim for three to seven.
+2. **The links.** Which records point to which? Draw it as boxes and lines on paper.
+3. **The volume.** Roughly how many records today, and in a year? Tens, hundreds, thousands, tens of thousands?
+4. **The people.** Who edits, who only reads and who is outside the company (vendors, contractors, customers)?
+5. **The rhythm.** Is the work a steady flow of requests, a set of projects with deadlines or a reference library?
+6. **The triggers.** What should happen automatically when something changes?
+
+If you have already decided which system owns which data, this will go quickly. If you have not, read [how to decide which tool owns which data](/blog/system-of-record-source-of-truth) first. A new database that duplicates data already living in your accounting tool or HR system will create a second version of the truth, and you will spend the next year reconciling it.
+
+## Step 2: Score the tools on what operations teams actually need
+
+Here is the comparison framework. Each row is a question to ask about the tool, not a claim about it. Check each answer on the vendor's current documentation and in your own trial, because details change.
+
+| Question | Why it matters for operations |
+| --- | --- |
+| How does it model links between tables? | Determines whether you can build a real data model or only a long list |
+| Can it roll up or summarize linked records? | Needed for totals, counts and status summaries per vendor, project or person |
+| What views are available, and can they be filtered and shared? | Different roles need different windows into the same data |
+| How granular are permissions? | Controls whether you can share safely with vendors or other departments |
+| Is there an audit trail or change history? | Needed when someone asks who changed a field and why |
+| What can its built-in automation do, and what are the run limits? | Decides how much you can do without another tool |
+| How good is its API and its integrations? | Decides how well it fits with the rest of your stack |
+| What happens at 10,000 or 50,000 records? | Performance and plan limits show up late and cost the most |
+| How is it priced, and who counts as a paid user? | Seat definitions can double a bill |
+| How easy is it to export everything? | Your exit plan |
+
+A scorecard is useful because it forces the conversation away from preferences. You will use it again in the pilot.
+
+## Data model: where Airtable and Notion shine, and Smartsheet differs
+
+**Airtable** treats linked records as a core feature. You create a table of vendors, a table of contracts, link them and then use lookup and rollup fields to show information from one table inside another. Fields have types (single select, multiple select, date, person, attachment, number, formula, checkbox and others). This is the closest of the three to how a developer would model the data, but without the code.
+
+**Notion** also has relations and rollups between databases, and its property types cover the common cases. Its databases feel lighter and more flexible than Airtable's, and any record can open as a full page with text, checklists and embedded content. That is a real advantage when a record needs a written explanation. It can be a disadvantage when you need strict, consistent structure, because it is easy for the team to put important information in the free-text part of a page where it cannot be filtered or reported on.
+
+**Smartsheet** is organized around sheets with rows and columns. It supports cross-sheet references and has features for linking and reporting across sheets, and the model will feel familiar to anyone who has used a spreadsheet. It is less natural for deeply relational data (many-to-many relationships between several tables) than the other two. If most of your data is one main list with a few supporting lists, that does not matter. If you need five interconnected tables, expect to work harder.
+
+**What to test:** build your three most important tables with their links in each tool. Can you answer "show me every open contract for vendors in the high-risk tier, grouped by owner" without a workaround?
+
+## Views and reporting: who needs to see what
+
+Operations data is read far more often than it is edited, and by more people. The question is how easily each tool gives each reader what they need.
+
+**Airtable** offers several view types on the same table, including grid, kanban, calendar, gallery and timeline, with filters, sorting and grouping saved per view. It also has an interface-building feature for assembling dashboards and simple apps on top of your data, which is useful when you want non-editors to interact with a clean screen instead of the raw table.
+
+**Notion** offers table, board, list, calendar, timeline and gallery views on databases, with filters and sorts. Charts and dashboards are possible, and the page-first design makes it easy to build a "home page" for a team that mixes a few database views with text instructions.
+
+**Smartsheet** is strong where the work has dates and dependencies. Grid, Gantt, calendar and card views, plus reports and dashboards that pull from multiple sheets, suit project-style work and executive summaries.
+
+**What to test:** pick the one report your manager asks for every week. Build it in each tool. Time how long it takes and note what you had to work around.
+
+## Automation and integrations: what is built in and what you will bolt on
+
+Every operations database needs to do things when records change: notify an owner, create a follow-up task, update a status, send a form to a vendor.
+
+All three have built-in automation features, and all three can connect to outside automation platforms. The practical differences are:
+
+- **What triggers and actions exist.** Check that the specific ones you need are there.
+- **How many runs you get.** Built-in automation is often metered by plan. A busy process can exhaust it.
+- **How errors are shown.** An automation that fails silently is worse than none.
+- **How well it connects to your other tools.** If your stack relies on an automation platform, check that the tool's connector exposes the fields and events you need. [Zapier vs. Make vs. n8n](/blog/zapier-vs-make-vs-n8n-ops-teams) compares those platforms, and [webhooks, APIs and iPaaS](/blog/webhooks-apis-ipaas-integration-patterns) explains how the pieces fit.
+
+A good rule: use the built-in automation for simple, single-step reactions inside the tool, and use an outside platform when a process spans several systems or needs branching, retries and logs.
+
+**What to test:** automate one real process end to end. For example, "when a vendor request is approved, create an onboarding task, notify the owner and set a due date." Note how many steps it took and what broke.
+
+## Permissions and governance: the part teams skip and regret
+
+An operations database often holds sensitive information: vendor terms, employee data, incident details. It also often needs to be shared with people outside your team. This is where the tools differ most, and where the cost of a wrong choice is highest.
+
+Ask these questions in your trial, not from marketing pages:
+
+- Can I give a person access to only some records, or only some fields, not just whole tables?
+- Can I share a view with an outside vendor without exposing the rest of the data?
+- What is the difference between a person who can edit and a person who can only comment or view, and does each count as a paid seat?
+- Is there an audit log, and who can see it?
+- Can an administrator see and control who has shared what outside the company?
+- Is there single sign-on and automated user provisioning, and on which plan?
+
+Smartsheet is built with centralized administration and governance in mind, which is part of why larger organizations adopt it. Airtable and Notion have been adding enterprise controls as well, but the plan you need to get those controls is often not the plan you see on the pricing page. Check before you commit.
+
+Whatever tool you choose, give it an owner and a review cycle, the same way you would for a procedure. [SOP governance](/blog/sop-governance-ownership-versioning) covers how to assign ownership and versioning, and the same rules apply to a database that people depend on.
+
+## Scale and performance: ask early, because it is expensive late
+
+Every tool performs well with 200 records. The question is what happens at 20,000, with many linked fields, many views and many people editing at once.
+
+Look for three things in each vendor's documentation and in your own test:
+
+- **Record or row limits per base, workspace or sheet, by plan.** These exist, they differ and they change.
+- **Limits on automation runs, API calls and attachments.**
+- **Speed with your real data.** Import a realistic volume and use the tool for a day.
+
+If your data is already large, or will be, test with a copy of it. A tool that feels fast with sample data and slow with real data is the most common and most avoidable disappointment in this category.
+
+## Pricing: understand the model, then check the numbers
+
+We are not quoting prices, because plan changes can make any number out of date within months. Check each vendor's current pricing page. What you can compare reliably is how pricing works.
+
+- **Per-seat pricing** is the norm. The key question is who counts as a seat. Do people who only view or comment count? Do external collaborators? A tool that looks cheap per seat can become expensive if many people need to touch it.
+- **Plan tiers gate features**, not only volume. Permissions, audit logs, single sign-on, larger limits and advanced automation often sit on higher tiers.
+- **Metered resources** such as automation runs, storage and API calls can run out before the month does.
+- **Add-ons and AI features** may be priced separately.
+- **Annual vs. monthly billing** often changes the effective price.
+
+Build a simple cost estimate: number of editors, number of viewers, plan you need for permissions and automation, add-ons and the cost of the outside automation platform if you need one. Compare that total across tools, then add the cost of the time your team will spend building and maintaining the system. The honest cost of a tool includes the hours.
+
+For the broader question of whether a configurable tool like this beats building something custom or buying a dedicated product, see [build vs. buy for operations software](/blog/build-vs-buy-operations-software).
+
+## Five scenarios and where each tool tends to fit
+
+These are tendencies, not rules. Your data and your people matter more than any generalization.
+
+**1. Vendor and contract tracker.** Records: vendors, contracts, owners, renewal dates, risk tier. The data is relational and read by several departments. *Airtable* is a natural fit because of linked records, rollups and shareable views. *Smartsheet* works if the process is approval-heavy and your organization already uses it. *Notion* works for small teams, especially if each vendor needs notes and meeting records. If this process includes due diligence and approvals, the [vendor onboarding SOP](/blog/vendor-onboarding-sop-procurement) shows what to track.
+
+**2. Employee onboarding pipeline.** Records: new hires, tasks, owners, dates. Each hire gets a checklist. *Notion* is strong here because the checklist, the welcome page and the links live in one place. *Airtable* is better if you need to track many hires through stages and report on completion rates. *Smartsheet* fits if onboarding is managed as a project with dependencies. The [30-60-90 onboarding template](/blog/employee-onboarding-sop-30-60-90) gives you the content to put in whichever tool you choose.
+
+**3. Order exceptions or issue log.** Records: exceptions, customers, root causes, owners, resolutions. This is a high-volume log that feeds reports. *Airtable* handles volume and reporting well. *Smartsheet* works if exceptions flow into a managed process with SLAs. *Notion* is less comfortable at high volume and strict structure.
+
+**4. Work intake and project requests with dependencies.** Records: requests, projects, tasks, dependencies, due dates. *Smartsheet* tends to fit best because of its scheduling and dependency features. *Airtable* can do it with more setup. *Notion* works for lightweight planning.
+
+**5. Documentation, runbooks and SOP library.** This is mostly documents, with some metadata. *Notion* is the natural fit because writing and structure live together. A database tool can hold the index (owner, review date, status) while the text lives elsewhere. See [how to write an SOP people follow](/blog/how-to-write-an-sop-people-follow) for the content itself.
+
+Notice that no tool wins every scenario. Many operations teams end up using two: one for structured records and one for documents. That is a legitimate answer as long as each type of data has one clear home.
+
+## A two-week pilot you can run before you commit
+
+Do not decide from a demo or a comparison page. Run a short, real test.
+
+**Days 1 to 2: set up.** Pick one real process from the scenarios above. Write the one-page description from Step 1. Choose two tools to test, not three. Three dilutes the effort.
+
+**Days 3 to 5: build.** In each tool, build the tables, links and one report. Import a realistic sample of your data. Keep notes on what was easy and what was awkward.
+
+**Days 6 to 8: automate.** Build one automation that matters. Note the steps, the limits and any failures.
+
+**Days 9 to 11: use it.** Have three people from different roles use each tool for real work. One editor, one reader, one outsider if relevant. Collect their reactions in writing.
+
+**Days 12 to 13: score.** Use the framework table from Step 2. Weight each row by how much it matters to you (for example, permissions may be ten out of ten for you and views five). Total the scores. Estimate the full cost, including the time you spent.
+
+**Day 14: decide and write it down.** Record the decision, the reasons, what you gave up and the date you will review it. A decision with its reasoning written down is easy to revisit. One without is argued again in a year.
+
+## Migration and exit: plan the way out on day one
+
+Every system is temporary. Before you commit, answer three questions.
+
+- **Can I export everything, including links between tables, attachments and history?** Test it. Export a table and open the file.
+- **Do my records have stable unique IDs?** If you create your own ID field from day one, you can move the data later and keep references intact.
+- **Where else is this data referenced?** Links in documents, automations and other tools will break if the system changes. Keep a list.
+
+A tool you cannot leave has a hidden price. A short exit test in the pilot costs an hour and may save weeks later.
+
+## Common mistakes
+
+**Choosing by what the team already knows.** Familiarity is worth something, but it is not the same as fit. A tool the team loves for notes may be a poor database.
+
+**Building too much too soon.** Start with one process and a minimal structure. Add fields when someone asks for them, not before.
+
+**Letting free text replace fields.** If important data sits in a notes box, you cannot filter, report or automate on it. Turn recurring information into a proper field.
+
+**Skipping ownership.** Someone has to own the structure, approve new fields and clean old data. Without that, the tool turns back into a messy spreadsheet.
+
+**Ignoring who counts as a seat.** The price you are quoted may assume fewer paid users than you actually need.
+
+**Duplicating a system of record.** If the data lives in your finance or HR system, link to it or sync from it. Do not retype it.
+
+**Forgetting to review.** Set a calendar reminder to check usage, cost and fit every six months.
+
+## A simple decision guide
+
+Use this as a starting point, then confirm with your pilot.
+
+- If your work is **many related lists** that need reporting and flexible views, start by testing **Airtable**.
+- If your work is **documents with data attached**, and your team already writes in a shared workspace, start by testing **Notion**.
+- If your work is **scheduled, dependency-driven or tightly governed**, and central administration matters, start by testing **Smartsheet**.
+- If your needs are **small and simple**, a well-structured spreadsheet may still be the right answer. Do not move until the pain is real.
+- If your needs are **large, regulated or highly specific**, step back and look at dedicated software or a custom build.
+
+## Key takeaways
+
+- Airtable, Notion and Smartsheet differ most in their center of gravity: Airtable is a relational database, Notion is documents plus databases and Smartsheet is a spreadsheet grown into work management.
+- Describe your work first: records, links, volume, people, rhythm and triggers. Then compare tools, not the other way around.
+- Score each tool on data model, views, automation, permissions, audit, scale, pricing and exit, and weight the rows by what matters to you.
+- Permissions, seat definitions and plan limits are where costs and surprises hide. Check them in a trial, not on a marketing page.
+- Test with real data and real users. Build one report, one automation and one export in each tool before you commit.
+- Give the system a named owner, a review cycle and one clear source of truth for each type of data.
+- Write down your decision, your reasoning and your review date.
+
+A good operations database is not the one with the longest feature list. It is the one your team will keep accurate, that the right people can see and that you can leave if you ever need to. Pick the work first, test with the real thing and write the reasoning down. The tool follows from that.
+
+## A note on sources
+
+This is a framework article. It is built on common operating practice and does not cite outside statistics or studies. We describe how each product is designed at a general level and do not quote prices, limits or plan details, because vendors change them often. Always check each vendor's current documentation and pricing page before you decide. If you spot something that looks wrong or out of date, [tell us](/contact).
