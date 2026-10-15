@@ -21,8 +21,9 @@ export default function EditorialPolicyPage() {
       <p>
         Articles are published under the byline <strong>OpsGrit Research Desk</strong>. That is a team byline, not a
         named individual, and we do not invent personal profiles or credentials. The desk is responsible for every
-        article, and every article is reviewed by the OpsGrit editor before it goes live. If you disagree with
-        something, the <Link href="/contact">contact page</Link> reaches the same person.
+        article. Every article passes an automated editorial review before it goes live, and the desk reads reader
+        reports and corrects or removes content when it is wrong. If you disagree with something, the{" "}
+        <Link href="/contact">contact page</Link> reaches the desk.
       </p>
 
       <h2>How we use AI</h2>
@@ -33,10 +34,11 @@ export default function EditorialPolicyPage() {
         <li><strong>Research.</strong> Current facts are collected from primary sources such as vendor documentation, standards bodies, regulators and published research.</li>
         <li><strong>Drafting.</strong> A draft is written to answer a specific operating question, with an original framework or worked example rather than a summary of other articles.</li>
         <li><strong>Editing.</strong> The draft is edited for clarity and plain language.</li>
-        <li><strong>Human review.</strong> The editor reads the article, checks claims against the cited sources and decides whether it is ready to publish.</li>
+        <li><strong>Automated editorial review.</strong> A separate AI editor scores the article for business relevance, depth, originality, clarity and trust. It rewrites or removes weak or unsupported passages, and an article that does not meet our minimum standard is not published. This review is performed by AI, not by a person, so it can miss mistakes.</li>
+        <li><strong>Corrections.</strong> People can read and report problems at any time. The desk reviews every report and corrects or removes content.</li>
       </ol>
       <p>
-        AI-assisted drafting does not change who is accountable. We publish it only if we would stand behind it.
+        AI-assisted drafting does not change who is accountable. We publish only what passes our review and correct what does not hold up. Articles are guidance, not professional, legal or financial advice.
       </p>
 
       <h2>Sources and evidence</h2>

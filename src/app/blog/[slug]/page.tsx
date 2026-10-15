@@ -112,7 +112,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
               {post.updated !== post.date && <> · Updated {formatDate(post.updated)}</>}
             </p>
             <p className="mt-1 text-xs text-ink-500">
-              AI-assisted research and drafting, reviewed by the OpsGrit editor.{" "}
+              AI-assisted research and drafting, checked by automated editorial review.{" "}
               <Link href="/editorial-policy" className="underline underline-offset-2">How we make articles</Link>
             </p>
           </header>
@@ -178,8 +178,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
             <div>
               <p className="font-semibold text-ink-900">{post.author}</p>
               <p className="mt-1 text-sm leading-relaxed text-ink-600">
-                A team byline, not an individual. Articles are researched from primary sources with AI assistance and
-                reviewed by the OpsGrit editor before publication. Prices and features change, so check the vendor before
+                A team byline, not an individual. Articles are researched and drafted with AI assistance and checked
+                by our automated editorial review before publication. Prices and features change, so check the vendor before
                 you buy. See our <Link className="font-semibold underline decoration-gold-500 underline-offset-2" href="/editorial-policy">editorial policy</Link>{" "}
                 or <Link className="font-semibold underline decoration-gold-500 underline-offset-2" href="/contact">report an error</Link>.
               </p>

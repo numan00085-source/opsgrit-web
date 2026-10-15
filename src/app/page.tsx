@@ -33,7 +33,7 @@ const PILLARS = [
   },
   {
     title: "Reviewed before it ships",
-    body: "We use AI to help research and draft, and say so. An editor reviews every article before it goes live. See how we work in our editorial policy.",
+    body: "We use AI to help research and draft, and say so. Every article goes through an automated editorial review before it goes live. See how we work in our editorial policy.",
   },
 ];
 

@@ -303,7 +303,7 @@ function intent(raw: string): BotReply | null {
   }
   if (/\b(contact|email address|reach (you|opsgrit)|report (an )?error|correction)\b/.test(t) && words <= 10) {
     return {
-      text: `You can reach the OpsGrit editor through the ${linkMd("/contact")} page, which is also where to report a mistake. For sponsorship, see ${linkMd("/advertise")}.`,
+      text: `You can reach the OpsGrit team through the ${linkMd("/contact")} page, which is also where to report a mistake. For sponsorship, see ${linkMd("/advertise")}.`,
       suggestions: ["How does OpsGrit check its facts?", "How can I advertise or sponsor OpsGrit?"],
     };
   }
