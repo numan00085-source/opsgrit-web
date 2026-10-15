@@ -1,9 +1,21 @@
 {
-  "adsense": { "client": "", "slotArticle": "", "slotSidebar": "", "enabled": true },
+  "adsense": {
+    "client": "ca-pub-3518213876116202",
+    "slotArticle": "",
+    "slotSidebar": "",
+    "enabled": true
+  },
   "googleVerification": "",
   "contactEmail": "opsgrit.com@gmail.com",
-  "social": { "x": "https://x.com/OpsGrit", "linkedin": "" },
-  "announcement": { "enabled": false, "text": "", "link": "" },
+  "social": {
+    "x": "https://x.com/OpsGrit",
+    "linkedin": ""
+  },
+  "announcement": {
+    "enabled": false,
+    "text": "",
+    "link": ""
+  },
   "home": {
     "heroEyebrow": "B2B Operations · AI Workflows · Enterprise Automation",
     "heroTitle": "Run operations with *grit*, not guesswork.",

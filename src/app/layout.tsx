@@ -9,7 +9,6 @@ const ADS_CLIENT = adsenseClient(SETTINGS);
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AmbientDust from "@/components/AmbientDust";
-import Script from "next/script";
 import IntroSplash from "@/components/IntroSplash";
 import PageViewTracker from "@/components/PageViewTracker";
 
@@ -73,6 +72,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "try{if(sessionStorage.getItem('og_intro')){document.documentElement.classList.add('no-intro')}else{sessionStorage.setItem('og_intro','1')}}catch(e){}",
           }}
         />
+        {/* AdSense snippet in the server-rendered head so Google can find it when it verifies the site. */}
+        {ADS_CLIENT && <meta name="google-adsense-account" content={ADS_CLIENT} />}
+        {ADS_CLIENT && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS_CLIENT}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </head>
       <body className="min-h-screen font-sans">
         {SITE_SCHEMA.map((s) => (
@@ -91,14 +99,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <PageViewTracker />
-        {ADS_CLIENT && (
-          <Script
-            async
-            strategy="afterInteractive"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS_CLIENT}`}
-            crossOrigin="anonymous"
-          />
-        )}
       </body>
     </html>
   );
