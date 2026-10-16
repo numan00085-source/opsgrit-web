@@ -281,3 +281,37 @@ html::after {
 @media (prefers-reduced-motion: reduce) {
   .hero-tip-in { animation: none; }
 }
+
+/* ===== Cutover Simulator: space + puzzle stage ===== */
+@keyframes cs-float { 0%,100% { transform: translate3d(0,0,0) rotate(var(--r,0deg)); } 50% { transform: translate3d(var(--dx,12px),var(--dy,-22px),0) rotate(calc(var(--r,0deg) + 14deg)); } }
+@keyframes cs-spin { to { transform: rotate(360deg); } }
+@keyframes cs-nebula { 0%,100% { transform: translate3d(0,0,0) scale(1); opacity: .55; } 50% { transform: translate3d(3%,-4%,0) scale(1.12); opacity: .85; } }
+@keyframes cs-in { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes cs-shake { 0%,100% { transform: translateX(0); } 18% { transform: translateX(-9px); } 36% { transform: translateX(8px); } 54% { transform: translateX(-6px); } 72% { transform: translateX(4px); } }
+@keyframes cs-glow { 0%,100% { box-shadow: 0 0 0 0 rgba(212,175,79,.0), 0 0 22px -6px rgba(212,175,79,.55); } 50% { box-shadow: 0 0 0 6px rgba(212,175,79,.10), 0 0 34px -4px rgba(246,227,163,.8); } }
+@keyframes cs-pulse-ring { 0% { transform: scale(.7); opacity: .9; } 100% { transform: scale(2.1); opacity: 0; } }
+@keyframes cs-burst { 0% { transform: translate(-50%,-50%) rotate(var(--a)) translateX(0) scale(1); opacity: 1; } 100% { transform: translate(-50%,-50%) rotate(var(--a)) translateX(var(--d)) scale(0); opacity: 0; } }
+@keyframes cs-fall { 0% { transform: translate3d(0,-20px,0) rotate(0deg); opacity: 1; } 100% { transform: translate3d(var(--x),520px,0) rotate(540deg); opacity: 0; } }
+@keyframes cs-flash { 0% { opacity: .55; } 100% { opacity: 0; } }
+@keyframes cs-blink { 50% { opacity: 0; } }
+@keyframes cs-rocket { 0%,100% { transform: translateY(0) rotate(45deg); } 50% { transform: translateY(-4px) rotate(45deg); } }
+
+.cs-float { animation: cs-float var(--t,14s) ease-in-out infinite; animation-delay: var(--d0,0s); will-change: transform; }
+.cs-spin { animation: cs-spin var(--t,40s) linear infinite; }
+.cs-nebula { animation: cs-nebula 18s ease-in-out infinite; }
+.cs-in { animation: cs-in .55s cubic-bezier(.22,1,.36,1) both; }
+.cs-shake { animation: cs-shake .5s ease; }
+.cs-glow { animation: cs-glow 2.6s ease-in-out infinite; }
+.cs-ring { animation: cs-pulse-ring 1.8s ease-out infinite; }
+.cs-spark { animation: cs-burst .75s ease-out forwards; }
+.cs-confetti { animation: cs-fall var(--ft,3.2s) ease-in forwards; animation-delay: var(--fd,0s); }
+.cs-flash { animation: cs-flash .6s ease-out forwards; }
+.cs-cursor { animation: cs-blink 1s steps(2) infinite; }
+.cs-rocket { animation: cs-rocket 1.6s ease-in-out infinite; }
+.cs-opt { transition: transform .2s ease, border-color .2s ease, background-color .2s ease, box-shadow .2s ease; }
+.cs-opt:not(:disabled):hover { transform: translateY(-3px) scale(1.01); border-color: rgba(230,200,115,.9); box-shadow: 0 10px 30px -12px rgba(230,200,115,.55); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-float, .cs-spin, .cs-nebula, .cs-glow, .cs-ring, .cs-cursor, .cs-rocket, .cs-confetti { animation: none; }
+  .cs-in, .cs-shake, .cs-spark, .cs-flash { animation-duration: .01s; }
+}
