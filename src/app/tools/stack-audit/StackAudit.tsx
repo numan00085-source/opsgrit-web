@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { IconCross } from "@/components/icons/OpsIcons";
 
 type Decision = "Keep" | "Review" | "Merge" | "Retire";
 
@@ -89,7 +90,7 @@ export default function StackAudit() {
                   </select>
                 </td>
                 <td className="px-3 py-2">
-                  <button type="button" aria-label="Remove row" className="text-ink-400 hover:text-red-600" onClick={() => setRows((p) => p.filter((x) => x.id !== r.id))}>✕</button>
+                  <button type="button" aria-label="Remove row" className="text-ink-400 hover:text-red-600" onClick={() => setRows((p) => p.filter((x) => x.id !== r.id))}><IconCross size={16} /></button>
                 </td>
               </tr>
             ))}

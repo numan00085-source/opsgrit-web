@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IconCheck } from "@/components/icons/OpsIcons";
 
 type State = "idle" | "loading" | "done" | "error";
 
@@ -54,7 +55,7 @@ export default function NewsletterCard() {
         <div>
           {state === "done" ? (
             <div role="status" className="rounded-2xl border border-gold-400/60 bg-white p-6">
-              <p className="text-lg font-bold text-ink-900">You&apos;re in. ✓</p>
+              <p className="text-lg font-bold text-ink-900">You&apos;re in. <IconCheck size="1.1em" className="inline-block align-[-0.15em]" /></p>
               <p className="mt-1 text-sm text-ink-600">{message}</p>
             </div>
           ) : (

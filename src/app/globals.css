@@ -294,7 +294,7 @@ html::after {
 @keyframes cs-fall { 0% { transform: translate3d(0,-20px,0) rotate(0deg); opacity: 1; } 100% { transform: translate3d(var(--x),520px,0) rotate(540deg); opacity: 0; } }
 @keyframes cs-flash { 0% { opacity: .55; } 100% { opacity: 0; } }
 @keyframes cs-blink { 50% { opacity: 0; } }
-@keyframes cs-rocket { 0%,100% { transform: translateY(0) rotate(45deg); } 50% { transform: translateY(-4px) rotate(45deg); } }
+@keyframes cs-rocket { 0%,100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
 
 .cs-float { animation: cs-float var(--t,14s) ease-in-out infinite; animation-delay: var(--d0,0s); will-change: transform; }
 .cs-spin { animation: cs-spin var(--t,40s) linear infinite; }

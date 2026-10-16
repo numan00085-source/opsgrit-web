@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import Starfield from "@/components/Starfield";
+import { IconCheck, IconCross, IconGear, IconPlanet, IconPuzzle, IconRocket, IconWarn, Pip } from "@/components/icons/OpsIcons";
 
 type Opt = { text: string; points: 0 | 1 | 3 };
 interface Round {
@@ -110,54 +110,13 @@ function outcome(score: number) {
   return { title: "Extended outage", tone: "text-red-300", body: "Too many shortcuts piled up. Data drifted, nobody owned the rollback decision, and the old system was gone. This is what the playbook exists to prevent." };
 }
 
-const SQ = (p: number) => (p === 3 ? "🟩" : p === 1 ? "🟨" : "🟥");
 const PLANETS = ["Assess", "Prepare", "Prepare", "Parallel", "Cutover", "Retire"];
 const PIECE = "M10 10 H40 a10 10 0 1 1 20 0 H90 V40 a10 10 0 1 1 0 20 V90 H60 a10 10 0 1 0 -20 0 H10 Z";
 
-/** Floating jigsaw pieces and gears behind the game: the "puzzle" half of the theme. */
-const DECOR: { k: "piece" | "gear"; x: string; y: string; s: number; c: string; r: string; t: string; d: string; dx: string; dy: string }[] = [
-  { k: "piece", x: "4%", y: "10%", s: 64, c: "#d4af4f", r: "-12deg", t: "15s", d: "0s", dx: "14px", dy: "-24px" },
-  { k: "piece", x: "88%", y: "6%", s: 48, c: "#8b93f7", r: "20deg", t: "18s", d: "-4s", dx: "-16px", dy: "20px" },
-  { k: "gear", x: "92%", y: "46%", s: 84, c: "#d4af4f", r: "0deg", t: "60s", d: "0s", dx: "0px", dy: "0px" },
-  { k: "piece", x: "6%", y: "62%", s: 54, c: "#8b93f7", r: "35deg", t: "17s", d: "-8s", dx: "12px", dy: "22px" },
-  { k: "gear", x: "-2%", y: "84%", s: 96, c: "#8b93f7", r: "0deg", t: "75s", d: "0s", dx: "0px", dy: "0px" },
-  { k: "piece", x: "80%", y: "86%", s: 58, c: "#d4af4f", r: "-30deg", t: "16s", d: "-2s", dx: "-12px", dy: "-18px" },
-];
-
-function Decor() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {DECOR.map((d, i) => (
-        <div
-          key={i}
-          className={d.k === "gear" ? "cs-spin absolute" : "cs-float absolute"}
-          style={{ left: d.x, top: d.y, width: d.s, height: d.s, opacity: 0.2, ["--r" as string]: d.r, ["--t" as string]: d.t, ["--d0" as string]: d.d, ["--dx" as string]: d.dx, ["--dy" as string]: d.dy }}
-        >
-          {d.k === "piece" ? (
-            <svg viewBox="0 0 100 100" className="h-full w-full">
-              <path d={PIECE} fill={d.c} fillOpacity=".25" stroke={d.c} strokeWidth="3" strokeLinejoin="round" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 100 100" className="h-full w-full">
-              <circle cx="50" cy="50" r="34" fill="none" stroke={d.c} strokeWidth="14" strokeDasharray="10.6 10.6" />
-              <circle cx="50" cy="50" r="27" fill="none" stroke={d.c} strokeWidth="3" />
-              <circle cx="50" cy="50" r="9" fill={d.c} fillOpacity=".5" />
-            </svg>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/** The space backdrop shared by every screen of the game. */
+/** Glass panel for the game. The space backdrop (stars, nebula, puzzle pieces) fills the whole page behind it. */
 function Stage({ children, shake = false, flash, flashKey = 0 }: { children: React.ReactNode; shake?: boolean; flash?: "good" | "bad" | null; flashKey?: number }) {
   return (
-    <div className={`relative mt-8 max-w-4xl overflow-hidden rounded-3xl border border-gold-400/30 bg-[#070b14] text-slate-100 shadow-[0_30px_80px_-30px_rgba(10,14,30,0.9)] ${shake ? "cs-shake" : ""}`}>
-      <div className="cs-nebula pointer-events-none absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(124,131,245,.38),transparent_62%)]" />
-      <div className="cs-nebula pointer-events-none absolute -bottom-32 -right-24 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,rgba(212,175,79,.30),transparent_62%)]" style={{ animationDelay: "-7s" }} />
-      <Starfield className="absolute inset-0 h-full w-full" />
-      <Decor />
+    <div className={`relative mt-8 max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-[#070b14]/55 text-slate-100 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)] backdrop-blur-[2px] ${shake ? "cs-shake" : ""}`}>
       {flash && <div key={`${flash}-${flashKey}`} className={`cs-flash pointer-events-none absolute inset-0 ${flash === "good" ? "bg-emerald-400/25" : "bg-red-500/30"}`} />}
       <div className="relative z-10 p-5 sm:p-9">{children}</div>
     </div>
@@ -242,8 +201,8 @@ function Route({ results, i, done }: { results: number[]; i: number; done: boole
           );
         })}
       </div>
-      <span className="absolute top-0 text-lg transition-all duration-700 ease-out" style={{ left: `calc(4% + ${(at / 5) * 92}% - 11px)` }} aria-hidden="true">
-        <span className="cs-rocket inline-block">🚀</span>
+      <span className="absolute top-0 text-lg transition-all duration-700 ease-out" style={{ left: `calc(4% + ${(at / 5) * 92}% - 12px)` }} aria-hidden="true">
+        <span className="cs-rocket inline-block"><IconRocket size={24} className="rotate-90" /></span>
       </span>
     </div>
   );
@@ -293,7 +252,7 @@ export default function CutoverSimulator() {
   };
 
   const shareText = () =>
-    `I scored ${score}/${MAX} on the OpsGrit Cutover Simulator: "${outcome(score).title}"\n${results.map(SQ).join("")}\nCan you migrate ops tools without downtime? https://www.getopsgrit.com/tools/cutover-simulator`;
+    `I scored ${score}/${MAX} on the OpsGrit Cutover Simulator: "${outcome(score).title}"\n${results.filter((r) => r === 3).length} best-practice, ${results.filter((r) => r === 1).length} risky, ${results.filter((r) => r === 0).length} dangerous\nCan you migrate ops tools without downtime? https://www.getopsgrit.com/tools/cutover-simulator`;
   const share = async () => {
     const text = shareText();
     try {
@@ -328,7 +287,7 @@ export default function CutoverSimulator() {
             path. Your score and risk meter react to every call. About three minutes.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
-            <span>🧩 6 puzzles</span><span>🪐 6 planets</span><span>🚀 1 cutover</span>
+            <span className="inline-flex items-center gap-1.5"><IconPuzzle size={18} /> 6 puzzles</span><span className="inline-flex items-center gap-1.5"><IconPlanet size={18} /> 6 planets</span><span className="inline-flex items-center gap-1.5"><IconRocket size={18} /> 1 cutover</span>
           </div>
           <button type="button" onClick={() => setStarted(true)} className="btn-primary cs-glow mt-8 px-8 py-3 text-base">Launch mission</button>
         </div>
@@ -350,13 +309,13 @@ export default function CutoverSimulator() {
             {shown}<span className="text-2xl font-bold text-slate-400"> / {MAX}</span>
           </p>
           <p className="mt-3 max-w-2xl leading-relaxed text-slate-300">{o.body}</p>
-          <div className="mt-5 text-2xl tracking-widest" aria-label="Your round results">{results.map(SQ).join("")}</div>
+          <div className="mt-5 flex gap-1.5" aria-label="Your round results">{results.map((p, k) => <Pip key={k} p={p} size={28} />)}</div>
 
           <ol className="mt-6 grid gap-3 sm:grid-cols-2">
             {results.map((p, idx) => (
               <li key={idx} className="cs-in rounded-xl border border-white/10 bg-white/5 p-4 text-sm backdrop-blur" style={{ animationDelay: `${idx * 90}ms` }}>
-                <span className="font-semibold text-white">{SQ(p)} {ROUNDS[idx].phase}: {ROUNDS[idx].question}</span>
-                {p < 3 ? <p className="mt-1 leading-relaxed text-slate-300">{ROUNDS[idx].why}</p> : <p className="mt-1 text-emerald-300">Nailed it.</p>}
+                <span className="flex items-start gap-2 font-semibold text-white"><Pip p={p} size={20} /><span>{ROUNDS[idx].phase}: {ROUNDS[idx].question}</span></span>
+                {p < 3 ? <p className="mt-1 pl-7 leading-relaxed text-slate-300">{ROUNDS[idx].why}</p> : <p className="mt-1 pl-7 text-emerald-300">Nailed it.</p>}
               </li>
             ))}
           </ol>
@@ -421,8 +380,9 @@ export default function CutoverSimulator() {
                   <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-amber-200 to-amber-500 text-sm font-black text-[#1a1405]">{"ABC"[idx]}</span>
                   <span>
                     {o.text}
-                    {reveal && o.points === 3 && <span className="ml-2 font-bold text-emerald-300">✓ Best practice</span>}
-                    {reveal && isPick && o.points !== 3 && <span className="ml-2 font-bold text-slate-100">{o.points === 1 ? "⚠ Risky" : "✕ Dangerous"}</span>}
+                    {reveal && o.points === 3 && <span className="ml-2 inline-flex items-center gap-1 font-bold text-emerald-300"><IconCheck size={16} /> Best practice</span>}
+                    {reveal && isPick && o.points === 1 && <span className="ml-2 inline-flex items-center gap-1 font-bold text-amber-300"><IconWarn size={16} /> Risky</span>}
+                    {reveal && isPick && o.points === 0 && <span className="ml-2 inline-flex items-center gap-1 font-bold text-red-300"><IconCross size={16} /> Dangerous</span>}
                   </span>
                 </button>
                 {reveal && isPick && o.points === 3 && <Burst />}
