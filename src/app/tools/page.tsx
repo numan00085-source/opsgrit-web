@@ -4,11 +4,17 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Free operations tools",
   description:
-    "Free, no-signup tools for operations teams: OpsGrit Bot, an automation ROI calculator, an SOP builder and a technology stack audit worksheet.",
+    "Free, no-signup tools for operations teams: OpsGrit Bot, a migration cutover simulator, an automation ROI calculator, an SOP builder and a technology stack audit worksheet.",
   alternates: { canonical: "/tools" },
 };
 
 const TOOLS = [
+  {
+    href: "/tools/cutover-simulator",
+    title: "Cutover Simulator",
+    body: "A three-minute game. Make six migration decisions and see if your cutover is clean or ends in a rollback.",
+    tag: "Game",
+  },
   {
     href: "/tools/ops-bot",
     title: "OpsGrit Bot",
@@ -44,7 +50,7 @@ export default function ToolsPage() {
         No signup, no email gate. The calculator, SOP builder and audit worksheet run in your browser and nothing you type
         is stored on a server. OpsGrit Bot has its own privacy note on its page.
       </p>
-      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {TOOLS.map((t) => (
           <Link key={t.href} href={t.href} className="card group p-7">
             <span className="chip">{t.tag}</span>
