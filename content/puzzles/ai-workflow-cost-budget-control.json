@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "Finance asks what a new AI workflow will cost. The provider's price list says a fraction of a cent per request.",
+    "question": "What do you tell them?",
+    "options": [
+      {
+        "text": "The model bill is real but usually the smallest line. Budget seven lines: model usage, platform, human review, build, maintenance, error cost and data work.",
+        "tier": "best"
+      },
+      {
+        "text": "Quote the per-request price multiplied by the expected volume.",
+        "tier": "risky"
+      },
+      {
+        "text": "Say it is too early to estimate until the workflow is live.",
+        "tier": "bad"
+      }
+    ],
+    "why": "In the article's illustrative example, review time and uncaught errors dwarf the model fee. A rough number for each line beats a precise number for only one."
+  },
+  {
+    "scenario": "A workflow reads long email threads, then classifies, extracts, drafts and checks. Your estimate used a short sample ticket.",
+    "question": "Why is the estimate probably too low?",
+    "options": [
+      {
+        "text": "Longer inputs, several model calls per task and retries all multiply tokens, so estimates must use realistic median and longest cases.",
+        "tier": "best"
+      },
+      {
+        "text": "It is not. The model price per token does not change.",
+        "tier": "risky"
+      },
+      {
+        "text": "Because output is always cheaper than input.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Four calls cost more than one, and a failed step that retries is paid for every time. Estimate with real examples from your own data, not the shortest case."
+  },
+  {
+    "scenario": "Someone proposes switching to a cheaper model to cut the bill. Test results show the error rate would rise a little.",
+    "question": "How do you judge the trade?",
+    "options": [
+      {
+        "text": "Re-run the test set and compare total cost, including the error line. A small rise in uncaught errors can cost more than the model savings.",
+        "tier": "best"
+      },
+      {
+        "text": "Switch anyway, since cheaper is always better.",
+        "tier": "risky"
+      },
+      {
+        "text": "Keep the expensive model for everything and never test alternatives.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Cost per successful outcome, not cost per run, is the honest measure. Squeezing the model price while the error line is far larger is a poor use of effort."
+  },
+  {
+    "scenario": "A pilot's agent sometimes loops for a long time before finishing. Finance is nervous about bill shock.",
+    "question": "Which guardrails go in before launch?",
+    "options": [
+      {
+        "text": "Spending caps with the provider, daily alerts, per-task limits on tokens, steps and time, a separate key per workflow, a kill switch and a named owner.",
+        "tier": "best"
+      },
+      {
+        "text": "A monthly reminder to look at the invoice.",
+        "tier": "risky"
+      },
+      {
+        "text": "Nothing, because free credits cover the first months.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Cost control is also about preventing surprises. These controls cost about an hour to set up and make runaway loops visible and stoppable."
+  },
+  {
+    "scenario": "A team plans to run a real workflow on a free plan to save money.",
+    "question": "What is the sensible approach?",
+    "options": [
+      {
+        "text": "Use free tiers for testing, write down the limits, set an alert before reaching them and decide the fallback in advance. Check data terms before sending sensitive information.",
+        "tier": "best"
+      },
+      {
+        "text": "Run production on it and handle limit problems if they appear.",
+        "tier": "risky"
+      },
+      {
+        "text": "Send all sensitive data through it since it is only a trial.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Free tiers often have low limits, may change without much notice and can have different data terms. They are useful for testing but a poor basis for a budget."
+  }
+]

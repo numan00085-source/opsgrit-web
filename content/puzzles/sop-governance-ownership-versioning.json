@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "A company has hundreds of procedures spread across shared drives, wikis and personal folders. Several describe the same process differently.",
+    "question": "Where do you start?",
+    "options": [
+      {
+        "text": "Inventory what exists, merge duplicates, retire what is dead and pick one authoritative home before adding rules.",
+        "tier": "best"
+      },
+      {
+        "text": "Write a new, longer governance policy for every document.",
+        "tier": "risky"
+      },
+      {
+        "text": "Leave the old ones and add new versions next to them.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Governance effort scales with the number of documents, so shrink the surface first. Multiple versions of the same process are a standing hazard."
+  },
+  {
+    "scenario": "An important SOP lists 'Operations Team' as its owner. A manager says that is fine because the whole team cares.",
+    "question": "What is wrong with that?",
+    "options": [
+      {
+        "text": "Accountability needs a named person in a role. An unowned document has already started to decay.",
+        "tier": "best"
+      },
+      {
+        "text": "Nothing. Shared ownership is more resilient.",
+        "tier": "risky"
+      },
+      {
+        "text": "It is fine as long as the team inbox is monitored.",
+        "tier": "bad"
+      }
+    ],
+    "why": "The owner is a named person, not a department or generic inbox. Ownership should also transfer deliberately when people change roles or leave."
+  },
+  {
+    "scenario": "A step in a payment SOP changes: a new bank-detail verification is added. Someone proposes keeping the same version number to avoid confusion.",
+    "question": "How should it be versioned?",
+    "options": [
+      {
+        "text": "As a major version with full review, approval, a change log entry and communication or retraining, and update linked forms and automations.",
+        "tier": "best"
+      },
+      {
+        "text": "As a minor version, since it is only one step.",
+        "tier": "risky"
+      },
+      {
+        "text": "Do not version. Just edit the file and tell people verbally.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Major versions mark substantive changes to process or controls. The change log shows what changed and who approved it, and automations must be updated too."
+  },
+  {
+    "scenario": "Colleagues keep downloading the SOP as a PDF and saving it to their desktops.",
+    "question": "How do you reduce the risk?",
+    "options": [
+      {
+        "text": "Keep one official source and link to it, print with an 'uncontrolled when printed' footer and avoid emailing copies.",
+        "tier": "best"
+      },
+      {
+        "text": "Ask people to delete their copies at the end of each year.",
+        "tier": "risky"
+      },
+      {
+        "text": "Allow everyone to keep a local copy so they can work offline.",
+        "tier": "bad"
+      }
+    ],
+    "why": "The most common versioning failure is copies, not numbering. Someone may use a downloaded PDF for two years."
+  },
+  {
+    "scenario": "A procedure for a retired system is still in the library and appears in search results.",
+    "question": "What should happen?",
+    "options": [
+      {
+        "text": "Retire it deliberately: confirm with the owner, mark it retired with the date and reason, archive it, update the register and links, and keep it per retention rules.",
+        "tier": "best"
+      },
+      {
+        "text": "Leave it. Deleting history might cause trouble.",
+        "tier": "risky"
+      },
+      {
+        "text": "Delete it permanently without telling anyone.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Retirement is as important as creation. Archived versions remain available for audits, but obsolete documents should not mislead people."
+  }
+]

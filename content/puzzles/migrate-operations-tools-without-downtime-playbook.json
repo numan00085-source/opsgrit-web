@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "Your parallel-run has just started. The new tool receives mirrored writes but nobody sees its responses.",
+    "question": "When can you start moving live traffic?",
+    "options": [
+      {
+        "text": "Once the mismatch rate has been zero for 48 continuous hours in shadow mode, then ramp in measured steps and hold each step until criteria stay green.",
+        "tier": "best"
+      },
+      {
+        "text": "After one clean day, because the sandbox tests passed.",
+        "tier": "risky"
+      },
+      {
+        "text": "Immediately. Shadow mode already proved the tool works.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Shadow mode compares outputs field by field against the system of record. Advancing before it is clean skips the evidence the step exists to produce."
+  },
+  {
+    "scenario": "At a ramp step, one success criterion fails. The team wants to patch it and keep the percentage where it is.",
+    "question": "What does the playbook say?",
+    "options": [
+      {
+        "text": "Pause the ramp, fix the cause and restart that step from zero.",
+        "tier": "best"
+      },
+      {
+        "text": "Carry on to the next percentage. The failure was small.",
+        "tier": "risky"
+      },
+      {
+        "text": "Roll back the entire project and start the planning again.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A step only counts if criteria stay green for its full minimum run length. Restarting that step keeps the evidence honest without throwing away earlier progress."
+  },
+  {
+    "scenario": "It is T+30 minutes after cutover and the core workflow does not complete end-to-end. A rollback checkpoint is attached to that step.",
+    "question": "What happens?",
+    "options": [
+      {
+        "text": "Follow the predefined rollback rule: if a checkpoint between T+0 and T+2h fails, revert DNS to the old system within 15 minutes.",
+        "tier": "best"
+      },
+      {
+        "text": "Wait until T+4 hours to see if it fixes itself.",
+        "tier": "risky"
+      },
+      {
+        "text": "Ask every stakeholder to vote on what to do.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Rollback triggers and decision authority exist so the team acts in minutes instead of debating during an incident."
+  },
+  {
+    "scenario": "Cutover went well. Someone asks to switch off the old system today to save on licences.",
+    "question": "What is the safe call?",
+    "options": [
+      {
+        "text": "Keep it read-only for stabilization, wait for user acceptance sign-off and keep it available for at least one billing cycle to recover stranded data.",
+        "tier": "best"
+      },
+      {
+        "text": "Delete it now. A clean break avoids confusion.",
+        "tier": "risky"
+      },
+      {
+        "text": "Leave full write access open indefinitely.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Decommission is part of the migration. Stepping access down gradually, with sign-off first, stops the old system becoming a silent liability."
+  },
+  {
+    "scenario": "Two tools both claim to own customer records, and the mapping work is about to start.",
+    "question": "What should be settled first?",
+    "options": [
+      {
+        "text": "A written system-of-record decision for each data entity, covering the owner, the rationale and the sync direction.",
+        "tier": "best"
+      },
+      {
+        "text": "Let the new tool win by default since it is newer.",
+        "tier": "risky"
+      },
+      {
+        "text": "Sync both ways and fix conflicts when they appear.",
+        "tier": "bad"
+      }
+    ],
+    "why": "The system of record decides which tool wins when data conflicts during reconciliation. Without a written decision every discrepancy becomes an argument."
+  }
+]

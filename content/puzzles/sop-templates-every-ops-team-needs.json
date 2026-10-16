@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "Someone opens a blank document to write a process, writes three paragraphs of context and gives up.",
+    "question": "What fixes the blank-page problem?",
+    "options": [
+      {
+        "text": "A template that turns the job into short questions to answer, with title, owner, version, purpose, scope and related documents at the top.",
+        "tier": "best"
+      },
+      {
+        "text": "A longer instruction that explains how important documentation is.",
+        "tier": "risky"
+      },
+      {
+        "text": "A rule that nobody may write a procedure without a manager's review first.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Templates turn a vague job into answerable questions, and a familiar layout makes documents easier to read and maintain."
+  },
+  {
+    "scenario": "Your team has a month-end checklist that has grown to forty lines with long explanations.",
+    "question": "How should a checklist look?",
+    "options": [
+      {
+        "text": "Short, no more than about nine items per list and one line each, linking to the SOP for detail. Checklists offload memory, not judgment.",
+        "tier": "best"
+      },
+      {
+        "text": "Add the explanations inside the checklist so nobody has to look elsewhere.",
+        "tier": "risky"
+      },
+      {
+        "text": "Replace it with a ten-page procedure.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Under pressure nobody reads paragraphs. Keep judgment in the SOP and the reminder in the checklist."
+  },
+  {
+    "scenario": "A support shift ends. The outgoing agent says 'everything is in the queue, you will figure it out.'",
+    "question": "What should the handoff note contain?",
+    "options": [
+      {
+        "text": "Current status, what is in progress with the exact next step, what is waiting on someone else and since when, risks and surprises, where things are and how to reach the sender.",
+        "tier": "best"
+      },
+      {
+        "text": "Only the ticket numbers.",
+        "tier": "risky"
+      },
+      {
+        "text": "A summary of the agent's feelings about the shift.",
+        "tier": "bad"
+      }
+    ],
+    "why": "The most valuable sections are 'waiting on someone else' and 'risks and surprises', because the next person cannot see them in the system."
+  },
+  {
+    "scenario": "An outage fix is about to be deployed to a system others depend on. The change request has no rollback plan.",
+    "question": "What do you do?",
+    "options": [
+      {
+        "text": "Do not proceed until the change request states exact rollback steps and who decides. If you cannot describe how to undo it, you are not ready to make it.",
+        "tier": "best"
+      },
+      {
+        "text": "Proceed and figure out the rollback if something fails.",
+        "tier": "risky"
+      },
+      {
+        "text": "Add a rollback plan after the change succeeds, for the records.",
+        "tier": "bad"
+      }
+    ],
+    "why": "The rollback plan is the field people skip, and it is the one that saves you, especially when automations or AI steps are involved."
+  },
+  {
+    "scenario": "The incident report says 'an employee entered the wrong value.'",
+    "question": "What is wrong with it?",
+    "options": [
+      {
+        "text": "It blames a person instead of the system. A useful report says the form allowed an invalid value and nothing checked it, then lists owned, dated actions.",
+        "tier": "best"
+      },
+      {
+        "text": "Nothing. It states the cause plainly.",
+        "tier": "risky"
+      },
+      {
+        "text": "It should name the employee so the lesson is clear.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A blame-focused write-up teaches nothing. The action table at the end, with owners and dates, is the point of the report."
+  }
+]

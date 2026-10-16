@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "A new engineer starts Monday. It is the Friday before and nobody has confirmed their laptop or accounts.",
+    "question": "What should the process have done?",
+    "options": [
+      {
+        "text": "Run a day-before readiness check by the process owner, escalate any gap immediately, and start preparation as soon as the offer is accepted.",
+        "tier": "best"
+      },
+      {
+        "text": "Order equipment on the start date, since the new hire will be busy anyway.",
+        "tier": "risky"
+      },
+      {
+        "text": "Skip it. The new hire can sort accounts out with IT during the first week.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A poor first day is hard to recover from. Pre-boarding begins at offer acceptance, and the readiness check exists so gaps are caught while they can still be fixed."
+  },
+  {
+    "scenario": "IT is creating accounts for a new marketing hire. The quickest way is to copy a predecessor's access.",
+    "question": "What is the right approach?",
+    "options": [
+      {
+        "text": "Use a role-based access template with minimum permissions, require justification and approval for extras, and review access at 30 and 90 days.",
+        "tier": "best"
+      },
+      {
+        "text": "Copy the predecessor's access, then remove anything that seems wrong later.",
+        "tier": "risky"
+      },
+      {
+        "text": "Give broad access at first so the new hire never feels blocked.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A predecessor's access often includes outdated or excessive rights. Least privilege, an approval trail and scheduled reviews prevent avoidable security problems."
+  },
+  {
+    "scenario": "Several teams each do their part of onboarding. Tasks get missed and nobody sees the whole process.",
+    "question": "What do you fix?",
+    "options": [
+      {
+        "text": "Name a single process owner accountable for the end-to-end experience, and assign every task to a role with an owner, due date and status on a shared checklist.",
+        "tier": "best"
+      },
+      {
+        "text": "Add more email reminders for each team.",
+        "tier": "risky"
+      },
+      {
+        "text": "Make the hiring manager responsible for everything.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Clear ownership prevents tasks from falling between teams. A named process owner, often in HR or People Operations, also keeps the procedure current."
+  },
+  {
+    "scenario": "A manager wants to show a new hire sixty slides on day one so nothing is missed.",
+    "question": "What works better?",
+    "options": [
+      {
+        "text": "Spread learning across the first weeks, with a welcome, working logins, a buddy, a small first task and an end-of-day check-in on day one.",
+        "tier": "best"
+      },
+      {
+        "text": "Go ahead, then test the new hire with a quiz at the end of the week.",
+        "tier": "risky"
+      },
+      {
+        "text": "Skip day one and start with real work on day two.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Information overload helps no one. Day one should make the new hire feel welcome, able to log in and clear about what happens next."
+  },
+  {
+    "scenario": "Day 30 arrives. The manager is busy and suggests skipping check-ins because the new hire seems fine.",
+    "question": "What should the 30-day check-in cover?",
+    "options": [
+      {
+        "text": "Review progress, address gaps, collect feedback on onboarding, confirm priorities and agree goals for the next 60 days, plus an access review.",
+        "tier": "best"
+      },
+      {
+        "text": "Skip it. No news is good news.",
+        "tier": "risky"
+      },
+      {
+        "text": "A short chat about weekend plans, since formal reviews feel stiff.",
+        "tier": "bad"
+      }
+    ],
+    "why": "The 30-60-90 structure makes goals, support and feedback explicit at each stage. New hires are also the best source of insight into what is broken in the process."
+  }
+]

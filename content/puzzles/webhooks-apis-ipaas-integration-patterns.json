@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "A billing webhook sometimes arrives twice, and a retry occasionally repeats a 'create invoice' call.",
+    "question": "How do you design for that?",
+    "options": [
+      {
+        "text": "Make operations idempotent: use unique IDs from the source system, check whether a record exists before creating it and prefer upsert operations.",
+        "tier": "best"
+      },
+      {
+        "text": "Assume duplicates will never happen and handle complaints as they come.",
+        "tier": "risky"
+      },
+      {
+        "text": "Turn off retries so nothing can run twice.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Retries, duplicate webhooks and re-runs are normal. If 'create invoice' runs twice a customer may be billed twice, while 'set status to paid' running twice does no harm."
+  },
+  {
+    "scenario": "An integration fails after several retries. The easiest option is to discard the item and move on.",
+    "question": "What should happen to it?",
+    "options": [
+      {
+        "text": "Park it in a clear failure log or queue with the data and the error, alert a person who watches that channel and allow it to be fixed and replayed.",
+        "tier": "best"
+      },
+      {
+        "text": "Discard it. A later run will probably fix it.",
+        "tier": "risky"
+      },
+      {
+        "text": "Keep retrying forever until it works.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Silent loss is the worst outcome. A failed integration nobody knows about is a hidden outage."
+  },
+  {
+    "scenario": "A source system supports webhooks. Your team currently checks it every minute for changes, and platform costs are rising.",
+    "question": "What is the better design?",
+    "options": [
+      {
+        "text": "Prefer webhooks when the source supports them and timeliness matters, with a periodic reconciliation to catch anything missed.",
+        "tier": "best"
+      },
+      {
+        "text": "Poll even more often to be sure nothing is missed.",
+        "tier": "risky"
+      },
+      {
+        "text": "Switch to webhooks only, with no safety net, since they are faster.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Polling is simple but wasteful and adds delay. Webhooks are not guaranteed to arrive, so good designs assume some will be lost or delivered twice."
+  },
+  {
+    "scenario": "An important integration runs under the personal login of an employee who is about to leave.",
+    "question": "What is the right fix?",
+    "options": [
+      {
+        "text": "Move it to a dedicated service account with least privilege, document its owner and backup and rotate credentials when staff change.",
+        "tier": "best"
+      },
+      {
+        "text": "Leave it and ask the employee to keep the password.",
+        "tier": "risky"
+      },
+      {
+        "text": "Share the employee's password with the team before they leave.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Workflows tied to one person's login break when they depart. Service accounts and documented ownership keep connections running."
+  },
+  {
+    "scenario": "You need to connect a CRM and billing system. A native integration exists, but it does not let you control field mapping or error handling.",
+    "question": "How do you decide?",
+    "options": [
+      {
+        "text": "Check whether the native integration does exactly what you need. If the logic is multi-step or needs control, an iPaaS may fit better. Weigh volume, cost of failure and who will maintain it.",
+        "tier": "best"
+      },
+      {
+        "text": "Always use the native integration since the vendor maintains it.",
+        "tier": "risky"
+      },
+      {
+        "text": "Always build direct API code since it gives the most control.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Native integrations are quick but often shallow and fixed. The right choice depends on logic complexity, volume, risk and what your team can actually support."
+  }
+]

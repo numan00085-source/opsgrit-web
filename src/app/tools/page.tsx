@@ -16,6 +16,12 @@ const TOOLS = [
     tag: "Game",
   },
   {
+    href: "/tools/daily-puzzle",
+    title: "Daily Ops Puzzle",
+    body: "Three operations scenarios a day, drawn from our articles. Pick the best call, see why, and share your score.",
+    tag: "Game",
+  },
+  {
     href: "/tools/ops-bot",
     title: "OpsGrit Bot",
     body: "A free assistant for operations and automation. Ask a question, get a clear answer from OpsGrit guides and a link to read more.",

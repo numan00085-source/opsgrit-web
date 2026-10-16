@@ -92,7 +92,7 @@ function seeded(seed: number) {
     return s / 4294967296;
   };
 }
-function shuffle<T>(arr: T[], seed: number): T[] {
+export function shuffle<T>(arr: T[], seed: number): T[] {
   const a = [...arr];
   if (seed === 0) return a;
   const r = seeded(seed);
@@ -114,7 +114,7 @@ const PLANETS = ["Assess", "Prepare", "Prepare", "Parallel", "Cutover", "Retire"
 const PIECE = "M10 10 H40 a10 10 0 1 1 20 0 H90 V40 a10 10 0 1 1 0 20 V90 H60 a10 10 0 1 0 -20 0 H10 Z";
 
 /** Glass panel for the game. The space backdrop (stars, nebula, puzzle pieces) fills the whole page behind it. */
-function Stage({ children, shake = false, flash, flashKey = 0 }: { children: React.ReactNode; shake?: boolean; flash?: "good" | "bad" | null; flashKey?: number }) {
+export function Stage({ children, shake = false, flash, flashKey = 0 }: { children: React.ReactNode; shake?: boolean; flash?: "good" | "bad" | null; flashKey?: number }) {
   return (
     <div className={`relative mt-8 max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-[#070b14]/55 text-slate-100 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)] backdrop-blur-[2px] ${shake ? "cs-shake" : ""}`}>
       {flash && <div key={`${flash}-${flashKey}`} className={`cs-flash pointer-events-none absolute inset-0 ${flash === "good" ? "bg-emerald-400/25" : "bg-red-500/30"}`} />}
@@ -124,7 +124,7 @@ function Stage({ children, shake = false, flash, flashKey = 0 }: { children: Rea
 }
 
 /** Count up to a number so the score feels earned. */
-function useCount(target: number, run: boolean) {
+export function useCount(target: number, run: boolean) {
   const [n, setN] = useState(0);
   useEffect(() => {
     if (!run) return;
@@ -145,7 +145,7 @@ function useCount(target: number, run: boolean) {
   return n;
 }
 
-function Burst() {
+export function Burst() {
   return (
     <span className="pointer-events-none absolute right-6 top-1/2 z-20" aria-hidden="true">
       {Array.from({ length: 12 }).map((_, i) => (
@@ -155,7 +155,7 @@ function Burst() {
   );
 }
 
-function Confetti() {
+export function Confetti() {
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-full overflow-hidden" aria-hidden="true">
       {Array.from({ length: 34 }).map((_, i) => (
@@ -208,7 +208,7 @@ function Route({ results, i, done }: { results: number[]; i: number; done: boole
   );
 }
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
+export function Eyebrow({ children }: { children: React.ReactNode }) {
   return <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-amber-300/90">{children}</p>;
 }
 

@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "An order automation starts sending wrong amounts to customers. Three people are already investigating different theories.",
+    "question": "What should happen first?",
+    "options": [
+      {
+        "text": "Name an incident lead, contain the damage by pausing the automation, and start a timeline and a status update. Investigate after harm is stopped.",
+        "tier": "best"
+      },
+      {
+        "text": "Let each investigator keep digging until one finds the root cause.",
+        "tier": "risky"
+      },
+      {
+        "text": "Wait for more reports before declaring anything.",
+        "tier": "bad"
+      }
+    ],
+    "why": "The first goal is to stop the harm and restore service, even with a workaround. Confusion about who decides is the most common failure."
+  },
+  {
+    "scenario": "You are not sure whether a problem counts as an incident.",
+    "question": "What does the runbook advise?",
+    "options": [
+      {
+        "text": "Treat it as one for the first few minutes. It is cheaper to stand down early than to start late, and anyone may raise severity.",
+        "tier": "best"
+      },
+      {
+        "text": "Wait until the impact is obvious before telling anyone.",
+        "tier": "risky"
+      },
+      {
+        "text": "Ask a manager to decide at the next weekly meeting.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Severity can be lowered later by the lead. Starting higher costs little compared with a late start."
+  },
+  {
+    "scenario": "A fix does not seem to work. A responder suggests changing three settings at once to save time.",
+    "question": "What is the better approach?",
+    "options": [
+      {
+        "text": "Work on the most likely, least risky hypothesis first, make one reversible change at a time and ask the lead before anything that could make things worse.",
+        "tier": "best"
+      },
+      {
+        "text": "Change all three, since one of them will probably help.",
+        "tier": "risky"
+      },
+      {
+        "text": "Roll back everything made so far without recording it.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Changing several things at once means you will not know which worked, and you can make things worse. Record every change so it can be undone deliberately."
+  },
+  {
+    "scenario": "A SEV 1 incident is ongoing. Customers and executives are asking for news, but there is no progress yet.",
+    "question": "What does good communication look like?",
+    "options": [
+      {
+        "text": "Send updates on the agreed schedule even without progress, say so plainly, use a consistent template and avoid speculating about cause or promising fix times.",
+        "tier": "best"
+      },
+      {
+        "text": "Stay silent until there is something positive to report.",
+        "tier": "risky"
+      },
+      {
+        "text": "Tell customers the vendor is to blame so they stay calm.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Silence breeds rumors and duplicate effort. Customers should get honest, specific, calm messages that state what is affected and when the next update comes."
+  },
+  {
+    "scenario": "The incident is resolved. Someone suggests a quick thank-you message and moving on. Another wants to find who made the mistake.",
+    "question": "What should the review look like?",
+    "options": [
+      {
+        "text": "A blameless review within a few working days: reconstruct the timeline, explore contributing factors, note what went well and agree on follow-up actions with owners and dates.",
+        "tier": "best"
+      },
+      {
+        "text": "Name the individual responsible so it does not happen again.",
+        "tier": "risky"
+      },
+      {
+        "text": "Skip the review since the incident is closed.",
+        "tier": "bad"
+      }
+    ],
+    "why": "People report problems faster when they are not afraid of punishment. Reviews that produce no owned, dated actions teach the team that reviews are theater."
+  }
+]

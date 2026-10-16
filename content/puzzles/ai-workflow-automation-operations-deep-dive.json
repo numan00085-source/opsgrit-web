@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "Your team has a long list of ideas, and the loudest one is the most impressive demo.",
+    "question": "How do you pick the first workflow?",
+    "options": [
+      {
+        "text": "Score every candidate on volume, variance, clarity, risk, data access and owner, then start with the highest-scoring, lowest-risk workflow.",
+        "tier": "best"
+      },
+      {
+        "text": "Start with the demo the executives liked best, and score the rest later.",
+        "tier": "risky"
+      },
+      {
+        "text": "Start with the most complex process, since solving it proves the most.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A boring, reliable win builds the trust needed for harder projects. Scoring with the same criteria keeps the conversation objective instead of political."
+  },
+  {
+    "scenario": "An approval step in a process is duplicated by a second approval nobody can explain. Someone suggests adding AI to speed up both.",
+    "question": "What do you do first?",
+    "options": [
+      {
+        "text": "Map the process, remove the duplicate approval and standardize the intake form, then decide whether AI is still needed.",
+        "tier": "best"
+      },
+      {
+        "text": "Automate both approvals with AI so they are at least fast.",
+        "tier": "risky"
+      },
+      {
+        "text": "Leave the process as it is and add an agent that works around the delays.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Automating a confusing process makes it faster and still confusing. Simple fixes that need no AI are cheaper and make later automation more reliable."
+  },
+  {
+    "scenario": "A pilot has run with human review on every output for several weeks. Reviewers approve most drafts without changes.",
+    "question": "What should drive the decision to reduce review?",
+    "options": [
+      {
+        "text": "Evidence from the logs and approval rates over time, reducing review only where the data supports it.",
+        "tier": "best"
+      },
+      {
+        "text": "A manager's feeling that the team trusts it now.",
+        "tier": "risky"
+      },
+      {
+        "text": "The calendar: day 61 arrives, so review ends.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Approval and edit rates give direct evidence of quality. When people approve most drafts unchanged for several weeks, you have data to justify more autonomy, not before."
+  },
+  {
+    "scenario": "You are about to write the first prompt for a new automation. The security lead asks what happens if something goes wrong.",
+    "question": "Which guardrail set do you have ready before building?",
+    "options": [
+      {
+        "text": "Defined success and failure, limited permissions, a human checkpoint where mistakes are costly, full logging, escalation on low confidence and a pause switch.",
+        "tier": "best"
+      },
+      {
+        "text": "A good prompt that tells the model to be careful, plus a plan to add controls after launch.",
+        "tier": "risky"
+      },
+      {
+        "text": "Full write access in production, so the pilot is realistic.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Guardrails turn a clever demo into something an operations leader can rely on. They feel like overhead at the start and save a great deal of time when something unexpected happens."
+  },
+  {
+    "scenario": "Six months after launch, the pilot has not delivered the expected savings. The team feels bad about stopping it.",
+    "question": "What is the right call?",
+    "options": [
+      {
+        "text": "Calculate net value with the full formula, then decide to expand, adjust or stop. Stopping a weak pilot is a legitimate, healthy outcome.",
+        "tier": "best"
+      },
+      {
+        "text": "Keep it running indefinitely so the effort is not wasted.",
+        "tier": "risky"
+      },
+      {
+        "text": "Hide the weak results and report only the time saved on the happy path.",
+        "tier": "bad"
+      }
+    ],
+    "why": "The goal is to learn quickly and cheaply. Counting only the happy path overstates benefits, and the honest formula includes review, correction and maintenance time."
+  }
+]

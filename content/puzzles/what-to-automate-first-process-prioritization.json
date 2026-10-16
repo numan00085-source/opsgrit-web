@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "The team's loudest complaint is a task that happens twice a month. A quieter daily process quietly eats many hours a week.",
+    "question": "How should you choose the first automation?",
+    "options": [
+      {
+        "text": "Build an inventory, measure a baseline for volume, effort and quality, then score candidates on value and feasibility with criteria agreed in advance.",
+        "tier": "best"
+      },
+      {
+        "text": "Automate the loudest complaint first.",
+        "tier": "risky"
+      },
+      {
+        "text": "Pick whichever one the vendor's template supports.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Volume of complaints is not volume of work or value. A repeatable method replaces instinct with evidence."
+  },
+  {
+    "scenario": "A process has defects, long approval queues and duplicated data entry. A teammate proposes a bot to speed it up.",
+    "question": "What is the rule of thumb?",
+    "options": [
+      {
+        "text": "Eliminate, simplify, then automate. A fast version of a messy process is still messy.",
+        "tier": "best"
+      },
+      {
+        "text": "Automate first, then see what needs fixing.",
+        "tier": "risky"
+      },
+      {
+        "text": "Add more approvals so the bot has checkpoints.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Automating a mess makes it happen at machine speed and harder to see. Remove steps with no purpose first."
+  },
+  {
+    "scenario": "You are scoring candidates. A colleague wants to adjust the weights after seeing which candidate they like is behind.",
+    "question": "What is the right approach?",
+    "options": [
+      {
+        "text": "Decide the criteria and weights before scoring so the numbers cannot be nudged toward a favorite.",
+        "tier": "best"
+      },
+      {
+        "text": "Adjust the weights until the favorite wins, since the team believes in it.",
+        "tier": "risky"
+      },
+      {
+        "text": "Drop the scoring and vote.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A scoring model does not produce truth. It structures the conversation so the team argues about evidence instead of preferences."
+  },
+  {
+    "scenario": "A process looks clean on a diagram, but when you interview staff, they say 'it depends' for every decision and most cases are exceptions.",
+    "question": "What does that tell you?",
+    "options": [
+      {
+        "text": "The process needs judgment and is not ready for straight-through automation. Clarify the rules first or plan for human involvement.",
+        "tier": "best"
+      },
+      {
+        "text": "It is ready. Exceptions are rare, and the bot can handle them.",
+        "tier": "risky"
+      },
+      {
+        "text": "Automate it anyway and fix exceptions as they appear.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Decision points reveal whether rules are clear enough to automate. A process where most cases are exceptions is not a straight-through candidate, however clean the diagram looks."
+  },
+  {
+    "scenario": "Five people each save two hours a week through an automation. Finance asks how much money is saved.",
+    "question": "What is the honest answer?",
+    "options": [
+      {
+        "text": "Saved hours are not the same as saved money. You have made capacity available, so decide in advance what it will be used for.",
+        "tier": "best"
+      },
+      {
+        "text": "Multiply hours by salary and report that as savings.",
+        "tier": "risky"
+      },
+      {
+        "text": "Say savings cannot be measured, so there is no point tracking.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Capacity is not a removed salary. Count reductions in errors and delays too, and compare against the baseline measured before the pilot."
+  }
+]

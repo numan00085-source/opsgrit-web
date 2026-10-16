@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "Your AI extraction returns invoice fields. The line items do not add up to the subtotal on one invoice.",
+    "question": "What should happen to that invoice?",
+    "options": [
+      {
+        "text": "Fail the arithmetic validation and route it to a person, because either the extraction or the invoice is wrong.",
+        "tier": "best"
+      },
+      {
+        "text": "Trust the model's confidence score and pass it through if the score looks high.",
+        "tier": "risky"
+      },
+      {
+        "text": "Adjust the subtotal automatically so the numbers add up and keep processing.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Checking that line items sum to the subtotal and that subtotal plus tax equals the total is a free check that catches many extraction errors. Never let the system quietly change a number to make it agree."
+  },
+  {
+    "scenario": "A pilot is going well, and someone proposes letting the AI approve and release payments to speed things up.",
+    "question": "Where should AI stop in the invoice lifecycle?",
+    "options": [
+      {
+        "text": "AI reads, suggests and explains. Rules validate and match. People and a controlled system approve and pay, with a documented human or policy gate before money moves.",
+        "tier": "best"
+      },
+      {
+        "text": "Let AI approve invoices under a small amount, and decide the limit as you go.",
+        "tier": "risky"
+      },
+      {
+        "text": "Let AI release payments directly because it is faster and the model is accurate in testing.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Keeping approval and payment outside the model is what keeps the system explainable to an auditor. Any policy-based automation needs finance leadership sign-off and limits written down."
+  },
+  {
+    "scenario": "An email arrives from a known supplier asking you to update their bank details. It includes a new phone number to confirm the change.",
+    "question": "What do you do?",
+    "options": [
+      {
+        "text": "Verify through a contact method you already hold, not the details in the request, and never let an AI step approve a bank detail change on its own.",
+        "tier": "best"
+      },
+      {
+        "text": "Call the phone number in the email to confirm, since it was in the same message.",
+        "tier": "risky"
+      },
+      {
+        "text": "Update the details automatically if the sender's email address matches the supplier record.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Bank detail changes are a favorite target of payment fraud. Verification must use a known contact path held independently of the request, and a person must own the decision."
+  },
+  {
+    "scenario": "The AI suggests a general ledger account and cost center for each invoice. Clerks are asked to approve suggestions.",
+    "question": "How do you roll out automatic coding?",
+    "options": [
+      {
+        "text": "Suggest first with the precedent shown, track acceptance by supplier, and allow automatic coding only for suppliers where acceptance stays consistently high.",
+        "tier": "best"
+      },
+      {
+        "text": "Turn on automatic coding for every supplier once the average accuracy looks good.",
+        "tier": "risky"
+      },
+      {
+        "text": "Let the model invent new account codes when none fits, to keep invoices moving.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Rolling out supplier by supplier, with evidence, limits the damage if the model is wrong. The model must choose from your real chart of accounts, never invent codes."
+  },
+  {
+    "scenario": "Your dashboard shows 98 percent average extraction accuracy and the team wants to go live.",
+    "question": "What do you check before trusting that number?",
+    "options": [
+      {
+        "text": "Field-level accuracy for the critical fields, document-level accuracy, and above all the error escape rate: how many errors reached payment without being caught.",
+        "tier": "best"
+      },
+      {
+        "text": "Nothing more. Ninety-eight percent sounds high enough.",
+        "tier": "risky"
+      },
+      {
+        "text": "Only check speed, because faster cycle time proves it is working.",
+        "tier": "bad"
+      }
+    ],
+    "why": "An average can hide a field that is wrong too often, such as total or supplier. The error escape rate is the number that matters most, and a weekly audit of invoices that passed all checks finds silent failures."
+  }
+]

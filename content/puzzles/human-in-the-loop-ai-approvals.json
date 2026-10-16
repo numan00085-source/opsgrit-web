@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "A reviewer approves hundreds of AI proposals a day. Approval rates are near 100 percent and review times are very short.",
+    "question": "What does that suggest?",
+    "options": [
+      {
+        "text": "The loop may have become a ritual. Redesign the review: focused screens, safe defaults, realistic volume and seeded test cases.",
+        "tier": "best"
+      },
+      {
+        "text": "The AI is nearly perfect, so reduce review.",
+        "tier": "risky"
+      },
+      {
+        "text": "Add more reviewers to approve faster.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Warning signs of rubber-stamping include near-100 percent approval with very short review times. Adding reviewers does not fix a design problem."
+  },
+  {
+    "scenario": "An AI step can tag tickets, draft summaries, send standard customer emails and release payments.",
+    "question": "How do you decide which need approval?",
+    "options": [
+      {
+        "text": "Classify each action by reversibility, blast radius, external visibility and regulatory exposure, and set a default pattern per action. Payments need human approval always.",
+        "tier": "best"
+      },
+      {
+        "text": "Pick one policy for the whole workflow.",
+        "tier": "risky"
+      },
+      {
+        "text": "Require approval for everything, forever.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A single process contains actions of very different weight. Writing down the matrix gives you a documented answer when someone asks why an action does or does not need approval."
+  },
+  {
+    "scenario": "A reviewer sees an AI proposal. The model is unsure about two fields but the review screen shows the whole document.",
+    "question": "What is the better design?",
+    "options": [
+      {
+        "text": "Show the decision, evidence and reason together, highlight the uncertain fields and make the default 'needs more information' instead of 'approve'.",
+        "tier": "best"
+      },
+      {
+        "text": "Show only the final answer so the reviewer is not distracted.",
+        "tier": "risky"
+      },
+      {
+        "text": "Ask the reviewer to proofread the whole document carefully.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Reviewers do far better with a focused question than an open-ended 'please check'. The safe choice should be the easy one."
+  },
+  {
+    "scenario": "You want to know if your reviewers really catch errors.",
+    "question": "What is the most honest test?",
+    "options": [
+      {
+        "text": "Seed known test cases with planted problems, explain why this is done, and measure the catch rate.",
+        "tier": "best"
+      },
+      {
+        "text": "Ask reviewers whether they feel careful.",
+        "tier": "risky"
+      },
+      {
+        "text": "Count how many items each reviewer clears per hour.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Seeded cases show whether review is real. Measuring speed alone rewards speed, not quality."
+  },
+  {
+    "scenario": "An AI action has run well under full approval for months. The team wants less friction.",
+    "question": "How do you loosen control safely?",
+    "options": [
+      {
+        "text": "Move to the lightest control that is still safe, based on evidence: shadow, full approval, exception-based review, then monitored autonomy, with graduation and demotion criteria set in advance.",
+        "tier": "best"
+      },
+      {
+        "text": "Remove approvals everywhere at once and see what happens.",
+        "tier": "risky"
+      },
+      {
+        "text": "Keep full approval forever to be safe.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Approval for everything forever is not the goal. Predefined demotion criteria mean controls tighten again automatically if quality slips."
+  }
+]

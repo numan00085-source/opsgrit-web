@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "Sales, finance and support each report a different number of customers. All three numbers are defensible.",
+    "question": "What is the underlying problem?",
+    "options": [
+      {
+        "text": "Nobody has defined what 'customer' means or which system is the system of record for each data domain and attribute.",
+        "tier": "best"
+      },
+      {
+        "text": "The reports are wrong and need to be recalculated.",
+        "tier": "risky"
+      },
+      {
+        "text": "One team is lying, and leadership needs to find out which.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Ambiguous ownership leaves the same fact in several places, drifting apart. Ownership is decided per data domain and often per field, not per tool."
+  },
+  {
+    "scenario": "The CRM and the billing system both allow edits to a customer's billing address.",
+    "question": "What should you do?",
+    "options": [
+      {
+        "text": "Decide one owner per attribute, document who may create, update, read and delete it, and prefer one-way sync from the system of record.",
+        "tier": "best"
+      },
+      {
+        "text": "Allow two-way edits and let the most recent change win.",
+        "tier": "risky"
+      },
+      {
+        "text": "Pick whichever team argues most loudly.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Cells that say 'Edit' in more than one system for the same attribute are conflicts. Two-way sync creates loops, overwrites and conflicts, and should be rare and tightly restricted."
+  },
+  {
+    "scenario": "Customer records in three systems are matched by name and email address.",
+    "question": "What breaks first?",
+    "options": [
+      {
+        "text": "Matching on names or emails fails as soon as someone changes theirs. Use a stable shared ID generated in one system and stored in the others.",
+        "tier": "best"
+      },
+      {
+        "text": "Nothing breaks. Names are unique enough.",
+        "tier": "risky"
+      },
+      {
+        "text": "Matching only breaks when records are deleted.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Each record needs a stable identifier that other systems store, so records can be matched reliably."
+  },
+  {
+    "scenario": "Your CRM has many duplicate customer records. A teammate wants to bulk merge them tonight.",
+    "question": "How do you proceed?",
+    "options": [
+      {
+        "text": "Define a match rule, back up first, test the merge on a small set, understand what history is preserved and assign data stewards.",
+        "tier": "best"
+      },
+      {
+        "text": "Merge everything that looks similar to clean up fast.",
+        "tier": "risky"
+      },
+      {
+        "text": "Leave duplicates and ask users to be careful.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Merging records can destroy history. A clear match rule, backups and small tests keep cleanup safe, and stewards keep quality from decaying."
+  },
+  {
+    "scenario": "Six months after the data ownership decisions, a team proposes a new tool that stores customer data.",
+    "question": "What keeps the decisions from eroding?",
+    "options": [
+      {
+        "text": "Publish the data ownership table, review new tools against it, state the system of record for every integration or migration, and record exceptions with reasons.",
+        "tier": "best"
+      },
+      {
+        "text": "Nothing. Decisions made once stay correct.",
+        "tier": "risky"
+      },
+      {
+        "text": "Let the new tool become another editable copy and reconcile later.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Decisions made once and forgotten erode as tools arrive and people change roles. Light governance keeps ownership clear and exceptions visible."
+  }
+]
