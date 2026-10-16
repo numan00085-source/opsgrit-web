@@ -25,7 +25,7 @@
         "sidebar",
         "article-top"
       ],
-      "enabled": true,
+      "enabled": false,
       "start": "2026-10-13",
       "end": "2026-10-19"
     }
