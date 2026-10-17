@@ -9,7 +9,11 @@ const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 export interface PostMeta {
   slug: string;
   title: string;
+  /** Shorter title for search results (about 60 characters including the site name). */
+  seoTitle: string;
   excerpt: string;
+  /** Description for search results, 160 characters or fewer. */
+  metaDescription: string;
   category: string;
   date: string;
   updated: string;
@@ -49,6 +53,26 @@ function extractHeadings(content: string): Post["headings"] {
   return out;
 }
 
+/** Search results cut titles at about 60 characters, and the site name is added after the title. */
+export function makeSeoTitle(custom: string, title: string): string {
+  if (custom.trim()) return custom.trim();
+  if (title.length <= 50) return title;
+  const head = title.split(":")[0].trim();
+  if (head.length >= 24 && head.length <= 50) return head;
+  const cut = title.slice(0, 50);
+  return cut.slice(0, Math.max(cut.lastIndexOf(" "), 30)).replace(/[,:;\s-]+$/, "");
+}
+
+/** Keep descriptions to 160 characters so Google does not cut them mid-sentence. */
+export function makeMetaDescription(custom: string, excerpt: string): string {
+  const t = (custom.trim() || excerpt.trim()).replace(/\s+/g, " ");
+  if (t.length <= 160) return t;
+  const cut = t.slice(0, 157);
+  const sentence = cut.lastIndexOf(". ");
+  if (sentence > 90) return cut.slice(0, sentence + 1);
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,:;\s-]+$/, "") + "...";
+}
+
 function parse(file: string): Post {
   const slug = file.replace(/\.mdx?$/, "");
   const raw = fs.readFileSync(path.join(POSTS_DIR, file), "utf8");
@@ -60,7 +84,9 @@ function parse(file: string): Post {
   return {
     slug: String(data.slug || slug),
     title: String(data.title ?? slug),
+    seoTitle: makeSeoTitle(String(data.seoTitle ?? ""), String(data.title ?? slug)),
     excerpt: String(data.excerpt ?? ""),
+    metaDescription: makeMetaDescription(String(data.metaDescription ?? ""), String(data.excerpt ?? "")),
     category: String(data.category ?? "Ops Stack"),
     date,
     updated:

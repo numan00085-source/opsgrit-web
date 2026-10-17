@@ -33,13 +33,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const post = getPost(slug);
   if (!post) return {};
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: post.seoTitle,
+    description: post.metaDescription,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
       title: post.title,
-      description: post.excerpt,
+      description: post.metaDescription,
       publishedTime: post.date,
       authors: [post.author],
       images: post.coverImage ? [post.coverImage] : undefined,
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.excerpt,
+      description: post.metaDescription,
       images: post.coverImage ? [post.coverImage] : undefined,
     },
   };
