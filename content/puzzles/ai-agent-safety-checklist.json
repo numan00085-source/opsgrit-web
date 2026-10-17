@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "An operations lead is configuring an AI agent to update staging fields in the company CRM. A single failed verification item remains on the pre-flight safety matrix regarding the agent kill switch.",
+    "question": "What should the team do with the deployment?",
+    "why": "The operational rule is absolute: a single failed check halts production deployment and keeps the agent in sandbox mode.",
+    "options": [
+      {
+        "text": "Deploy to production with read-only permissions while engineers fix the kill switch.",
+        "tier": "risky"
+      },
+      {
+        "text": "Halt deployment and keep the agent in sandbox mode until every check passes.",
+        "tier": "best"
+      },
+      {
+        "text": "Grant write permissions since CRM staging fields are non-destructive.",
+        "tier": "bad"
+      }
+    ]
+  },
+  {
+    "scenario": "A team wants to give an AI agent the ability to update lead summaries and route tags in Salesforce. The administrator must decide on the credential structure.",
+    "question": "How should the agent's permissions be architected?",
+    "why": "CRM write configurations must use dedicated, scoped service principals restricted to specific staging fields rather than inherited roles or broad permissions.",
+    "options": [
+      {
+        "text": "Provide field-level write access restricted to specific staging fields using a dedicated service principal.",
+        "tier": "best"
+      },
+      {
+        "text": "Grant standard Modify All Data credentials so the agent can read and write across objects.",
+        "tier": "bad"
+      },
+      {
+        "text": "Let the agent inherit a manager's session token with standard lead edit permissions.",
+        "tier": "risky"
+      }
+    ]
+  },
+  {
+    "scenario": "A workflow involves feeding customer support tickets directly into an AI model context window for triage and routing. The team needs to prevent prompt injection overrides.",
+    "question": "How should the team isolate untrusted customer input?",
+    "why": "Defenses against indirect injection require structural isolation like XML delimiters and deterministic pre-sanitization before the model runs.",
+    "options": [
+      {
+        "text": "Add a system prompt sentence instructing the model to ignore any malicious text in the ticket.",
+        "tier": "risky"
+      },
+      {
+        "text": "Sanitize input for high-risk patterns and wrap untrusted messages in structural XML delimiters.",
+        "tier": "best"
+      },
+      {
+        "text": "Allow the raw text directly into the prompt without formatting to avoid token parsing overhead.",
+        "tier": "bad"
+      }
+    ]
+  },
+  {
+    "scenario": "Customer service records containing names, emails, and phone numbers must be analyzed by an external model. The team is deciding how to protect privacy.",
+    "question": "How should customer PII be handled prior to sending the prompt?",
+    "why": "Teams must never rely on LLMs to redact sensitive data; deterministic masking and tokenization must run in integration middleware before calling external APIs.",
+    "options": [
+      {
+        "text": "Instruct the model prompt to omit customer identifiers in its final response.",
+        "tier": "bad"
+      },
+      {
+        "text": "Rely on the external model provider's default data processing terms to scrub data.",
+        "tier": "risky"
+      },
+      {
+        "text": "Pseudonymize identifiers with stable tokens in integration middleware before API egress.",
+        "tier": "best"
+      }
+    ]
+  },
+  {
+    "scenario": "An autonomous agent generates database updates to commit directly into an enterprise billing tool. The engineer needs to handle output execution.",
+    "question": "What validation must occur before the payload triggers the billing API?",
+    "why": "Downstream actions must never trigger from unvalidated text; they require strict JSON schema enforcement followed by deterministic validation against trusted records.",
+    "options": [
+      {
+        "text": "Pass the output through strict schema compilation and deterministic business logic checks.",
+        "tier": "best"
+      },
+      {
+        "text": "Rely on the model's natural language output to format direct billing calls.",
+        "tier": "bad"
+      },
+      {
+        "text": "Run a secondary prompt asking the model to verify if its own output fields are correct.",
+        "tier": "risky"
+      }
+    ]
+  }
+]
