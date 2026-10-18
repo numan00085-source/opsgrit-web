@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "A workflow that creates a ticket for every signed contract stops running after an app update. No errors appear anywhere.",
+    "question": "How would you catch this?",
+    "options": [
+      {
+        "text": "Add a heartbeat check that alerts when the expected number of tickets is missing in a window, such as none created in a weekday.",
+        "tier": "best"
+      },
+      {
+        "text": "Wait for the error alert, since failures always produce one.",
+        "tier": "risky"
+      },
+      {
+        "text": "Ask the sales team to tell you if tickets look low.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A silent no-run produces no error message. Only a check for the missing result can see it."
+  },
+  {
+    "scenario": "Your automation alerts post to a shared channel that most people have muted.",
+    "question": "What is the better design?",
+    "options": [
+      {
+        "text": "Route by severity to a named owner with a backup, put the automation name, symptom and next step in the alert and test the route every quarter.",
+        "tier": "best"
+      },
+      {
+        "text": "Post every alert to a bigger channel so more people see it.",
+        "tier": "risky"
+      },
+      {
+        "text": "Turn alerts off since nobody reads them anyway.",
+        "tier": "bad"
+      }
+    ],
+    "why": "An alert nobody reads is the same as no alert. Ownership, a backup and a tested route are what make an alert work."
+  },
+  {
+    "scenario": "A run finishes with no error, but a sample check shows 46 tickets created for 50 signed contracts.",
+    "question": "What does this show?",
+    "options": [
+      {
+        "text": "A wrong-output failure that status colors cannot see. Reconcile counts, find the four missing items and fix the cause.",
+        "tier": "best"
+      },
+      {
+        "text": "The automation is healthy because the run was green.",
+        "tier": "risky"
+      },
+      {
+        "text": "Ignore it. Four out of fifty is close enough.",
+        "tier": "bad"
+      }
+    ],
+    "why": "A run that finishes without error has not proved the result is right. Count reconciliation catches silent gaps."
+  },
+  {
+    "scenario": "You are choosing between alerting on 'step four retried twice' and alerting on 'no invoices created today'.",
+    "question": "Which do you set up first?",
+    "options": [
+      {
+        "text": "The symptom alert, no invoices created, because it catches any cause, including ones you did not anticipate.",
+        "tier": "best"
+      },
+      {
+        "text": "The step retry alert, since it shows the exact cause.",
+        "tier": "risky"
+      },
+      {
+        "text": "Neither. Review the dashboard when you remember.",
+        "tier": "bad"
+      }
+    ],
+    "why": "Cause alerts only fire for causes you predicted. A missing result always triggers a symptom alert."
+  },
+  {
+    "scenario": "Your urgent alert channel has fired ten times in a month and was ignored all ten times.",
+    "question": "What should happen?",
+    "options": [
+      {
+        "text": "Review it in the monthly hygiene pass: remove it, merge it with a duplicate or move it to a digest, so urgent alerts stay meaningful.",
+        "tier": "best"
+      },
+      {
+        "text": "Keep it. It might matter one day.",
+        "tier": "risky"
+      },
+      {
+        "text": "Add more urgent alerts so nobody can miss a real one.",
+        "tier": "bad"
+      }
+    ],
+    "why": "People can react urgently only a few times a day before fatigue sets in. Alerts that are routinely harmless teach people to ignore alerts."
+  }
+]

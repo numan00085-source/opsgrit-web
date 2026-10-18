@@ -1,0 +1,209 @@
+---
+title: "RACI Matrix for Operations Teams: Template, Examples and Mistakes"
+seoTitle: "RACI Matrix for Operations Teams: Template"
+slug: "raci-matrix-operations-teams-template"
+category: "Process SOPs"
+excerpt: "Build a RACI matrix people actually use. A step-by-step method, a copyable template, three operations examples and the mistakes that make RACI charts useless."
+date: "2026-10-17"
+author: "OpsGrit Research Desk"
+coverImage: "/images/raci-matrix-operations-teams-template-cover.webp"
+featured: false
+---
+
+Ask five people on an operations team who approves a vendor contract, who updates the runbook after an incident, or who tells finance that a migration slipped, and you will often get five different answers. Nobody is lazy. The ownership was never written down, so everyone filled the gap with an assumption.
+
+A RACI matrix is the simplest tool for closing that gap. It is also one of the most misused. Teams build a chart once, file it in a shared drive and never look at it again, or they fill every cell with an R "to be safe" and end up with a grid that says nothing. This guide shows how to build a RACI matrix that people actually use: start from decisions rather than names, keep exactly one accountable person per row, and review it when the work changes.
+
+## What RACI means and what it does not
+
+RACI assigns one of four roles to each person for each task or decision:
+
+- **Responsible (R):** does the work or produces the deliverable. There can be more than one.
+- **Accountable (A):** holds final decision authority and answers for the result. There should be exactly one.
+- **Consulted (C):** gives advice or specialist input before the work is finished. Communication runs both ways.
+- **Informed (I):** is told what happened or what was decided. Communication runs one way.
+
+Two rules do most of the work. Every row needs at least one R, because a task nobody does will not get done. Every row needs exactly one A, because a task with two owners has none. Common guidance on RACI also says the accountable person must have the real authority to get the task finished, and that you should keep consulted roles few, since each one adds delay.
+
+RACI is not an org chart, a reporting line or a performance measure. It does not say who is senior. It says who does, who decides, who advises and who needs to know for one specific piece of work. A manager can be A on one row and I on the next.
+
+Variants exist. RASCI adds a Supportive role, and other models such as DACI focus on decisions. Pick one and use it consistently. A team that mixes three variants spends its meetings arguing about letters.
+
+## Start with decisions and deliverables, not people
+
+Most weak matrices begin with a list of names and try to work out what each person does. That produces a chart of job descriptions. A useful matrix starts with the work.
+
+Write the rows as verbs and outcomes:
+
+- Approve the cutover date
+- Sign off on field mapping
+- Decide whether to roll back
+- Update the runbook after an incident
+- Revoke access for a departing employee
+- Tell customers about planned downtime
+
+Notice that several rows are decisions rather than tasks. Decisions are where ownership usually breaks. Two people each assume the other will approve the change, or three people each believe they can veto it. Putting "Approve the cutover date" on its own row forces the conversation.
+
+Columns should be roles at first: operations lead, data owner, IT, finance, support lead. Replace roles with names once the roles are agreed. If you start with names, people negotiate around personalities. If you start with roles, they negotiate around responsibilities, which is the useful argument.
+
+## Build the matrix in six steps
+
+1. **Define the scope.** One process, project or decision area. "Everything operations does" is too big to fill in honestly. "The CRM migration" or "Vendor onboarding" is the right size.
+2. **List 8 to 20 rows.** Fewer than eight usually means rows are too coarse. More than twenty means you are mapping steps instead of ownership. Split the matrix if it grows.
+3. **List the roles.** Include every function that does, decides or needs to know. If a function is missing at this stage, it will show up as a surprise later.
+4. **Draft the A column first.** For each row, name the single role that holds final authority. Doing this before assigning R, C and I stops the common pattern where the person who does the work is assumed to own the outcome.
+5. **Fill in R, then C, then I.** Ask for each C whether the task would fail or be worse without their input. If the answer is no, they are an I.
+6. **Check every row against the rules.** One A. At least one R. No row where every person has a letter. Then get the people in the matrix to read their own rows.
+
+The draft should be rough and quick. Aim for a draft in under an hour, then use the alignment meeting described below to settle the disagreements. The disagreements are the point. A matrix that nobody argued about is probably a matrix nobody read.
+
+## A RACI template you can copy
+
+Use roles as columns and decisions or deliverables as rows. The example below is for a tool migration. The assignments are illustrative: your organization may reasonably choose differently, as long as each row has one A.
+
+| Task or decision | Ops lead | Data owner | IT | Finance | Support lead |
+|---|---|---|---|---|---|
+| Approve migration scope | A | C | C | I | I |
+| Sign off on field mapping | C | A | R | I | I |
+| Run reconciliation checks | I | A | R | | |
+| Approve the cutover date | A | C | C | C | C |
+| Decide whether to roll back | A | C | R | I | I |
+| Send the customer notice | C | | | | A/R |
+| Approve decommissioning the old system | C | A | R | C | I |
+
+Three habits make the template work.
+
+**Add a "decision date" or "review" column when needed.** A row that never gets finished is a sign that its A is overloaded. A date next to the row makes that visible.
+
+**Allow A/R on the same cell.** When the accountable person also does the work, write A/R. This is normal for small teams, and it is clearer than leaving the R blank.
+
+**Leave blanks blank.** If a role has no involvement in a row, do not fill the cell with an I out of politeness. A grid full of I's tells people nothing, and they stop reading it.
+
+For the migration steps themselves, the [migration playbook](/blog/migrate-operations-tools-without-downtime-playbook) covers what each gate needs, and its decision authority matrix is a close relative of the RACI above.
+
+## Three worked examples for operations teams
+
+### Example 1: Incident response
+
+Speed matters more than consultation during an incident, so the matrix is short and the A is clear.
+
+| Task | Incident commander | Service owner | Communications lead | Exec sponsor |
+|---|---|---|---|---|
+| Declare an incident and set severity | A/R | C | I | I |
+| Decide on a rollback or workaround | A | R | I | I |
+| Update status page and stakeholders | C | I | A/R | I |
+| Approve the post-incident review | C | C | R | A |
+
+The point is that one person, the incident commander, decides during the incident. Consultation happens in the minutes before the decision, not in a long thread. The [incident response runbook](/blog/operational-incident-response-runbook) shows how to attach these roles to severity levels and escalation timing.
+
+### Example 2: New vendor onboarding
+
+Vendor onboarding involves procurement, security, finance, legal and the business owner, which is exactly where ownership gets muddy.
+
+| Task | Business owner | Procurement | Security | Finance | Legal |
+|---|---|---|---|---|---|
+| Define the need and success criteria | A/R | C | C | I | |
+| Run the security review | I | I | A/R | | C |
+| Negotiate terms | C | A/R | C | C | C |
+| Approve the purchase | A | R | C | C | C |
+| Confirm the vendor is set up for payment | I | R | | A | |
+
+Note that the business owner is accountable for the purchase decision, not procurement. Procurement does the work and keeps the process honest, but the person who will live with the tool decides whether to buy it. Teams that skip this distinction often find that procurement is blamed when a tool fails to deliver. The [vendor onboarding SOP](/blog/vendor-onboarding-sop-procurement) has the due diligence steps that sit underneath these rows.
+
+### Example 3: Employee offboarding
+
+Offboarding fails when HR assumes IT will revoke access and IT assumes HR will tell them who left.
+
+| Task | HR | Manager | IT | Security |
+|---|---|---|---|---|
+| Notify IT of the departure date | A/R | C | I | I |
+| Revoke access to all systems | I | I | R | A |
+| Collect devices and assets | C | A | R | I |
+| Transfer automations and shared files | I | A | C | C |
+| Sign off the audit trail | I | C | R | A |
+
+The security owner is accountable for access revocation because that is a risk decision, while IT does the work. The [offboarding SOP](/blog/employee-offboarding-sop-deprovisioning-assets-audit) has the full deprovisioning checklist and audit trail template these rows point to.
+
+## How to run the alignment meeting
+
+Do not email the matrix around for comments. Email produces polite silence, and silence is not agreement. Run a 45-minute meeting with the people who appear in the matrix.
+
+1. **Five minutes: explain the four roles** and the two rules, so nobody argues about definitions.
+2. **Twenty minutes: walk the rows with conflicts.** Spot the rows with two A's, no A, or one person carrying too many R's. Start there instead of reading from the top.
+3. **Ten minutes: test the hard cases.** Ask "What happens if this person is on holiday?" and "Who decides if A and the team disagree?" Add a named backup for each A.
+4. **Five minutes: agree where it lives** and who updates it. A matrix without an owner will be wrong within a quarter.
+5. **Five minutes: confirm each person's rows.** Ask people to say out loud what they are accountable for. If someone hesitates, the row is not settled.
+
+If two people both claim to be accountable for a row, do not average the answer by making both of them A. Ask who gets blamed if it goes wrong, and who has the power to change the outcome. If those are different people, the real problem is an authority gap, and that is a conversation for their shared manager.
+
+## Rules that keep the matrix honest
+
+Use this as a checklist before you publish the matrix.
+
+- Every row has exactly one A.
+- Every row has at least one R.
+- The A has the authority and the time to do the job.
+- Consulted roles are limited to people who can change the outcome.
+- No row has more than one level of approval unless a rule requires it.
+- Names are used where possible, and teams are used only when the team has a single owner.
+- Every A has a named backup for holidays and sick days.
+- People in the matrix have read their own rows and agreed to them.
+- The matrix has an owner, a location and a review date.
+
+If a row fails more than one of these checks, split it into two rows. Rows that fail checks are often two decisions pretending to be one.
+
+## Common mistakes that make RACI charts useless
+
+**Two A's on one row.** This feels collaborative and removes accountability. When something goes wrong, each person assumes the other was responsible.
+
+**Every cell filled.** If everyone is C or I on every row, the matrix gives no guidance. Leave the cell blank when a role has no involvement.
+
+**Too many C's.** Each consulted person is a delay and a chance for disagreement. Consult the people whose input could change the decision, and inform the rest.
+
+**Making the doer the decider by default.** The person doing the work is not always the right person to decide. Separate R from A on purpose, then check that the A has the authority to act.
+
+**Naming teams instead of people.** "IT" is not accountable for anything. A person in IT is. Use team names only when you are sure one person speaks for the team.
+
+**Building it once and forgetting it.** Roles change, people leave and new tools appear. A matrix that was right last year can send people to the wrong person this year.
+
+**Using it for work that is not a project.** RACI is good at one-off projects and cross-team decisions. For routine, repeatable work, ownership usually belongs in the procedure itself.
+
+**Skipping the conversation.** The chart is a record of an agreement. If people did not have the conversation, the chart is a guess.
+
+## When RACI is the wrong tool
+
+RACI is not always the right answer. A three-person team that sits in the same room does not need a grid, and writing one adds overhead without clarity. A fast-moving incident needs a single commander, not a table of letters. Ongoing run work, such as processing invoices every week, is better handled by an SOP with a named owner and a review cycle. The [SOP governance guide](/blog/sop-governance-ownership-versioning) covers ownership, versioning and review for those documents, and [how to write an SOP people follow](/blog/how-to-write-an-sop-people-follow) covers the procedure itself.
+
+A good rule of thumb: use RACI when several teams must coordinate on a project or a decision, and use an SOP when one team repeats a process. If you need both, link them. Put the RACI link in the SOP header so the people reading the procedure can see who decides when something unusual happens.
+
+## Keep it alive with a short review cycle
+
+A matrix goes stale for ordinary reasons: someone changes role, a new tool arrives, a team is reorganized. Set a review trigger rather than relying on memory.
+
+- **Review at the end of every project** and update the template for next time.
+- **Review when any named person leaves or changes role.** Add this to the offboarding and role-change checklists.
+- **Review once a quarter** for matrices that cover ongoing programs.
+- **Review after any incident** where nobody was sure who should decide.
+
+Keep the matrix where people already work, such as the project page or the runbook header, instead of in a folder of its own. A matrix people have to hunt for is one they will not use. If you are deciding which automations to build next, the [automation prioritization guide](/blog/what-to-automate-first-process-prioritization) suggests an automation register with named owners and review dates, which fits naturally alongside a RACI. And if you need a starting point for the documents themselves, [ten SOP templates](/blog/sop-templates-every-ops-team-needs) includes ones that pair well with a matrix.
+
+## Key takeaways
+
+- RACI assigns Responsible, Accountable, Consulted and Informed roles to tasks and decisions. It describes who does, who decides, who advises and who is told, not who is senior.
+- Every row needs at least one R and exactly one A, and the A must have the authority to finish the task.
+- Start from decisions and deliverables, use roles as columns first, and replace roles with names once the roles are agreed.
+- Draft the A column first, then R, then C, then I. Limit C's to people who can change the outcome.
+- Run a short alignment meeting instead of emailing the matrix. The disagreements you find in the room are the value.
+- Name a backup for each accountable person, and leave cells blank when a role has no involvement.
+- Use RACI for projects and cross-team decisions, and use an SOP with a named owner for routine repeatable work.
+- Give the matrix an owner and a review trigger so it stays accurate when people and tools change.
+
+Pick one project that is in progress right now and list its ten most important decisions. Write the single accountable role next to each one. If you cannot agree on even one, you have found the first problem the matrix will solve.
+
+## A note on sources
+
+This guide is written by the OpsGrit Research Desk from common operating practice. It does not cite outside statistics or studies, and the templates and examples are starting points, so test them against your own team before you rely on them. If you spot something that looks wrong, [tell us](/contact).
+
+**Further reading.** A general reference on the four RACI roles and the guidelines mentioned above, such as one accountable person per task and limiting consulted roles:
+
+- [Smartsheet: A Comprehensive Project Management Guide for Everything RACI](https://www.smartsheet.com/comprehensive-project-management-guide-everything-raci-b)

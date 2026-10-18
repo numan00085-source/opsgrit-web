@@ -1,0 +1,200 @@
+---
+title: "How to Monitor Business Automations: Alerts, Checks and Reviews"
+seoTitle: "How to Monitor Business Automations"
+slug: "automation-monitoring-alerting-operations-teams"
+category: "Ops Stack"
+excerpt: "Automations fail quietly. Learn how operations teams define healthy, add heartbeat checks, route alerts to owners and run a 20-minute weekly review."
+date: "2026-10-17"
+author: "OpsGrit Research Desk"
+coverImage: "/images/automation-monitoring-alerting-operations-teams-cover.webp"
+featured: false
+---
+
+The worst automation failure is rarely the one that throws an error. An error is loud: a step turns red, a message lands in a channel, someone notices. The expensive failures are quiet. A trigger stops firing after an app update, so nothing runs and nothing complains. A workflow keeps running but writes the wrong value into a field. A queue backs up for three days before anyone asks why the invoices stopped.
+
+Most operations teams monitor automations the way they monitor nothing at all: they wait for someone to complain. This guide gives you a practical alternative that needs no engineering team. Define what "healthy" means for each automation, alert on the symptoms people would actually notice, send alerts to someone who owns them, and review the whole set once a week for twenty minutes.
+
+## The four ways an automation fails
+
+Before you can monitor something, you need to know how it breaks. Almost every failure fits one of four types, and each needs a different kind of check.
+
+| Failure type | What it looks like | How to catch it |
+|---|---|---|
+| **Loud error** | A step fails, the run shows an error, retries run out | Failure alert from the platform, plus a failure log |
+| **Silent no-run** | The trigger never fires, a schedule is paused, a connection is disconnected | A heartbeat check: expect a minimum number of runs in a window |
+| **Wrong output** | The run succeeds but the result is incorrect or incomplete | Output checks: counts, sampling and reconciliation |
+| **Slow or stuck** | Runs wait on an approval, a rate limit or a queue | Age alerts: flag items older than the expected time |
+
+Notice that only the first type produces an error message on its own. The other three look like success, or like nothing. Most basic setups cover the first type and miss the rest, which is why a team can believe it has monitoring and still discover an outage from a customer.
+
+## Define what healthy means for each automation
+
+You cannot alert on "something seems off." You need a short written definition of normal. For each automation, record five things:
+
+1. **Purpose in one sentence.** What business result does it produce?
+2. **Expected frequency.** How often should it run? Daily at nine, around fifty times on a weekday, only when a deal closes.
+3. **Expected result.** What should exist when it finishes? A record created, a message sent, a row updated.
+4. **Maximum acceptable delay.** How long can it be late before a person is affected?
+5. **Owner and backup.** One named person who responds, and one who covers.
+
+This takes about ten minutes per automation and doubles as documentation. If you do not know the owner or the expected frequency, you have already found a risk. The [guide on choosing what to automate first](/blog/what-to-automate-first-process-prioritization) recommends keeping an automation register with owners and review dates, and this definition is what you put in it.
+
+Numbers in a definition should come from observation, not hope. Look at the run history for a few weeks and write down what normal actually looks like. A workflow that "should" run daily but really runs on weekdays only will throw false alarms every Saturday.
+
+## Add a heartbeat for silent failures
+
+A heartbeat check answers a simple question: did the automation run at all? It is the single most useful addition for most teams, because silent no-runs are the failure that nobody sees.
+
+The idea is to expect a minimum activity level in a time window and raise an alert when it is not met. For example, imagine an automation that creates a ticket for every new signed contract. If a normal weekday sees at least a few contracts, then "zero tickets created in the last 24 hours on a weekday" is a strong signal that something is broken. You do not need to know why, only that the expected result is missing.
+
+Ways to implement a heartbeat without code:
+
+- **A scheduled check workflow.** A second small automation counts the records the first one should have created and posts an alert when the count is below the minimum.
+- **A dashboard or saved view** that shows "last successful run" per automation, reviewed in the weekly meeting.
+- **A final step that records a timestamp** in a status table. A separate scheduled check flags rows with an old timestamp.
+
+Keep the heartbeat on a different path from the thing it watches. A check that depends on the same connection as the automation will fail at the same moment and say nothing.
+
+## Alert on symptoms first, causes second
+
+A well-known chapter on monitoring in Google's Site Reliability Engineering book makes a useful point: monitoring should answer what is broken and why, and teams should spend most of their effort catching symptoms rather than causes. In operations terms, alert on "invoices are not being created" before you alert on "step four retried twice."
+
+Symptom alerts map to what the business feels:
+
+- No new tickets, invoices or records created in the expected window.
+- Items sitting in a queue longer than the maximum delay.
+- Reconciliation counts that do not match.
+- Failure log entries that nobody has reviewed in a day.
+
+Cause alerts, such as an expired token or a failing connection, are still useful as early warnings, but they should not be the only line of defense. A cause you did not anticipate will never trigger a cause alert. A missing result always triggers a symptom alert.
+
+The same source gives a practical test for any alert that wakes someone or interrupts their day: it should be urgent, it should be actionable, and it should need human judgment. If a robot could fix it, automate the fix. If it can wait until morning, send it to a digest instead. Remove alerts that are routinely harmless.
+
+## Route alerts so someone actually owns them
+
+An alert nobody reads is the same as no alert. Many teams build notifications that post to a shared channel, and over time the channel becomes noise that people mute. Treat alert routing as part of the design.
+
+Set three severity levels and route each differently.
+
+| Level | Meaning | Route | Response |
+|---|---|---|---|
+| **Urgent** | A revenue, customer or compliance process has stopped | Direct message or on-call notification to the owner, backup if no reply | Same day, ideally within an hour |
+| **Needs a ticket** | Something is wrong but not yet hurting anyone | A ticket assigned to the owner | Within the working week |
+| **Digest** | Informational or low risk | A daily or weekly summary | Reviewed in the weekly meeting |
+
+Three rules keep routing healthy:
+
+- **Every alert names an owner.** The alert text should include which automation, what the symptom is, who owns it and where the runbook or notes are.
+- **Every owner has a backup.** People take holidays. An alert sent to an absent person is an unmonitored alert.
+- **Test the route.** Once a quarter, send a test alert to each owner and confirm that a human sees it. A dead channel or a departed employee's inbox is a common hidden failure.
+
+The offboarding checklist matters here as well. When someone leaves, the [offboarding SOP](/blog/employee-offboarding-sop-deprovisioning-assets-audit) covers transferring or deleting automations they owned. Part of that transfer is changing the alert recipient, which is easy to forget.
+
+## Build a failure log and a safe replay path
+
+When a run fails, you want to know what failed, when, and what it was trying to do. You also want a way to run it again without causing damage. Both need a little structure.
+
+A simple failure log can be a table with these columns:
+
+- Timestamp
+- Automation name
+- Record or event identifier
+- Error message or symptom
+- Status: new, investigating, fixed, replayed or ignored with a reason
+- Owner
+
+Park failed items there rather than discarding them or retrying forever. A reviewed failure log tells you which automations are fragile and which errors repeat.
+
+Replay needs one precaution. If rerunning a workflow can create a duplicate invoice, a second email or a double charge, then replaying a failed item is risky. Design steps so repeating them is safe: check whether a record exists before creating it, and use unique identifiers from the source system. The [integration patterns guide](/blog/webhooks-apis-ipaas-integration-patterns) explains idempotency, retries and failure queues in plain terms and is worth reading alongside this one.
+
+## Check the output, not just the run
+
+A run that finishes without an error has not proved the result is right. Output checks catch the wrong-output failures that status colors cannot.
+
+Choose checks in proportion to the risk:
+
+- **Count reconciliation.** Compare how many items went in with how many came out. If fifty contracts were signed and forty-six tickets were created, find the four.
+- **Field checks.** Confirm that required fields are filled and values fall in an expected range or list.
+- **Sampling.** Each week, open a handful of results by hand and compare them with the source. Even a small sample finds drift that no alert would flag.
+- **Cross-system comparison.** For automations that sync data between tools, compare a key figure, such as open invoices, in both systems.
+
+For steps where a language model produces or classifies content, ordinary checks are not enough because the output can be plausible and wrong. The [guide to evaluating AI workflows](/blog/evaluate-ai-workflow-test-set-accuracy) covers building a test set and tracking accuracy over time, and [human-in-the-loop design](/blog/human-in-the-loop-ai-approvals) explains when a person should approve an action before it takes effect.
+
+## Watch usage and cost
+
+Automations can fail by costing too much rather than by breaking. A loop that retries without limit, a trigger that fires on every edit instead of every new record, or an AI step called far more often than planned can all drive up usage quickly.
+
+Check the billing unit your platform uses, such as tasks, credits, operations or executions, and put a usage view on your weekly review. Set an alert for a sudden rise compared with a normal week. The [AI workflow cost guide](/blog/ai-workflow-cost-budget-control) explains how to estimate cost per run and set budgets and limits before a problem arises.
+
+A sudden drop matters as well. If usage falls sharply, an automation may have stopped running. Usage data is a useful free heartbeat.
+
+## Hold a weekly 20-minute automation review
+
+Alerts catch urgent problems. A regular review catches slow decay. Keep it short, keep it regular and keep it to the people who own automations.
+
+A simple agenda:
+
+1. **Alerts since last week (5 minutes).** What fired, was it real, and was the response fast enough?
+2. **Failure log (5 minutes).** What is open, what repeats, what needs a fix rather than a replay?
+3. **Heartbeat and output checks (5 minutes).** Did every automation run as expected, and did the sample checks pass?
+4. **Changes and risks (5 minutes).** Is anything new, changed or about to change, such as an app update, a new owner or a new data source?
+
+A one-page table is enough to run the meeting:
+
+| Automation | Owner | Last successful run | Open failures | Output check | Notes |
+|---|---|---|---|---|---|
+| Contract to ticket | Name | Today 9:02 | 0 | Passed | |
+| Invoice intake | Name | Yesterday 17:40 | 2 | Count mismatch of 1 | Investigate |
+| New hire accounts | Name | 3 days ago | 0 | Not checked | Check trigger |
+
+Look at the third row. A three-day gap on a workflow that should run for every new hire may be perfectly normal in a slow hiring week, or it may be a broken trigger. The definition of healthy you wrote earlier is what lets the team tell the difference.
+
+## Keep alerts useful over time
+
+Alert quality drops unless somebody tends it. The Google SRE chapter notes that people can respond with urgency only a few times a day before fatigue sets in, which is a good reason to protect the urgent channel.
+
+Once a month:
+
+- **Remove alerts that are routinely harmless.** If an alert has fired ten times and been ignored ten times, it is teaching people to ignore alerts.
+- **Merge duplicates.** Two alerts describing one problem double the noise.
+- **Promote or demote severity.** If a digest item keeps turning into real incidents, raise it. If an urgent alert keeps waiting until morning, lower it.
+- **Review owners.** Confirm that every automation's owner and backup are still in the company and still the right people.
+
+## Common mistakes
+
+**Monitoring only errors.** Error alerts miss silent no-runs, wrong output and stuck work, which are the failures that cost the most.
+
+**Sending everything to one channel.** A single noisy channel trains people to mute it.
+
+**No owner on the alert.** An alert that says "Workflow failed" with no owner or next step creates a group shrug.
+
+**Alerts that depend on the thing they watch.** If the monitor shares a connection with the automation, both fail together.
+
+**Never testing the route.** A departed employee's inbox or an archived channel can swallow alerts for months.
+
+**Treating a retry as success.** A step that fails twice and succeeds on the third attempt may still point to a fragile connection. Log retries, and review them weekly.
+
+**Skipping the definition of normal.** Without a written expected frequency and result, every alert argument becomes a debate about opinions.
+
+**Fixing without recording.** If failures are fixed and forgotten, the same failure returns. Record cause and fix in the failure log.
+
+## Key takeaways
+
+- Automations fail in four ways: loud errors, silent no-runs, wrong output, and slow or stuck work. Only the first announces itself.
+- Write a short definition of healthy for each automation: purpose, expected frequency, expected result, maximum delay, owner and backup.
+- Add a heartbeat check that raises an alert when the expected number of runs or results is missing, and keep it on a separate path.
+- Alert on symptoms the business would feel first. Make every urgent alert actionable and in need of human judgment.
+- Route alerts by severity to a named owner with a backup, and test the route every quarter.
+- Keep a failure log and make replay safe by designing steps that can run twice without harm.
+- Check outputs with count reconciliation, field checks and weekly sampling, and use usage data as an early warning for both runaway cost and silent stops.
+- Hold a 20-minute weekly review and prune noisy alerts monthly.
+
+Choose the single most important automation you run today and write its five-line definition of healthy. Then ask the question that exposes the most risk: if it stopped right now, how long until a person found out?
+
+## A note on sources
+
+This guide is written by the OpsGrit Research Desk from common operating practice. It does not cite outside statistics or studies, and the templates and examples are starting points, so test them against your own setup before you rely on them. If you spot something that looks wrong, [tell us](/contact).
+
+**Further reading.** The monitoring chapter of Google's Site Reliability Engineering book, which is the source of the points above about symptoms versus causes and about alerts being urgent and actionable:
+
+- [Google SRE Book: Monitoring Distributed Systems](https://sre.google/sre-book/monitoring-distributed-systems/)
