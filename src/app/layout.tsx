@@ -65,6 +65,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Impact (HubSpot affiliate) site ownership verification. */}
+        <meta name="impact-site-verification" {...({ value: "da28a6f7-532e-49cc-940d-ea5dc3ac63c2" } as Record<string, string>)} />
         {/* Play the intro once per browser session: later page loads skip it. */}
         <script
           dangerouslySetInnerHTML={{
