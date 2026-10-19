@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "A new invoice-automation was deployed last month and routed a payment to the wrong vendor. Your team wants to audit it immediately.",
+    "question": "What should you do next?",
+    "why": "The article says if a system was added mid-quarter, fold it into the next scheduled review and do not start ad hoc audits unless a control failure is confirmed. The wrong-vendor routing is a control failure, so confirm it first and then schedule the audit in the next quarter.",
+    "options": [
+      {
+        "text": "Wait for the next scheduled quarterly review and add it to that cycle.",
+        "tier": "best"
+      },
+      {
+        "text": "Run a quick ad hoc audit now to catch the error fast.",
+        "tier": "risky"
+      },
+      {
+        "text": "Exclude it from the AI audit since it has not been reviewed yet.",
+        "tier": "bad"
+      }
+    ]
+  },
+  {
+    "scenario": "During the Q2 performance review, the contract-classification model shows accuracy dropped from 94% to 87%.",
+    "question": "How should you record and act on this finding?",
+    "why": "The article states to flag drift when any key metric drops by more than 5 percentage points and to retrain with fresh labeled data if the underlying patterns are still valid, which is the case here.",
+    "options": [
+      {
+        "text": "Flag drift, compare current metrics to the baseline, and retrain with fresh labeled data.",
+        "tier": "best"
+      },
+      {
+        "text": "Ignore the drop since 87% still seems acceptable for classification.",
+        "tier": "risky"
+      },
+      {
+        "text": "Decommission the model immediately without further analysis.",
+        "tier": "bad"
+      }
+    ]
+  },
+  {
+    "scenario": "Your CFO asks for total AI spend across three different billing systems and you do not have a consolidated view.",
+    "question": "What is the correct approach to provide an accurate figure?",
+    "why": "The article specifies pulling real spend from every provider invoice and usage logs, joining the data sets on automation ID, and calculating actual cost per run to reconcile spend to forecast accurately.",
+    "options": [
+      {
+        "text": "Pull real spend from every provider invoice and usage logs, then join them on automation ID.",
+        "tier": "best"
+      },
+      {
+        "text": "Give a rough estimate based on last quarter's totals and adjust later.",
+        "tier": "risky"
+      },
+      {
+        "text": "Report only the largest vendor's spend to simplify the answer.",
+        "tier": "bad"
+      }
+    ]
+  },
+  {
+    "scenario": "You are building the AI automation register and an owner says the success metric for a lead-enrichment workflow is vague.",
+    "question": "What should you do?",
+    "why": "The article says if the answer to 'What number tells you this is working?' is vague, the automation stays in draft status until the metric is defined, ensuring clear ownership and measurable outcomes.",
+    "options": [
+      {
+        "text": "Leave the automation in draft status until a specific metric is defined.",
+        "tier": "best"
+      },
+      {
+        "text": "Assign a generic metric like 'improved performance' and move on.",
+        "tier": "risky"
+      },
+      {
+        "text": "Skip the metric column and mark the row as live.",
+        "tier": "bad"
+      }
+    ]
+  },
+  {
+    "scenario": "During the Q3 access review, you find that the 'engineering' group still has edit rights to several automations.",
+    "question": "How should you handle this?",
+    "why": "The article explicitly says to remove any legacy accounts or broad groups like 'engineering' and restrict edit rights to the named automation owner and one backup, with multi-factor authentication required for any account that can change prompts or model parameters.",
+    "options": [
+      {
+        "text": "Remove the broad group and restrict edit rights to the named owner and one backup.",
+        "tier": "best"
+      },
+      {
+        "text": "Keep the group access since engineers may need to troubleshoot quickly.",
+        "tier": "risky"
+      },
+      {
+        "text": "Transfer all edit rights to the CFO to centralize control.",
+        "tier": "bad"
+      }
+    ]
+  }
+]
