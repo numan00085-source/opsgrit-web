@@ -21,8 +21,11 @@ export async function POST(req: Request) {
     }
   }
 
+  // Real browsers always send these: skip scripted requests and cross-site calls.
+  const site = req.headers.get("sec-fetch-site");
+  if (site && site !== "same-origin") return empty();
   const ua = req.headers.get("user-agent") || "";
-  if (!ua || BOT.test(ua)) return empty();
+  if (!ua || !/^Mozilla\//i.test(ua) || BOT.test(ua)) return empty();
 
   let body: { path?: unknown; ref?: unknown; ping?: unknown };
   try {
@@ -55,7 +58,7 @@ export async function POST(req: Request) {
       ["PFADD", `og:uv:${day}`, vid],
       ["EXPIRE", `og:uv:${day}`, 60 * 60 * 24 * 120],
     );
-    // A "visitor" = one person (IP + browser) per 5 hours, however many pages they open.
+    // A "visitor" = one person (IP + browser) per 24 hours, however many pages they open.
     let isNewVisit = false;
     try {
       const [set] = await pipeline([["SET", `og:vs:${visitId(ip, ua)}`, 1, "NX", "EX", VISIT_WINDOW_SECONDS]]);
@@ -68,7 +71,8 @@ export async function POST(req: Request) {
       const ref = typeof body.ref === "string" ? body.ref.toLowerCase() : "";
       if (ref && HOST.test(ref)) cmds.push(["HINCRBY", "og:ref", ref, 1]);
       const country = (req.headers.get("x-vercel-ip-country") || "").toUpperCase();
-      if (/^[A-Z]{2}$/.test(country)) cmds.push(["HINCRBY", "og:country", country, 1]);
+      // XX = unknown and T1 = Tor are not real countries, so they are left out.
+      if (/^[A-Z]{2}$/.test(country) && country !== "XX" && country !== "T1") cmds.push(["HINCRBY", "og:country", country, 1]);
     }
   }
 
