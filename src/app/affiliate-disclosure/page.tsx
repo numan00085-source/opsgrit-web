@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AffiliateDisclosurePage() {
   return (
-    <PolicyPage title="Affiliate and sponsorship disclosure" updated="October 11, 2026">
+    <PolicyPage title="Affiliate and sponsorship disclosure" updated="October 20, 2026">
       <p>
         OpsGrit is free to read. We cover our costs through advertising, sponsorships and, in some cases, affiliate
         links. This page explains what each one means so you can judge our articles with full information.
@@ -39,6 +39,11 @@ export default function AffiliateDisclosurePage() {
         <li>An article that contains affiliate links says so near the top, before the first link, in plain words.</li>
         <li>We do not hide affiliate links inside text that claims to be neutral.</li>
         <li>Not every link to a product is an affiliate link. Links to vendor documentation, standards and sources are normal links.</li>
+      </ul>
+
+      <h2>Current affiliate relationships</h2>
+      <ul>
+        <li><strong>Jotform.</strong> OpsGrit is a Jotform affiliate. Articles that link to Jotform with a tracking link say so at the top of the article.</li>
       </ul>
 
       <h2>What money never changes</h2>

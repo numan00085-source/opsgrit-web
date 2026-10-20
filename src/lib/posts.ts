@@ -22,6 +22,7 @@ export interface PostMeta {
   readTime: string;
   featured: boolean;
   sponsored: boolean;
+  affiliate: string; // name of the affiliate product linked in the article, empty if none
   sponsor: string;
   /** Two or three plain sentences that answer the article's main question. Shown at the top and read by search and AI tools. */
   shortAnswer: string;
@@ -111,6 +112,7 @@ function parse(file: string): Post {
     readTime: readingTime(content).text.replace("read", "").trim(),
     featured: Boolean(data.featured),
     sponsored: Boolean(data.sponsored),
+    affiliate: typeof data.affiliate === "string" ? data.affiliate.trim() : "",
     sponsor: String(data.sponsor ?? ""),
     shortAnswer: String(data.shortAnswer ?? "").trim(),
     faq: parseFaq(data.faq),

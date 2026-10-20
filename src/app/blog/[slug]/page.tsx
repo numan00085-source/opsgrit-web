@@ -23,6 +23,13 @@ function SponsoredLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return external ? <a {...props} rel="sponsored noopener noreferrer" target="_blank" /> : <a {...props} />;
 }
 
+// Affiliate links (tracking links such as ?partner=) are marked sponsored so search engines know there is a commercial relationship.
+function ArticleLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const affiliate = typeof props.href === "string" && /^https?:\/\/(www\.)?jotform\.com\/\?partner=/i.test(props.href);
+  // eslint-disable-next-line jsx-a11y/anchor-has-content
+  return affiliate ? <a {...props} rel="sponsored noopener noreferrer" target="_blank" /> : <a {...props} />;
+}
+
 type Params = Promise<{ slug: string }>;
 
 export function generateStaticParams() {
@@ -131,6 +138,13 @@ export default async function ArticlePage({ params }: { params: Params }) {
             </p>
           </header>
 
+          {post.affiliate && !post.sponsored && (
+            <aside aria-label="Affiliate disclosure" className="mt-6 rounded-xl border border-cream-300 bg-white/70 p-4 text-sm leading-relaxed text-ink-600">
+              <strong className="text-ink-800">Affiliate disclosure:</strong> this article contains an affiliate link to {post.affiliate}. If you sign up through it, OpsGrit may earn a commission at no extra cost to you. Our{" "}
+              <Link href="/affiliate-disclosure" className="font-semibold underline decoration-gold-500 underline-offset-2">disclosure</Link> explains how we handle this.
+            </aside>
+          )}
+
           {post.sponsored && (
             <aside
               aria-label="Sponsored content notice"
@@ -174,7 +188,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <div id="article-body" className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
             <MDXRemote
               source={post.content}
-              components={post.sponsored ? { a: SponsoredLink, RaciEmbed, ToolCard, Download } : { RaciEmbed, ToolCard, Download }}
+              components={post.sponsored ? { a: SponsoredLink, RaciEmbed, ToolCard, Download } : { a: ArticleLink, RaciEmbed, ToolCard, Download }}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
