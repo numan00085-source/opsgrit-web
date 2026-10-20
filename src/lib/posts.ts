@@ -158,5 +158,5 @@ export function getTakeaways(content: string): string[] {
 
 /** Remove custom MDX component tags (keeps their inner text) for plain-text uses such as llms-full.txt and the bot. */
 export function plainContent(content: string): string {
-  return content.replace(/<\/?(RaciEmbed|ToolCard|Download)\b[^>]*>/g, "");
+  return content.replace(/<\/?(RaciEmbed|ToolCard|Download|PartnerCard)\b[^>]*>/g, "");
 }

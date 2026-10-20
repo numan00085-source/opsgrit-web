@@ -39,3 +39,19 @@ export function Download({ href, title, children }: { href: string; title: strin
     </div>
   );
 }
+
+/** An affiliate partner card with a clear button. The link is marked sponsored. */
+export function PartnerCard({ href, name, children }: { href: string; name: string; children: React.ReactNode }) {
+  return (
+    <div className="not-prose my-8 flex flex-col gap-4 rounded-2xl border border-gold-300 bg-gold-50/60 p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p className="text-xs font-bold uppercase tracking-wider text-gold-700">Tool option (affiliate link)</p>
+        <p className="mt-1 text-lg font-extrabold text-ink-900">{name}</p>
+        <p className="mt-1 text-sm leading-relaxed text-ink-600">{children}</p>
+      </div>
+      <a href={href} target="_blank" rel="sponsored noopener noreferrer" className="btn-primary shrink-0 text-center">
+        Explore {name}
+      </a>
+    </div>
+  );
+}

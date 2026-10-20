@@ -15,7 +15,7 @@ import SponsorAd from "@/components/SponsorAd";
 import { adsenseClient, getSettings } from "@/lib/settings";
 import ReadingProgress from "@/components/ReadingProgress";
 import ShareBar from "@/components/ShareBar";
-import { RaciEmbed, ToolCard, Download } from "@/components/MdxParts";
+import { RaciEmbed, ToolCard, Download, PartnerCard } from "@/components/MdxParts";
 
 function SponsoredLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   const external = typeof props.href === "string" && /^https?:\/\//i.test(props.href);
@@ -188,7 +188,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <div id="article-body" className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
             <MDXRemote
               source={post.content}
-              components={post.sponsored ? { a: SponsoredLink, RaciEmbed, ToolCard, Download } : { a: ArticleLink, RaciEmbed, ToolCard, Download }}
+              components={post.sponsored ? { a: SponsoredLink, RaciEmbed, ToolCard, Download, PartnerCard } : { a: ArticleLink, RaciEmbed, ToolCard, Download, PartnerCard }}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
