@@ -8,6 +8,18 @@ date: "2026-10-14"
 author: "OpsGrit Research Desk"
 coverImage: "/images/ai-workflow-cost-budget-control-cover.webp"
 featured: false
+shortAnswer: "The model bill is usually the smallest cost of an AI workflow. Human review, maintenance and error cost are often much larger, so budget seven lines: model usage, platform, review, build, maintenance, error cost and data work. Track cost per successful outcome against a measured manual baseline, not cost per run."
+faq:
+  - q: "How much does an AI workflow really cost?"
+    a: "Estimate seven lines: model usage, platform and tooling, human review, build and setup, maintenance, error cost, and data and integration work. The model bill is usually the smallest of them."
+  - q: "What is the biggest cost of an AI workflow?"
+    a: "Human review, maintenance and error cost are often much larger than the model bill. The guide treats human review as usually the largest line."
+  - q: "What is the right unit for measuring AI workflow cost?"
+    a: "Cost per successful outcome, compared with a measured manual baseline. Cost per run is the wrong unit."
+  - q: "How can you lower the cost of an AI workflow?"
+    a: "Avoid unnecessary model calls, use smaller models for easy steps, route in stages, shorten prompts and speed up review. Re-run your test set after every change so savings do not hide a drop in quality."
+  - q: "How do you prevent bill shock from AI usage?"
+    a: "Set spending caps, alerts, per-task limits and separate keys, and have a kill switch in place before launch."
 ---
 
 Every team that adds an AI step to a workflow eventually gets the same question from finance: what is this going to cost us? The first answer is usually a guess based on the price list of a model provider, something like "a fraction of a cent per request." That number is real. It is also the least important number in the budget.

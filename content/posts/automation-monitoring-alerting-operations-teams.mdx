@@ -8,6 +8,18 @@ date: "2026-10-17"
 author: "OpsGrit Research Desk"
 coverImage: "/images/automation-monitoring-alerting-operations-teams-cover.webp"
 featured: false
+shortAnswer: "Automations fail in four ways: loud errors, silent no-runs, wrong output, and slow or stuck work. Only the first announces itself. Monitor them by defining what healthy means for each one, adding a heartbeat check, alerting on symptoms, routing alerts to a named owner and holding a 20-minute weekly review."
+faq:
+  - q: "How do you monitor business automations?"
+    a: "Define what healthy means for each automation, add a heartbeat check for silent failures, alert on symptoms the business would feel, route alerts to a named owner, check the output and hold a short weekly review."
+  - q: "How do automations fail?"
+    a: "In four ways: loud errors, silent no-runs, wrong output, and slow or stuck work. Only the loud error announces itself."
+  - q: "What is a heartbeat check for an automation?"
+    a: "A check that raises an alert when the expected number of runs or results is missing. Keep it on a separate path so it still works when the automation breaks."
+  - q: "What should a definition of healthy include?"
+    a: "The purpose, expected frequency, expected result, maximum delay, owner and backup."
+  - q: "How do you keep automation alerts useful?"
+    a: "Make every urgent alert actionable, route by severity to a named owner with a backup, test the route every quarter and prune noisy alerts monthly."
 ---
 
 The worst automation failure is rarely the one that throws an error. An error is loud: a step turns red, a message lands in a channel, someone notices. The expensive failures are quiet. A trigger stops firing after an app update, so nothing runs and nothing complains. A workflow keeps running but writes the wrong value into a field. A queue backs up for three days before anyone asks why the invoices stopped.

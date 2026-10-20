@@ -8,6 +8,18 @@ date: "2026-10-13"
 author: "OpsGrit Research Desk"
 coverImage: "/images/evaluate-ai-workflow-test-set-accuracy-cover.webp"
 featured: false
+shortAnswer: "To evaluate an AI workflow, build a test set from about 50 real cases plus awkward and hostile ones, have an independent expert write the expected answers first, score with a written rubric and agree the pass rule before you see results. Re-run the whole set after every change and keep monitoring after launch."
+faq:
+  - q: "Why do AI demos mislead?"
+    a: "Demos use friendly, tiny, unscored samples. Evaluation replaces impressions with a repeatable number."
+  - q: "How do you build a test set for an AI workflow?"
+    a: "Sample about 50 real cases at random, then add awkward and hostile cases on purpose. An independent expert should write the expected answers and reasons before you run anything."
+  - q: "What are precision and recall?"
+    a: "Precision is how often a flag is right. Recall is how many of the true cases were caught. Choose which matters more based on the cost of a mistake."
+  - q: "When should you decide what counts as a pass?"
+    a: "Before you look at results, including a floor for critical cases."
+  - q: "How often should you re-test an AI workflow?"
+    a: "Re-run the whole set after every change, hold back part of the set so you are not tuning on the exam, and keep monitoring after launch with weekly samples, override counts and a named owner."
 ---
 
 A team launches an AI step in a workflow. It sorts support tickets, pulls fields from invoices or drafts replies. The demo went well. The first week looks fine. Then someone notices that a refund request went to the wrong queue, an invoice total was misread and a draft promised something the company does not offer. Nobody can say how often this happens, whether it is getting better or worse, or whether the last prompt change helped.

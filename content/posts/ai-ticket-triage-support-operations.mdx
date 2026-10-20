@@ -8,6 +8,20 @@ date: "2026-10-11"
 author: "OpsGrit Research Desk"
 coverImage: "/images/ai-ticket-triage-support-operations-cover.webp"
 featured: false
+shortAnswer: "AI ticket triage splits support work into categorizing, prioritizing, routing, enriching, special-case detection and drafting replies, and each part should be built and tested separately. Clean, well-defined categories matter more than model choice, and security, legal and other sensitive cases should go straight to a human with no auto-drafted reply."
+faq:
+  - q: "What does AI ticket triage involve?"
+    a: "Six parts: categorizing, prioritizing, routing, enriching, detecting special cases and drafting replies. Build and test them separately."
+  - q: "What matters more, the model or the categories?"
+    a: "Clean, short, well-defined categories matter more than model choice, so design the taxonomy first."
+  - q: "How should AI set the priority of a support ticket?"
+    a: "Combine extracted signals with account data through deterministic rules. Sentiment alone is not enough."
+  - q: "Which tickets should go straight to a human?"
+    a: "Security, legal, safety, vulnerable-customer and critical-account cases should be detected and escalated immediately, and no reply should be auto-drafted for them."
+  - q: "How do you draft AI replies safely?"
+    a: "Draft for agents to review, ground answers in approved content and never let the model invent facts or make promises."
+  - q: "How do you evaluate AI ticket triage?"
+    a: "Build an evaluation set from real tickets, track recall on the escalation categories and roll out in stages."
 ---
 
 Every support team knows the feeling of an inbox that grows faster than it drains. Tickets arrive without context, urgent issues hide among routine ones, and skilled agents spend the first minutes of each case just working out what it is about and who should handle it.

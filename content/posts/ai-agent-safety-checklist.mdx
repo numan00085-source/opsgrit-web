@@ -7,6 +7,18 @@ date: "2026-10-17"
 author: "OpsGrit Research Desk"
 coverImage: "/images/ai-agent-safety-checklist-cover.webp"
 featured: false
+shortAnswer: "An AI agent safety checklist is a set of controls to put in place before an autonomous agent touches real systems. The eight controls are hard permission boundaries, defenses against prompt injection, data masking and egress controls, output schema checks, approval gates for high-impact actions, a kill switch, audit logging and drift monitoring, and a sign-off scorecard."
+faq:
+  - q: "What controls should an AI agent have before deployment?"
+    a: "Eight: hard permission boundaries with read-only defaults, prompt injection defenses, deterministic data masking and egress controls, output schema enforcement, approval gates for high-impact actions, a kill switch with rollback, audit logging with drift monitoring, and an operational sign-off scorecard."
+  - q: "How should you limit what an AI agent can do?"
+    a: "Give every autonomous agent its own dedicated service principal with read-only defaults, and keep reasoning tasks separate from rate-limited write credentials."
+  - q: "How do you stop an AI agent from leaking customer data?"
+    a: "Strip customer identifiers and operational secrets with deterministic masking on the client side instead of trusting the language model to redact itself, and apply egress controls."
+  - q: "When should an AI agent ask a human for approval?"
+    a: "Set hard quantitative thresholds that pause execution and route high-impact actions, such as financial adjustments or bulk data changes, to human reviewers."
+  - q: "What is an AI agent kill switch?"
+    a: "A pre-wired control that revokes credentials, freezes inbound webhooks and pauses pending jobs within seconds across your integration layer."
 ---
 
 Most autonomous agents break in production because teams treat them like software scripts rather than junior employees with admin access. When an operational model connects directly to your ERP, CRM, or ticketing queue, an unconstrained prompt injection or a hallucinated parameter does not just return bad text. It issues unauthorized customer credits, updates pipeline values with garbage data, or fires unintended emails to high-value accounts.

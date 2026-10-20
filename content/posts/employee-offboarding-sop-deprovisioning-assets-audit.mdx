@@ -8,6 +8,20 @@ date: "2026-10-16"
 author: "OpsGrit Research Desk"
 coverImage: "/images/employee-offboarding-sop-deprovisioning-assets-audit-cover.webp"
 featured: false
+shortAnswer: "Employee offboarding is a controlled handoff of access, assets and workflows, not an HR paperwork exercise. Disable the identity provider record first, then deprovision systems not on single sign-on, revoke tokens and API keys separately, transfer automations before the last day, collect assets and keep a time-stamped audit trail."
+faq:
+  - q: "What should an employee offboarding SOP cover?"
+    a: "A controlled handoff of access, assets and workflows: account deprovisioning, device and license return, token and API key revocation, transfer of automations and a signed audit trail."
+  - q: "What is the first step in deprovisioning an employee?"
+    a: "Disable the identity provider record first, then manually deprovision any system that is not connected to single sign-on."
+  - q: "Why revoke API keys and tokens separately?"
+    a: "Disabling single sign-on does not always invalidate personal access tokens, API keys and app passwords, so revoke them separately."
+  - q: "What happens to the automations an employee owned?"
+    a: "Transfer or delete them before the employee's final day to prevent silent failures in production workflows."
+  - q: "What should the offboarding audit trail include?"
+    a: "A time-stamped record with sign-offs from IT, HR, the manager and security."
+  - q: "How do you keep the offboarding process current?"
+    a: "Run a quarterly review and an offboarding drill with a test identity."
 ---
 
 A departing engineer still has admin access to your production database. A sales rep's laptop sits in a box for three weeks before IT wipes it. An automation they built keeps running, posting to a Slack channel nobody monitors. These are not edge cases. They are what happens when offboarding lives in HR's to-do list instead of your security and continuity plan.
