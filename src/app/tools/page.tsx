@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Free operations tools",
   description:
-    "Free, no-signup tools for operations teams: OpsGrit Bot, a migration cutover simulator, an automation ROI calculator, an SOP builder and a technology stack audit worksheet.",
+    "Free, no-signup tools for operations teams: OpsGrit Bot, a migration cutover simulator, an automation ROI calculator, an SOP builder, an invoice generator, a RACI matrix generator, an out-of-office email generator and a technology stack audit worksheet.",
   alternates: { canonical: "/tools" },
 };
 
@@ -40,6 +40,24 @@ const TOOLS = [
     tag: "Template",
   },
   {
+    href: "/tools/invoice-generator",
+    title: "Invoice generator",
+    body: "Add line items, tax, discount and payment terms, then print or save a clean PDF invoice. Nothing is stored on a server.",
+    tag: "Generator",
+  },
+  {
+    href: "/tools/raci-generator",
+    title: "RACI matrix generator",
+    body: "Set R, A, C and I for each task and role. It flags tasks with no owner or two owners and shows each role's workload.",
+    tag: "Generator",
+  },
+  {
+    href: "/tools/out-of-office-generator",
+    title: "Out-of-office email generator",
+    body: "Get a ready subject line and auto-reply, with one version for clients and one for colleagues. Pick a tone and add who covers for you.",
+    tag: "Generator",
+  },
+  {
     href: "/tools/stack-audit",
     title: "Tech stack audit worksheet",
     body: "List every tool, owner, cost and user count, flag overlap and see what the stack costs. Export to CSV for your spreadsheet.",
@@ -53,7 +71,7 @@ export default function ToolsPage() {
       <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-700">Free tools</p>
       <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink-900 sm:text-5xl">Tools you can use today</h1>
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-600">
-        No signup, no email gate. The calculator, SOP builder and audit worksheet run in your browser and nothing you type
+        No signup, no email gate. The calculator, builders, generators and audit worksheet run in your browser and nothing you type
         is stored on a server. OpsGrit Bot has its own privacy note on its page.
       </p>
       <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
