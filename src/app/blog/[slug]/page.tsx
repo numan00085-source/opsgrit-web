@@ -25,7 +25,7 @@ function SponsoredLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
 
 // Affiliate links (tracking links such as ?partner=) are marked sponsored so search engines know there is a commercial relationship.
 function ArticleLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
-  const affiliate = typeof props.href === "string" && /^https?:\/\/(www\.)?jotform\.com\/\?partner=/i.test(props.href);
+  const affiliate = typeof props.href === "string" && /^https?:\/\/(www\.)?jotform\.com\/[^?#]*\?partner=/i.test(props.href);
   // eslint-disable-next-line jsx-a11y/anchor-has-content
   return affiliate ? <a {...props} rel="sponsored noopener noreferrer" target="_blank" /> : <a {...props} />;
 }
