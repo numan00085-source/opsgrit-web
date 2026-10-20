@@ -50,7 +50,7 @@ export default function AdvertisePage() {
           Reach the people who <span className="gold-text">run operations</span>.
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-600">
-          {SITE.name} is a B2B publication on AI workflows, enterprise automation and operations. Our readers are
+          {SITE.name} is an independent B2B publication on AI workflows, business automation and operations. Our readers are
           evaluating tools, building processes and deciding where to spend.
         </p>
         <a href={mail} className="btn-primary mt-9 !px-7 !py-3">Request our media kit</a>

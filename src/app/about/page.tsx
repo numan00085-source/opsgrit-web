@@ -5,7 +5,7 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "OpsGrit is an independent B2B publication covering AI workflows, enterprise automation and operations.",
+  description: "OpsGrit is an independent B2B publication on AI workflows, business automation and operations. Practical playbooks, tool breakdowns, SOPs and free tools for operators.",
   alternates: { canonical: "/about" },
 };
 

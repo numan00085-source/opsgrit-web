@@ -72,6 +72,18 @@ export default async function ArticlePage({ params }: { params: Params }) {
     ],
   };
 
+  const faqLd = post.faq.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -94,6 +106,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
       <ReadingProgress />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }} />
+      {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
       <nav aria-label="Breadcrumb" className="mb-8 text-sm text-ink-500">
         <Link href="/" className="hover:text-gold-700">Home</Link> / <Link href={`/topics/${topicSlug}`} className="hover:text-gold-700">{post.category}</Link>
       </nav>
@@ -137,6 +150,13 @@ export default async function ArticlePage({ params }: { params: Params }) {
             />
           )}
 
+          {post.shortAnswer && (
+            <aside aria-label="Short answer" className="mt-10 rounded-2xl border-l-4 border-gold-500 bg-white/70 p-6">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-700">Short answer</p>
+              <p className="mt-2 text-[17px] leading-relaxed text-ink-900">{post.shortAnswer}</p>
+            </aside>
+          )}
+
           {takeaways.length > 0 && (
             <aside aria-label="In short" className="mt-10 rounded-2xl border border-gold-400/50 bg-gold-100/50 p-6">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-700">In short</p>
@@ -162,6 +182,20 @@ export default async function ArticlePage({ params }: { params: Params }) {
               }}
             />
           </div>
+
+          {post.faq.length > 0 && (
+            <section id="faq" aria-labelledby="faq-heading" className="mt-14">
+              <h2 id="faq-heading" className="text-2xl font-extrabold text-ink-900">Frequently asked questions</h2>
+              <div className="mt-5 divide-y divide-cream-300 rounded-2xl border border-cream-300 bg-white/70">
+                {post.faq.map((f) => (
+                  <div key={f.q} className="p-5">
+                    <h3 className="text-base font-bold text-ink-900">{f.q}</h3>
+                    <p className="mt-2 leading-relaxed text-ink-700">{f.a}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           <ShareBar url={`${SITE.url}/blog/${post.slug}`} title={post.title} />
 

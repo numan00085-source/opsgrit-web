@@ -23,6 +23,10 @@ export interface PostMeta {
   featured: boolean;
   sponsored: boolean;
   sponsor: string;
+  /** Two or three plain sentences that answer the article's main question. Shown at the top and read by search and AI tools. */
+  shortAnswer: string;
+  /** Questions and answers shown at the end of the article and published as FAQ data. */
+  faq: { q: string; a: string }[];
 }
 
 export interface Post extends PostMeta {
@@ -73,6 +77,17 @@ export function makeMetaDescription(custom: string, excerpt: string): string {
   return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,:;\s-]+$/, "") + "...";
 }
 
+function parseFaq(raw: unknown): { q: string; a: string }[] {
+  if (!Array.isArray(raw)) return [];
+  const out: { q: string; a: string }[] = [];
+  for (const item of raw) {
+    const q = String((item as { q?: unknown })?.q ?? "").trim();
+    const a = String((item as { a?: unknown })?.a ?? "").trim();
+    if (q && a) out.push({ q, a });
+  }
+  return out.slice(0, 8);
+}
+
 function parse(file: string): Post {
   const slug = file.replace(/\.mdx?$/, "");
   const raw = fs.readFileSync(path.join(POSTS_DIR, file), "utf8");
@@ -97,6 +112,8 @@ function parse(file: string): Post {
     featured: Boolean(data.featured),
     sponsored: Boolean(data.sponsored),
     sponsor: String(data.sponsor ?? ""),
+    shortAnswer: String(data.shortAnswer ?? "").trim(),
+    faq: parseFaq(data.faq),
     content,
     headings: extractHeadings(content),
   };

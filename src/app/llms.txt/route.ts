@@ -12,7 +12,7 @@ export function GET() {
   const sections = CATEGORIES.map((c) => {
     const list = posts
       .filter((p) => p.category === c.name)
-      .map((p) => `- [${line(p.title)}](${SITE.url}/blog/${p.slug}): ${line(p.excerpt)} (published ${p.date}${p.sponsored ? ", sponsored" : ""})`)
+      .map((p) => `- [${line(p.title)}](${SITE.url}/blog/${p.slug}): ${line(p.shortAnswer || p.excerpt)} (published ${p.date}${p.sponsored ? ", sponsored" : ""})`)
       .join("\n");
     return `## ${c.name}\n\n${c.blurb}\n\n${list || "- No articles yet."}`;
   }).join("\n\n");
@@ -31,6 +31,9 @@ ${sections}
 
 - [ROI calculator](${SITE.url}/tools/roi-calculator): estimate the return on an automation project.
 - [SOP builder](${SITE.url}/tools/sop-builder): turn a process into a standard operating procedure.
+- [Invoice generator](${SITE.url}/tools/invoice-generator): build and print or save a clean invoice with tax, discount and payment terms.
+- [RACI matrix generator](${SITE.url}/tools/raci-generator): assign R, A, C and I and check that every task has exactly one owner.
+- [Out-of-office email generator](${SITE.url}/tools/out-of-office-generator): write an auto-reply for clients and colleagues.
 - [Tech stack audit](${SITE.url}/tools/stack-audit): review the tools your operations team depends on.
 - [OpsGrit bot](${SITE.url}/tools/ops-bot): ask questions and get answers from OpsGrit guides.
 

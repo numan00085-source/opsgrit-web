@@ -8,6 +8,18 @@ date: "2026-10-11"
 author: "OpsGrit Research Desk"
 coverImage: "/images/system-of-record-source-of-truth-cover.webp"
 featured: false
+shortAnswer: "A system of record is the authoritative system where a piece of data is created, maintained and considered correct. When another system disagrees, the system of record wins. Define it for each data domain, and often for each field, then document the update rules and prefer one-way sync from it."
+faq:
+  - q: "What is a system of record?"
+    a: "It is the authoritative system where a particular piece of data is created, maintained and considered correct. When another system disagrees, the system of record wins."
+  - q: "What is the difference between a system of record and a source of truth?"
+    a: "The terms are often used interchangeably. In practice, a source of truth is the answer to where you go to settle a dispute about the data."
+  - q: "How do you choose a system of record?"
+    a: "Base it on where the data originates, who is accountable for it, which system has the right controls and what regulations require. Choose per data domain and often per field, not per tool."
+  - q: "What is a system of engagement?"
+    a: "A tool where people interact with data or take actions, such as a support desk or a sales sequencing tool. It may display or temporarily hold data that is owned elsewhere."
+  - q: "How do you prevent duplicate records?"
+    a: "Use match rules, validation and named data stewards. Where possible, reference records by ID instead of copying them, and prefer one-way sync from the system of record."
 ---
 
 Ask three people in your company how many customers you have and you will often get three different answers. Sales counts accounts in the CRM. Finance counts customers who have been invoiced. Support counts people who have submitted a ticket. Each number is defensible, and none is wrong, but nobody agrees on what "customer" means or which system gets the final say.
