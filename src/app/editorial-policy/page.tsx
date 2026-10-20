@@ -21,8 +21,8 @@ export default function EditorialPolicyPage() {
       <p>
         Articles are published under the byline <strong>OpsGrit Research Desk</strong>. That is a team byline, not a
         named individual, and we do not invent personal profiles or credentials. The desk is responsible for every
-        article. Every article passes an automated editorial review before it goes live, and the desk reads reader
-        reports and corrects or removes content when it is wrong. If you disagree with something, the{" "}
+        article. Every article passes an automated editorial review before it goes live, the publisher checks articles
+        from time to time, and the desk reads reader reports and corrects or removes content when it is wrong. If you disagree with something, the{" "}
         <Link href="/contact">contact page</Link> reaches the desk.
       </p>
 
@@ -34,7 +34,8 @@ export default function EditorialPolicyPage() {
         <li><strong>Research.</strong> Current facts are collected from primary sources such as vendor documentation, standards bodies, regulators and published research.</li>
         <li><strong>Drafting.</strong> A draft is written to answer a specific operating question, with an original framework or worked example rather than a summary of other articles.</li>
         <li><strong>Editing.</strong> The draft is edited for clarity and plain language.</li>
-        <li><strong>Automated editorial review.</strong> A separate AI editor scores the article for business relevance, depth, originality, clarity and trust. It rewrites or removes weak or unsupported passages, and an article that does not meet our minimum standard is not published. This review is performed by AI, not by a person, so it can miss mistakes.</li>
+        <li><strong>Automated editorial review.</strong> A separate AI editor scores the article for business relevance, depth, originality, clarity and trust. It rewrites or removes weak or unsupported passages, and an article that does not meet our minimum standard is not published. This review is performed by AI, so it can miss mistakes.</li>
+        <li><strong>Publisher spot-checks.</strong> The publisher of OpsGrit reads and checks articles from time to time and acts on what is found. Not every article is read by a person before it goes live, which is why the automated review and reader reports matter.</li>
         <li><strong>Corrections.</strong> People can read and report problems at any time. The desk reviews every report and corrects or removes content.</li>
       </ol>
       <p>

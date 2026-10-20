@@ -2,7 +2,7 @@
 // It searches the published articles, the glossary and a hand-written Q&A with BM25 ranking,
 // then composes an answer from the best matches and links to the source.
 import GithubSlugger from "github-slugger";
-import { getAllPosts } from "@/lib/posts";
+import { getAllPosts, plainContent } from "@/lib/posts";
 import { TERMS } from "@/lib/glossary";
 import { FAQ1 } from "@/lib/botFaq1";
 import { FAQ2 } from "@/lib/botFaq2";
@@ -145,7 +145,7 @@ function build(): Index {
   for (const p of getAllPosts()) {
     postTitle.set(p.slug, p.title);
     const slugger = new GithubSlugger();
-    const parts = p.content.split(/^##\s+(.*)$/m); // [intro, h1, body1, h2, body2...]
+    const parts = plainContent(p.content).split(/^##\s+(.*)$/m); // [intro, h1, body1, h2, body2...]
     const sections: { h: string; body: string }[] = [];
     if (parts[0].trim()) sections.push({ h: p.title, body: parts[0] });
     for (let i = 1; i < parts.length; i += 2) sections.push({ h: parts[i].trim(), body: parts[i + 1] || "" });

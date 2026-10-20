@@ -1,0 +1,177 @@
+---
+title: "Joiner, Mover, Leaver: An Access Workflow Template for Small Teams"
+seoTitle: "Joiner Mover Leaver Access Workflow Template"
+slug: "joiner-mover-leaver-access-workflow-template"
+category: "Process SOPs"
+excerpt: "Access problems cluster around three events: someone joins, someone moves, someone leaves. Use this joiner, mover, leaver workflow template to keep access tied to the job."
+date: "2026-10-19"
+author: "OpsGrit Research Desk"
+coverImage: "/images/joiner-mover-leaver-access-workflow-template-cover.webp"
+featured: false
+shortAnswer: "A joiner, mover, leaver workflow manages access at three events. Joiners get a role-based bundle, movers have old access removed before new access is added, and leavers lose all access on their last day. Keep one record of who has what and who approved it, and review access against the staff list every quarter."
+faq:
+  - q: "What is joiner, mover, leaver?"
+    a: "It is a way of describing the three moments when a person's access to systems should change: when they join, when they change role or team and when they leave. A workflow for each keeps access aligned with the job."
+  - q: "Why are movers the most overlooked group?"
+    a: "When someone changes role, new access is added but old access is rarely removed. Over time they collect permissions they no longer need."
+  - q: "What is a role-based access bundle?"
+    a: "It is a standard set of groups and tools for a role. New people in the role receive the bundle, and anything beyond it needs a documented approval."
+  - q: "How do you know access is correct?"
+    a: "Run an access review, usually every quarter, that compares active accounts and permissions with the current staff list and role bundles, and remove what should not be there."
+  - q: "What should be recorded?"
+    a: "For each access grant, record the person, the access, who approved it, why and when, and when it was removed. The same record is used to remove access later."
+---
+
+When people think about access control, they picture firewalls and passwords. In a small company, most of the real risk is more ordinary. A person joins and receives whatever access the last person in the role had. A person changes teams and keeps every permission from their old job. A person leaves and one account, forgotten in a tool nobody checks, stays active for months.
+
+All three problems come from the same gap: access is granted by hand, at moments when people are busy, and nobody owns the full picture. The joiner, mover, leaver model, often shortened to JML, is a simple way to close it. It names the three events that change access and asks for a workflow for each.
+
+This guide gives a template for all three. It builds on our guides to [automating onboarding](/blog/employee-onboarding-automation-workflow-checklist) and the [offboarding SOP](/blog/employee-offboarding-sop-deprovisioning-assets-audit), and adds the piece most teams lack: what to do when someone moves.
+
+## The principle: access follows the job
+
+Before the workflows, one principle. A person's access should reflect their current job, and no more. Three ideas support it.
+
+- **Least privilege.** Give the minimum access needed to do the work.
+- **Role-based bundles.** Define a standard set of access for each role, instead of choosing tool by tool for each person.
+- **A record of approval.** Every grant has an owner, a reason and a date, so it can be reviewed and removed.
+
+Security guidance for account management says similar things. The NIST SP 800-53 account management control, as summarised by UpGuard, calls for documented approval before accounts are created or changed, recording who requested and approved them, reviewing accounts against HR records and disabling accounts that are no longer needed. You do not need to follow NIST to borrow a good checklist.
+
+## Start with a role bundle table
+
+The simplest and most useful artifact is a table that lists, for each role, the tools and permission level it gets by default. It does not need to be complicated.
+
+| Role | Email and chat | CRM | Finance system | Project tool | Admin tools |
+|---|---|---|---|---|---|
+| Sales representative | Standard | Standard user | None | Standard | None |
+| Operations coordinator | Standard | Read only | None | Standard | None |
+| Accounts payable | Standard | None | Payables user | Standard | None |
+| Finance lead | Standard | Read only | Approver | Standard | None |
+| IT administrator | Standard | None | None | Standard | Admin |
+
+The roles and tools above are examples. Write your own, and keep it to the roles you actually have. Anything outside a bundle is a request, approved by a named person, with a reason. A bundle table also makes the other workflows easier, because each one becomes a comparison between two rows.
+
+## The joiner workflow
+
+A joiner is a new hire, contractor or intern. The aim is that on day one the person can do their job, with the right access and nothing extra.
+
+1. **Trigger from one source.** The record in your HR or applicant system starts the process. Capture name, role, manager, start date, location and employment type.
+2. **Assign the role bundle.** The role decides the standard access.
+3. **Approve extras.** Anything beyond the bundle is requested and approved by the manager or the system owner.
+4. **Create accounts before the start date.** Email and core tools are ready, and tested with a test sign-in.
+5. **Record the grants.** Who, what, who approved, when.
+6. **Check on day one.** The person confirms they can sign in and reach the key tools. Failures go straight to IT.
+7. **Enable the second factor.** Require multi-factor sign-in for the accounts that support it.
+
+The checks matter as much as the creation. A joiner workflow that does not verify its work only tells you about failures when a new hire is stuck.
+
+## The mover workflow
+
+A mover is someone who changes role, team, manager or location. This is where access goes wrong most often, because adding new access is a request people make eagerly, and removing old access is a task nobody remembers.
+
+The rule for movers is simple: **remove before you add**, or at the very least remove at the same time.
+
+1. **Trigger from the change record.** The same HR system should record a role change, with an effective date.
+2. **Compare the old and new bundles.** List what the person has, what the new role gets and what must go.
+3. **Remove access the new role does not need.** Do this on or soon after the effective date, not "when someone gets around to it."
+4. **Add the new bundle.** Treat extras the same way as for joiners.
+5. **Handle the handover.** Transfer ownership of files, shared mailboxes, recurring tasks and approvals from the old role to a named person.
+6. **Review any temporary access.** If a person needs the old access for a transition period, give it a clear end date.
+7. **Update the record.** The access record should show the old grants removed and the new ones added.
+
+Some moves are sensitive. A person moving from finance to sales should not retain approval rights. A person moving from a support team into engineering may need a different level of data access. The bundle comparison makes these differences visible.
+
+## The leaver workflow
+
+A leaver is anyone who departs, whether by resignation, end of contract or dismissal. The aim is that access ends when employment ends, and that the business keeps what it needs.
+
+1. **Trigger from the HR record.** The last day is set in the same system.
+2. **Prepare ahead.** Before the last day, plan the handover of work, files and recurring duties.
+3. **Set an out-of-office and forwarding.** Route mail to a named person for a defined period. The [out-of-office generator](/tools/out-of-office-generator) can help write the message.
+4. **Disable accounts on the last day.** Use the access record to find every account, including tools set up outside IT.
+5. **Revoke other access.** Shared passwords, API keys, tokens, signing authority, payment cards, building access and approval lists.
+6. **Collect equipment.** Record what was returned.
+7. **Transfer ownership of data.** Move files, calendars, and shared resources to a named person, then retain or delete according to your policy.
+8. **Review afterward.** About a week later, check that no active accounts remain.
+
+The most common leaver failure is not missing the main accounts. It is missing the small ones: a tool someone signed up for with a work email, a shared login, a personal API token. The access record is your defense, and so is the quarterly review below.
+
+## Keep one access record
+
+All three workflows depend on one record of who has access to what. It can be a simple sheet, a table in your ops database or the output of your identity system. For each grant, it should hold:
+
+- The person and their role.
+- The system and the permission level.
+- Who requested and who approved it.
+- The reason.
+- The date granted and the date removed.
+- The next review date for sensitive access.
+
+Without it, the leaver workflow becomes guesswork. With it, offboarding is a list you can work through. Our guide to the [system of record](/blog/system-of-record-source-of-truth) explains why one tool should own this data, and the downloadable templates on this site can be adapted for it.
+
+## The quarterly access review
+
+Even good workflows leak. People leave without the HR record being updated, tools are added without telling IT and exceptions are never removed. A quarterly review catches what the workflows missed.
+
+1. **Export the accounts** from each important tool.
+2. **Compare with the staff list** from HR.
+3. **Flag the differences.** Accounts with no matching person, people with access beyond their bundle and accounts that have not signed in for a long time.
+4. **Ask the system owner** to confirm or remove each flagged item.
+5. **Record the result** and the date, and fix the cause, such as a missing step in a workflow.
+
+Start with the tools that matter most: email, finance, CRM, code or file storage, and any admin consoles. You can extend the review as the habit settles.
+
+## Automate where it helps
+
+You can build the three workflows with different levels of tooling.
+
+- **Level 1: checklists.** A template for each of the three events in your project tool, with owners and relative dates.
+- **Level 2: an automation platform.** A workflow that watches the HR record and creates tasks and tickets. Our comparison of [Zapier, Make and n8n](/blog/zapier-vs-make-vs-n8n-ops-teams) can help you choose, and you should [monitor the automation](/blog/automation-monitoring-alerting-operations-teams) because a broken connection affects every event at once.
+- **Level 3: identity-driven provisioning.** The HR system drives accounts and group membership in an identity provider. This reduces manual work the most and needs the most care, since a wrong rule affects many people.
+
+If AI drafts any of the messages or reads requests, keep it out of the approval step. Follow our [AI agent safety checklist](/blog/ai-agent-safety-checklist) and let a person approve access.
+
+## An illustrative example
+
+The scenario below is invented.
+
+Priya, an operations coordinator, is promoted to operations lead on the first of the month. The HR record is updated with the new role and date. The workflow compares the two bundles. The lead role needs approver rights in the project tool and read access to the finance system, and no longer needs the coordinator's shared inbox. The IT team removes the inbox access, adds the new bundle and records both changes with the manager's approval. Priya's old recurring tasks are reassigned to the new coordinator. A temporary extension of the old inbox access, for two weeks, is recorded with an end date. At the next quarterly review, the access list matches her role, and no one has to wonder why a lead can still use a coordinator's mailbox.
+
+## Common mistakes
+
+- **Adding access without removing any.** Movers accumulate permissions.
+- **Copying the last person's access.** It carries over their extras and their mistakes.
+- **No single record.** You cannot remove what you cannot find.
+- **Forgetting small tools.** Shared logins, tokens and tools signed up for outside IT.
+- **No end date on temporary access.** Temporary becomes permanent.
+- **Self-approval.** People should not approve their own access.
+- **Skipping the review.** Workflows leak, and the review finds the leaks.
+
+## Key takeaways
+
+- Access problems cluster around three events: joining, moving and leaving.
+- Define role bundles so access follows the job, and treat anything beyond the bundle as an approved request.
+- For movers, remove old access when you add new access, and hand over files and approvals.
+- For leavers, disable accounts on the last day using the access record, and check for small tools and shared credentials.
+- Keep one record of who has what, who approved it and when it was removed.
+- Review access every quarter against the staff list, and fix the cause of any differences.
+- Keep temporary access time-limited and keep approvals with people.
+
+This week, write a one-page bundle table for your three most common roles. It makes every joiner, mover and leaver decision faster and easier to check.
+
+<Download href="/downloads/employee-offboarding-checklist.csv" title="Offboarding checklist (CSV)">Tasks with owner roles and due dates relative to the last day, including the access review.</Download>
+
+## A note on sources
+
+This guide is written by the OpsGrit Research Desk from common operating practice. The role table, the process steps and the example are illustrations to adapt, and it does not cite outside statistics. If you spot something that looks wrong, [tell us](/contact).
+
+**Further reading.** The points about documented approval, account reviews and disabling accounts that are no longer needed come from this control summary:
+
+- [UpGuard: NIST SP 800-53 AC-2, Account Management](https://www.upguard.com/compliance/nist-sp-800-53/ac/ac-2)
+
+## Related guides
+
+- [Employee Onboarding Automation: A Workflow for Accounts, Access and Tasks](/blog/employee-onboarding-automation-workflow-checklist)
+- [Employee Offboarding SOP: Account Deprovisioning, Asset Return and Audit Trail Template](/blog/employee-offboarding-sop-deprovisioning-assets-audit)
+- [System of Record: How to Decide Which Tool Owns Which Data](/blog/system-of-record-source-of-truth)

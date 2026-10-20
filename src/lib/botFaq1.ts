@@ -20,13 +20,13 @@ export const FAQ1: Faq[] = [
   {
     q: "Who writes OpsGrit articles?",
     k: "author writer byline team research desk who wrote",
-    a: "Articles are published under the byline OpsGrit Research Desk. That is a team byline, not one named person. We research and draft with AI assistance, then each article goes through an automated editorial review before it goes live. The full process is public.",
+    a: "Articles are published under the byline OpsGrit Research Desk. That is a team byline, not one named person. We research and draft with AI assistance, then each article goes through an automated editorial review before it goes live, and the publisher spot-checks articles. The full process is public.",
     l: ["/editorial-policy"],
   },
   {
     q: "Are OpsGrit articles written by AI?",
     k: "ai generated chatgpt human written real person trust accurate",
-    a: "We use AI tools to help research and draft, and we say so openly. Every article then goes through an automated AI editorial review that scores it and removes weak or unsupported passages. That review is done by AI, not by a person, so errors can slip through. If you spot one, tell us on the contact page and we will correct it.",
+    a: "We use AI tools to help research and draft, and we say so openly. Every article then goes through an automated AI editorial review that scores it and removes weak or unsupported passages, and the publisher spot-checks articles from time to time. The review is done by AI and not every article is read by a person first, so errors can slip through. If you spot one, tell us on the contact page and we will correct it.",
     l: ["/editorial-policy"],
   },
   {

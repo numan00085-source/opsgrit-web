@@ -15,6 +15,7 @@ import SponsorAd from "@/components/SponsorAd";
 import { adsenseClient, getSettings } from "@/lib/settings";
 import ReadingProgress from "@/components/ReadingProgress";
 import ShareBar from "@/components/ShareBar";
+import { RaciEmbed, ToolCard, Download } from "@/components/MdxParts";
 
 function SponsoredLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   const external = typeof props.href === "string" && /^https?:\/\//i.test(props.href);
@@ -125,7 +126,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
               {post.updated !== post.date && <> · Updated {formatDate(post.updated)}</>}
             </p>
             <p className="mt-1 text-xs text-ink-500">
-              AI-assisted research and drafting, checked by automated editorial review.{" "}
+              AI-assisted research and drafting, automated editorial review and publisher spot-checks.{" "}
               <Link href="/editorial-policy" className="underline underline-offset-2">How we make articles</Link>
             </p>
           </header>
@@ -173,7 +174,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <div id="article-body" className="prose prose-lg mt-10 max-w-none prose-a:underline-offset-4 prose-pre:bg-ink-900 prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl">
             <MDXRemote
               source={post.content}
-              components={post.sponsored ? { a: SponsoredLink } : undefined}
+              components={post.sponsored ? { a: SponsoredLink, RaciEmbed, ToolCard, Download } : { RaciEmbed, ToolCard, Download }}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
@@ -212,8 +213,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
             <div>
               <p className="font-semibold text-ink-900">{post.author}</p>
               <p className="mt-1 text-sm leading-relaxed text-ink-600">
-                A team byline, not an individual. Articles are researched and drafted with AI assistance and checked
-                by our automated editorial review before publication. Prices and features change, so check the vendor before
+                A team byline, not an individual. Articles are researched and drafted with AI assistance, checked by our
+                automated editorial review before publication and spot-checked by the publisher from time to time. Prices and features change, so check the vendor before
                 you buy. See our <Link className="font-semibold underline decoration-gold-500 underline-offset-2" href="/editorial-policy">editorial policy</Link>{" "}
                 or <Link className="font-semibold underline decoration-gold-500 underline-offset-2" href="/contact">report an error</Link>.
               </p>

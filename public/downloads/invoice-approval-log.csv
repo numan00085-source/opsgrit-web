@@ -1,0 +1,2 @@
+Invoice number,Vendor,Invoice date,Amount,Currency,PO number,Three-way match (Y/N),Exception reason,Approval tier,Approver,Approved on,Paid on,Notes
+INV-0001 (example),Example Supplies Ltd,2026-01-15,1200.00,USD,PO-1001,Y,,Tier 1,Team lead,2026-01-16,2026-02-14,Example row: replace with your own

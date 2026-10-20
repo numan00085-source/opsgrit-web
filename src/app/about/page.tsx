@@ -26,7 +26,7 @@ export default function AboutPage() {
       <p>
         Every article is written to be useful first. We cite primary sources where they exist, state our assumptions,
         and update articles when facts change. We use AI tools to help research and draft, and every article passes an
-        automated editorial review before it is published. The OpsGrit Research Desk takes responsibility for what
+        automated editorial review before it is published, and the publisher spot-checks articles from time to time. The OpsGrit Research Desk takes responsibility for what
         we publish and corrects errors when readers report them.
       </p>
       <h2>Independence and sponsorship</h2>

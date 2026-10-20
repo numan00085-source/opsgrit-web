@@ -1,0 +1,9 @@
+Task,Owner role,Due (relative to last day),Definition of done,Done (Y/N),Notes
+Confirm last day and reason category,HR,-7 days,Recorded in the system of record,,Example rows: adapt to your company
+Plan handover of work and ownership,Manager,-7 days,Owners named for every open item,,
+Set out-of-office and mail forwarding,IT,-1 day,Message and forward tested,,
+Collect laptop and equipment,IT,0 days,Items logged as returned,,
+Disable accounts and revoke access,IT,0 days,All accounts in the access record removed,,
+Transfer files and shared documents,Manager,0 days,Ownership moved to a named person,,
+Remove from payments and approval lists,Finance,0 days,No approvals pointing at the person,,
+Access review against the access record,Security or IT,+7 days,No active accounts remain,,

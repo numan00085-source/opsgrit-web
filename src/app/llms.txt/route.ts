@@ -21,7 +21,7 @@ export function GET() {
 
 > ${SITE.description}
 
-OpsGrit publishes practical guides, decision frameworks and SOP templates for operations, revenue-operations, finance-operations and IT or automation leaders at companies. Articles are published under the OpsGrit Research Desk byline. They are researched and drafted with AI assistance and pass an automated editorial review before publication, as explained in the editorial policy. They are general guidance, not professional, legal, tax or financial advice. Prices and product features change, so check the vendor before you buy. Illustrative numbers in examples are labeled as examples. To report a mistake, use the contact page.
+OpsGrit publishes practical guides, decision frameworks and SOP templates for operations, revenue-operations, finance-operations and IT or automation leaders at companies. Articles are published under the OpsGrit Research Desk byline. They are researched and drafted with AI assistance and pass an automated editorial review before publication, and the publisher spot-checks them from time to time, as explained in the editorial policy. They are general guidance, not professional, legal, tax or financial advice. Prices and product features change, so check the vendor before you buy. Illustrative numbers in examples are labeled as examples. To report a mistake, use the contact page.
 
 How to cite: link to the article URL and name "OpsGrit". Articles are updated when facts change; the date next to each article is its first publication date.
 

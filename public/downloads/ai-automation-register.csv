@@ -1,0 +1,2 @@
+ID,Automation or AI tool,Business owner,Technical owner,Purpose,Data it touches,Contains personal or sensitive data (Y/N),Can it take action without approval (Y/N),Credentials and where stored,Last reviewed,Next review,Monitoring and alert contact,Risk level (L/M/H),Status
+A-001 (example),Invoice reader,Finance lead,Ops engineer,Extract fields from supplier invoices,Supplier invoices,N,N,Service account in password manager,2026-01-10,2026-04-10,finance-ops channel,M,Active

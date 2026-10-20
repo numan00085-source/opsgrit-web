@@ -135,6 +135,10 @@ A very common design choice is how one system learns that something has changed 
 
 A practical approach: prefer webhooks when the source supports them and timeliness matters, but add a safety net, such as a periodic reconciliation that checks for anything missed. Webhooks are not guaranteed to arrive, and good designs assume some will be lost or delivered twice.
 
+![Dependable integration pattern: validate input, check for duplicates, process, then retry, log failures and alert a person](/diagrams/integration-reliability-pattern.svg)
+
+*The patterns below fit together in this order.*
+
 ## Patterns that make integrations dependable
 
 Reliable integrations are built from a handful of habits.
@@ -172,6 +176,16 @@ APIs change. Vendors add fields, retire endpoints and alter behavior. Subscribe 
 ### Secrets and access control
 
 Keep credentials out of shared documents and screenshots. Use the least access needed, such as read-only where writing is unnecessary, and use dedicated service accounts instead of an individual's login, so that the integration does not break when that person leaves. Rotate credentials on a schedule and when staff change.
+
+## Edge cases from vendor documentation
+
+Real platforms have limits that your design has to survive. Three examples from vendor documentation, retrieved on October 19, 2026:
+
+- **Receivers can reject bursts.** Make's documentation says custom webhooks process up to 300 incoming requests per 10 seconds and return HTTP 429 beyond that, and that a full queue rejects data with a "Queue is full" response. Zapier's platform documentation also describes a 429 response when a sender exceeds webhook limits, and advises senders to support a retry and back-off schedule.
+- **Webhooks can go away.** Make deactivates a webhook that has not been connected to a scenario for more than 5 days, after which it returns 410 Gone. A sender that keeps posting to a retired URL will fail without anyone noticing unless you alert on it.
+- **Payload size is a setting.** On self-hosted n8n the maximum payload size defaults to 16 MiB and is changed by an environment variable and a restart. Pass a link to large files instead of the file itself.
+
+The common answer is the one in this section: validate at the edge, make processing safe to repeat, retry with back-off and alert a person when retries run out. For a side-by-side of platform limits, see our [Zapier, Make and n8n comparison](/blog/zapier-vs-make-vs-n8n-ops-teams).
 
 ## A simple decision guide
 
@@ -243,3 +257,10 @@ Links were checked on October 11, 2026. Pricing, limits and rules change, so con
 
 - [Stripe docs: Webhooks](https://docs.stripe.com/webhooks). Documents duplicate deliveries, automatic retries, unordered events and returning a quick 2xx response.
 - [Stripe docs: Idempotent requests](https://docs.stripe.com/api/idempotent_requests). Explains how idempotency keys let you retry a request safely without performing the operation twice.
+- [Make Help: Webhooks](https://help.make.com/webhooks). Source for the request rate limit, queue behavior and the 5 day deactivation rule.
+- [Zapier Platform: Troubleshoot throttles](https://docs.zapier.com/integrations/build/troubleshoot-throttles.md). Source for the 429 response and the retry and back-off advice.
+- [n8n docs: Endpoints environment variables](https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/use-environment-variables/endpoints). Source for the default 16 MiB payload limit.
+
+## Related guides
+
+- [Webhook Failures: Troubleshooting Timeouts, Retries and Missing Events](/blog/webhook-failures-troubleshooting-timeouts-retries)

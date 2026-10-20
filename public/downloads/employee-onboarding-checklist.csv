@@ -1,0 +1,10 @@
+Task,Owner role,Due (relative to start date),Definition of done,Done (Y/N),Notes
+Confirm start date and role in the hire record,HR,-14 days,Record complete and approved,,Example rows: adapt to your company
+Order laptop and equipment,IT,-10 days,Order confirmed with delivery date,,
+Create email and core accounts,IT,-3 days,Sign-in tested with a test login,,
+Apply role access bundle,IT,-3 days,Groups assigned and recorded with approver,,
+Manager plans first week,Manager,-5 days,Plan shared with new hire,,
+Open-task report reviewed,Onboarding owner,-2 days,All gaps assigned,,
+Day-one sign-in check,IT,0 days,Email and three key tools work,,
+First-week goals set,Manager,+7 days,Goals written down and shared,,
+30-day check-in,Manager,+30 days,Notes recorded,,

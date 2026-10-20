@@ -153,3 +153,8 @@ export function getTakeaways(content: string): string[] {
     .map((x) => x.replace(/\*\*(.+?)\*\*/g, "$1").replace(/\[(.+?)\]\(.+?\)/g, "$1").replace(/`/g, ""))
     .slice(0, 5);
 }
+
+/** Remove custom MDX component tags (keeps their inner text) for plain-text uses such as llms-full.txt and the bot. */
+export function plainContent(content: string): string {
+  return content.replace(/<\/?(RaciEmbed|ToolCard|Download)\b[^>]*>/g, "");
+}

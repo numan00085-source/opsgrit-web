@@ -1,0 +1,188 @@
+---
+title: "Automation Alert Review: A Weekly and Monthly Cadence That Prevents Alert Fatigue"
+seoTitle: "Automation Alert Review Cadence for Ops Teams"
+slug: "automation-alert-review-cadence-weekly-monthly"
+category: "Process SOPs"
+excerpt: "Alerts only help if someone reviews them on a schedule. Set a daily, weekly and monthly review cadence for business automations, with owners, agendas and a template."
+date: "2026-10-19"
+author: "OpsGrit Research Desk"
+coverImage: "/images/automation-alert-review-cadence-weekly-monthly-cover.webp"
+featured: false
+shortAnswer: "Review automation alerts on three rhythms: a daily glance at anything urgent, a weekly 20-minute review of failures, noise and ownership, and a monthly review of trends, thresholds and retired workflows. Give each review an owner and a fixed agenda, and change or delete any alert that nobody acts on."
+faq:
+  - q: "What is alert fatigue in business automation?"
+    a: "It is what happens when people receive so many alerts, many of them unimportant, that they stop reading them. Real failures are then missed because they look like the noise."
+  - q: "How often should you review automation alerts?"
+    a: "Use three rhythms: a daily check of urgent items, a weekly review of failures and noisy alerts, and a monthly review of trends, thresholds and the list of automations."
+  - q: "Who should own the alert review?"
+    a: "One named person owns the review and each automation has a named owner. A shared channel with no owner tends to be ignored."
+  - q: "What should you do with an alert nobody acts on?"
+    a: "Change it so it is actionable, lower its priority, merge it with related alerts or delete it. An alert that never leads to action is noise."
+  - q: "What should a weekly review cover?"
+    a: "Failures from the past week, repeated or noisy alerts, items with no owner, missed or late runs and any changes to the automations."
+---
+
+Most teams set up alerts for their automations at some point. A failed run posts to a channel, an email goes to a shared inbox, a message lands in a ticket queue. For a few weeks, people read them. Then the channel gets busy, a few alerts turn out to be harmless, and people start to scroll past. When a real failure arrives, it looks the same as all the rest.
+
+The fix is not more alerts. It is a regular review: a short, scheduled habit where someone looks at what fired, decides what to do, and tunes the alerts so that the next week is quieter and more useful. This guide sets out a simple cadence of daily, weekly and monthly reviews, with owners and agendas. It builds on our guide to [monitoring business automations](/blog/automation-monitoring-alerting-operations-teams), which covers what to monitor. This one covers how to keep the monitoring alive.
+
+## Why alerts decay
+
+Alerts decay for predictable reasons.
+
+- **Too many.** Every failure, warning and notice is sent to the same place.
+- **Not actionable.** The message says something failed, but not what to do or who should do it.
+- **No owner.** A shared channel belongs to everyone, which in practice means no one.
+- **Stale.** The automation changed, but the alert did not.
+- **No feedback loop.** Nobody asks whether an alert was useful, so noisy alerts stay forever.
+
+Google's Site Reliability Engineering book, in its chapter on monitoring distributed systems, makes the same general point from the engineering world: alerts that interrupt people should be urgent and actionable, and a system that pages people for things they cannot or need not act on wears them out. The principle carries over to business operations. An alert is a request for someone's attention. Each one should earn it.
+
+## The three-rhythm cadence
+
+A cadence turns good intentions into a habit. Three rhythms work for most teams, each with a different purpose.
+
+| Rhythm | Purpose | Time | Owner |
+|---|---|---|---|
+| Daily | Catch urgent failures | 5 minutes | Whoever is on rota that day |
+| Weekly | Fix problems and reduce noise | 20 to 30 minutes | Automation owner or ops lead |
+| Monthly | Review trends, thresholds and the inventory | 45 to 60 minutes | Ops lead with workflow owners |
+
+The times are suggestions. Start small, because a review that takes too long will be skipped.
+
+### The daily glance
+
+The daily check is not a meeting. It is one person, on a rota, looking at the alert channel or dashboard once or twice a day for anything urgent.
+
+The aim is to find failures that affect customers, money or compliance, and to make sure each has an owner and a next step. Everything else can wait for the weekly review.
+
+A good daily rule is that every urgent alert gets one of three marks: **owned** (someone is fixing it), **waiting** (blocked, with a reason) or **ignored on purpose** (with a note). An alert with no mark is unfinished work.
+
+### The weekly review
+
+The weekly review is the most valuable of the three. It is short and it has a fixed agenda, so it does not wander.
+
+1. **Failures from the last week.** List them, with the cause and whether it is fixed.
+2. **Repeats.** Anything that failed more than once. Repeats mean the root cause is not fixed.
+3. **Noise.** Alerts that fired and needed no action. For each, change, merge or remove it.
+4. **Misses.** Anything that went wrong and was not alerted. Add the alert that would have caught it.
+5. **Ownership.** Alerts or automations with no owner or an owner who has left.
+6. **Changes.** New or edited automations and whether their alerts were updated.
+
+End the meeting with a short list of actions, each with a name and a date. If the list is empty week after week and the channel is quiet, that is a good sign. If the list is empty and the channel is busy, the review is not working.
+
+### The monthly review
+
+The monthly review looks up from the individual alerts and asks bigger questions.
+
+- **Trends.** Are failures going up or down? Which automations fail most?
+- **Thresholds.** Are the numbers that trigger alerts still right? Volumes change, and a threshold that was sensible six months ago may be too tight or too loose.
+- **Inventory.** Is every automation listed, with an owner and an alert route? Our guide to [auditing AI tools and automations](/blog/how-to-audit-ai-tools-and-automations) shows how to keep such a register.
+- **Retirement.** Which automations are no longer used? Switch them off, along with their alerts.
+- **Cost and limits.** Are any workflows close to a platform limit, such as a payload size or rate limit?
+- **Incidents.** Did any alert lead to an incident? Do the lessons belong in a runbook? See our [incident response runbook](/blog/operational-incident-response-runbook).
+
+## Decide what each alert is for
+
+Before you tune alerts, sort them. Every alert should fall into one of three groups.
+
+| Group | What it means | Where it goes |
+|---|---|---|
+| Act now | Customer, money or compliance impact, needs a person soon | A channel or phone alert that someone is responsible for |
+| Act this week | Needs fixing, but not urgently | A ticket or the weekly review list |
+| Record only | Useful for history and trends, no action needed | A log or dashboard, not a notification |
+
+Most alert fatigue comes from sending the second and third groups to the first group's channel. Moving them out is the quickest improvement you can make.
+
+## Make every alert actionable
+
+When you review an alert, ask five questions. An alert that fails more than one of them needs editing.
+
+1. **Is it clear what failed?** Name the automation and the step.
+2. **Is it clear why it matters?** Say what is affected.
+3. **Is it clear who owns it?** Name a person or role.
+4. **Is it clear what to do first?** Link to the runbook or the log.
+5. **Is it clear how urgent it is?** Say whether to act now or this week.
+
+A short, well-formed alert is more useful than a long one. For example: the name of the workflow, the step that failed, the record affected, a link to the log and the owner's name.
+
+## Roles and rules
+
+A cadence needs a few clear roles.
+
+- **Review owner.** Runs the weekly review, keeps the notes and chases the actions.
+- **Automation owner.** Responsible for one automation, its alerts and its fixes.
+- **Daily rota person.** Checks the urgent channel and marks each alert.
+- **Backup.** Covers when someone is away. A review that depends on one person stops when that person is on holiday.
+
+Use the [RACI approach](/blog/raci-matrix-operations-teams-template) to be explicit about who is responsible and who is only informed, so alerts reach the people who can act on them and not everyone.
+
+Add a few rules:
+
+- An alert with no owner is assigned one or removed.
+- An alert that did not lead to action for a set period is reviewed for removal.
+- Changing an automation includes checking its alerts.
+- New automations go live with an alert route, not afterwards.
+
+## A weekly review template
+
+You can paste this into your notes or ticket tool.
+
+**Weekly automation review: [date]**
+
+- Attendees:
+- Failures this week (automation, cause, status):
+- Repeat failures and root cause:
+- Noisy alerts and the decision (change, merge, remove):
+- Things that went wrong without an alert, and the new alert:
+- Items with no owner:
+- Changes made to automations this week:
+- Actions (what, who, by when):
+
+Keep the notes short. They are a record that the review happened and a place to see patterns over time.
+
+## Illustrative example
+
+The example below is invented to show how the cadence works.
+
+An operations team has one alert channel for all its automations. In a typical week it receives dozens of messages, and most are warnings about retries that later succeed. People have muted the channel.
+
+The team introduces the cadence. At the first weekly review, they sort the alerts into the three groups. Retry warnings move to a log. Failures that touch invoices and customer orders stay in a channel with a named owner. Everything else becomes a weekly list. They also find two automations with no owner and a workflow that was switched off months ago but still posts a daily alert, which they remove.
+
+Within a month the channel has a handful of messages a week, each with an owner and a link to the log. When an order sync fails, it is noticed within the hour, because the channel is now worth reading.
+
+## Common mistakes
+
+- **Setting up alerts and never reviewing them.** They will decay.
+- **One channel for everything.** Urgent and routine alerts compete for attention.
+- **No owner.** Shared responsibility is usually nobody's responsibility.
+- **A review that is too long.** It will be skipped. Keep it short and fixed.
+- **Fixing the incident, not the alert.** After a miss, add or tune the alert so it is caught next time.
+- **Never deleting alerts.** Every alert has a maintenance cost.
+- **Reviewing alerts without reviewing automations.** Retire what is no longer used.
+
+## Key takeaways
+
+- Alerts decay when they are too many, not actionable, unowned or stale.
+- Use three rhythms: a daily glance at urgent items, a weekly review of failures and noise, and a monthly review of trends, thresholds and inventory.
+- Sort each alert into act now, act this week or record only, and send each group to the right place.
+- Make every alert say what failed, why it matters, who owns it, what to do first and how urgent it is.
+- Name a review owner, an owner for each automation and a backup.
+- Delete or change alerts nobody acts on, and add alerts for failures that went unnoticed.
+- Keep the review short and fixed so that it actually happens.
+
+This week, book a 20-minute slot for the first weekly review. Bring the last seven days of alerts and sort each into act now, act this week or record only. That one step usually removes most of the noise.
+
+## A note on sources
+
+This guide is written by the OpsGrit Research Desk from common operating practice. The meeting lengths and the example are illustrations to adapt, and it does not cite outside statistics. If you spot something that looks wrong, [tell us](/contact).
+
+**Further reading.** The principle that alerts should be urgent and actionable is discussed in the monitoring chapter of Google's SRE book:
+
+- [Google SRE Book: Monitoring Distributed Systems](https://sre.google/sre-book/monitoring-distributed-systems/)
+
+## Related guides
+
+- [How to Monitor Business Automations: Alerts, Checks and Reviews](/blog/automation-monitoring-alerting-operations-teams)
+- [Incident Response Runbook: A Template for Operations Teams](/blog/operational-incident-response-runbook)
+- [How to Audit AI Tools and Automations: A Quarterly Review Template](/blog/how-to-audit-ai-tools-and-automations)

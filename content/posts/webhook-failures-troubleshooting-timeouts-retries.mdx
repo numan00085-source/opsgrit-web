@@ -1,0 +1,187 @@
+---
+title: "Webhook Failures: Troubleshooting Timeouts, Retries and Missing Events"
+seoTitle: "Webhook Failures: Timeouts, Retries and Missing Events"
+slug: "webhook-failures-troubleshooting-timeouts-retries"
+category: "Ops Stack"
+excerpt: "When a webhook stops working, the cause is usually one of a few things. Follow a step-by-step checklist for timeouts, retries, duplicates, rate limits and missing events."
+date: "2026-10-19"
+author: "OpsGrit Research Desk"
+coverImage: "/images/webhook-failures-troubleshooting-timeouts-retries-cover.webp"
+featured: false
+shortAnswer: "When webhook events go missing, check in order: is the sender sending, is the receiver reachable, is the receiver answering quickly with a success code, is a limit being hit, and is a retry or duplicate hiding the problem. Fix it by returning a fast 2xx, processing the work after you respond, handling duplicates safely and alerting when retries run out."
+faq:
+  - q: "Why are my webhook events missing?"
+    a: "Common causes are a wrong or changed URL, a receiver that was down or too slow, a rate limit or full queue rejecting events, a deactivated webhook or a filter that excludes the event. Check the sender's delivery log first."
+  - q: "Why is the same webhook delivered more than once?"
+    a: "Senders usually retry when they do not receive a quick success response, and some may deliver the same event twice. Make your processing safe to repeat by recording event IDs and ignoring ones you have seen."
+  - q: "What response should a webhook receiver return?"
+    a: "A 2xx status code, returned quickly, once the event is safely stored. Do the slow work afterward, because a slow response can look like a failure to the sender and trigger retries."
+  - q: "What does an HTTP 429 on a webhook mean?"
+    a: "It means the receiver says it has received too many requests. The sender should wait and retry with back-off, and the receiver may need a queue or a higher limit."
+  - q: "How do you stop losing webhook events?"
+    a: "Store each event before processing it, retry failures with back-off, keep a failure log for events that cannot be processed and send an alert to a person when retries are exhausted."
+---
+
+A webhook fails quietly. A customer pays and the order never shows up. A form is submitted and the CRM stays empty. A ticket is created and nobody is notified. Nobody sees an error, because the error lives in a log nobody is reading.
+
+This guide is a troubleshooting path for those moments. It assumes you already know what a webhook is. If not, start with our guide to [webhooks, APIs and iPaaS integration patterns](/blog/webhooks-apis-ipaas-integration-patterns). Here the focus is practical: a set of checks in a sensible order, the typical causes behind each, and the design changes that stop the same failure from returning.
+
+## Start with the delivery log
+
+Before you change anything, find out whether the event was sent. Most systems that send webhooks keep a delivery log that shows each attempt, the status code that came back and sometimes the response body. This one screen answers the first question: is the problem on the sending side or the receiving side?
+
+- If there is **no attempt** in the log, the sender never tried. The cause is on the sender's side: the webhook is switched off, a filter excluded the event, the event type is not subscribed, or the trigger did not fire.
+- If there is an attempt with **no response or a timeout**, the receiver did not answer in time or could not be reached.
+- If there is an attempt with an **error code**, the receiver answered and refused. The code and body usually say why.
+- If there is an attempt with a **2xx code**, the receiver says it accepted the event. The problem is probably in what happened after acceptance.
+
+Write down which of the four you are in. The rest of the guide follows from it.
+
+## The five-step checklist
+
+Work through these in order. Most failures are found in the first three.
+
+| Step | Question | Typical finding |
+|---|---|---|
+| 1 | Did the sender send it? | Webhook disabled, event not subscribed, filter too narrow |
+| 2 | Is the URL right and reachable? | Changed URL, expired certificate, firewall, retired endpoint |
+| 3 | Did the receiver answer fast with a 2xx? | Slow handler, error thrown, wrong status code |
+| 4 | Was a limit hit? | Rate limit, full queue, payload too large |
+| 5 | Did a retry or duplicate hide the cause? | Same event twice, out-of-order events |
+
+### Step 1: Did the sender send it?
+
+Check that the webhook is switched on, that it points to the right environment (live, not test) and that it subscribes to the event type you expect. A common cause is a webhook created in a test mode that was never recreated for live use. Another is a filter or condition that quietly excludes certain records.
+
+### Step 2: Is the URL right and reachable?
+
+URLs change. A scenario is rebuilt, a domain moves, a tunnel used in development expires. The sender keeps posting to the old address. Check the exact URL, that the certificate is valid, that no firewall or proxy blocks the sender and that the endpoint still exists.
+
+Some platforms retire unused webhooks. Make's documentation says a webhook that has not been connected to a scenario for more than 5 days is deactivated and returns 410 Gone. If a sender gets a 410, it is being told the destination is gone, so fix or replace the URL rather than retrying.
+
+### Step 3: Did the receiver answer fast with a success code?
+
+This is the most common source of trouble. Senders wait a limited time for a response. If your receiver does heavy work before replying, such as calling other systems, writing several records or waiting for a person, the sender may give up and treat the delivery as failed, then try again.
+
+Stripe's documentation advises returning a successful 2xx response quickly, before running complex logic that could cause a timeout. The same principle applies elsewhere. The pattern is:
+
+1. Receive the event and check it is genuine.
+2. Store it, for example in a queue or table.
+3. Return a 2xx.
+4. Process it afterward.
+
+Also check what status code you return. Some handlers return 200 even when they failed, which tells the sender everything is fine, and some return an error for events they simply do not care about, which triggers needless retries. Return a success for events you accept or deliberately ignore, and an error only when you want a retry.
+
+### Step 4: Was a limit hit?
+
+Platforms limit how much they will take. Three kinds of limit cause missing events:
+
+- **Rate limits.** Make's documentation says custom webhooks process up to 300 incoming requests per 10 seconds and return HTTP 429 beyond that. Zapier's platform documentation also describes a 429 response when limits are exceeded and advises senders to retry with back-off.
+- **Queue limits.** Make's documentation says that when a webhook queue is full, new data is rejected with a "Queue is full" response.
+- **Payload size.** On self-hosted n8n the maximum payload size defaults to 16 MiB. A larger body is refused unless the setting is changed.
+
+If the pattern is that events go missing during busy periods, suspect a limit. The fix is a combination of smoothing the load, increasing capacity where the platform allows it and making sure the sender retries.
+
+### Step 5: Did a retry or duplicate hide the cause?
+
+Retries make systems reliable, and they also create confusion. A sender that retries after a timeout may deliver the same event several times. If your handler is not safe to repeat, you get duplicate orders, double emails or two records for one customer.
+
+Events can also arrive out of order. An "updated" event may arrive before the "created" event it follows. Stripe's documentation notes that duplicate deliveries and unordered events can occur and that handlers should expect them.
+
+The defense is idempotency: record the unique ID of each event you process, and when you see the same ID again, acknowledge it and skip the work. Our guide to [system of record](/blog/system-of-record-source-of-truth) design explains why one source should decide what is current, which helps when events arrive in the wrong order.
+
+## Reading status codes
+
+The status code the receiver returned often tells you where to look.
+
+| Code | Usual meaning | First thing to check |
+|---|---|---|
+| 2xx | Accepted | What happened after acceptance |
+| 400 | Bad request, or a rejected payload | Payload format, validation rules, full queue |
+| 401 or 403 | Not authorized | Secrets, signatures, allow-lists |
+| 404 | Not found | The URL, environment, path |
+| 410 | Gone | The webhook was retired or deactivated |
+| 413 | Payload too large | Body size and the receiver's limit |
+| 429 | Too many requests | Rate limit, bursts, back-off |
+| 5xx | Receiver error | The receiver's own logs |
+| Timeout | No answer in time | Handler speed, network path |
+
+Treat the table as a guide. Vendors use codes slightly differently, so check the documentation for the one you use.
+
+## Design changes that prevent repeat failures
+
+Troubleshooting fixes one incident. Design changes fix the class of incident.
+
+**Acknowledge fast, process later.** Put a queue or a table between receiving and processing. The receiver only validates, stores and answers.
+
+**Make processing safe to repeat.** Use event IDs or idempotency keys so a second delivery changes nothing.
+
+**Retry with back-off.** When your processing fails, retry after a growing delay, not in a tight loop that makes the problem worse.
+
+**Keep a failure log.** Events that still fail after the retries go to a place a person can inspect and replay, instead of disappearing.
+
+**Alert a person.** When retries run out, send a message to a channel someone reads. Our guide to [monitoring business automations](/blog/automation-monitoring-alerting-operations-teams) covers how to make alerts useful, not noisy.
+
+**Verify the sender.** Check signatures or secrets so that you only process genuine events. This is a security control and also protects you from junk that fills a queue.
+
+**Add a reconciliation check.** Even with all of the above, compare counts on a schedule. For example, the number of paid orders in the payment system against the number in your order system. A mismatch tells you an event went missing, even if no error was raised.
+
+## A runbook you can copy
+
+Put this in your SOP for any webhook that matters.
+
+1. Open the sender's delivery log and find the event by time or ID.
+2. Record which of the four outcomes applies: not sent, no response, error code or accepted.
+3. If not sent, check that the webhook is on, in the right environment and subscribed to the event type.
+4. If no response, check the URL, certificate, network path and handler speed.
+5. If an error code, read the body and the receiver's own log.
+6. If accepted, check the processing step and the failure log.
+7. Replay the event once the cause is fixed, and confirm the result in the target system.
+8. Record the cause and the fix, and add a prevention task if the cause was a design gap.
+
+## Illustrative example
+
+The details below are invented to show the method.
+
+A team notices that three customer sign-ups from yesterday are missing in the CRM. The sender's delivery log shows all three events were sent. Two returned 200 and one timed out. The two that returned 200 were accepted, so the problem is after acceptance: the processing step failed when a required field was empty, and the error was only in a log. The timed-out event was retried and succeeded later, which created a duplicate record because the handler had no duplicate check.
+
+The fixes are specific. The handler now stores the event and returns quickly. Missing required fields send the event to the failure log with an alert. Events are matched on ID, so a retry updates the existing record. A weekly check compares the sign-up count in the form tool with the count in the CRM. The same incident cannot go unnoticed again.
+
+## Common mistakes
+
+- **Doing slow work before responding.** It causes timeouts and retries.
+- **Returning 200 on failure.** The sender believes it worked and never retries.
+- **No duplicate handling.** Retries create duplicates.
+- **No failure log.** Events that fail disappear.
+- **Alerts that nobody reads.** An alert in an unwatched inbox is the same as none.
+- **Forgetting to update the sender.** A moved or retired URL is a silent break.
+- **Never reconciling.** Without a count check, a missing event can stay missing for months.
+
+## Key takeaways
+
+- Start with the sender's delivery log to learn whether the event was not sent, got no response, got an error or was accepted.
+- Work through five checks: sent, reachable, fast 2xx, limits and duplicates.
+- Return a success code quickly once the event is stored, and do the slow work afterward.
+- Expect rate limits, full queues and payload limits, and check the current documentation of the platform you use.
+- Make processing safe to repeat with event IDs, and expect events out of order.
+- Keep a failure log, retry with back-off and alert a person when retries run out.
+- Reconcile counts between systems on a schedule to catch events that went missing without an error.
+
+This week, choose your most important webhook and write down where its delivery log lives and who is alerted when it fails. If you cannot answer either question, that is the first fix.
+
+## A note on sources
+
+This guide is written by the OpsGrit Research Desk from common integration practice. Platform limits were taken from each vendor's documentation on October 19, 2026 and change, so check the current pages. The example is invented. If you spot something that looks wrong, [tell us](/contact).
+
+**Further reading.**
+
+- [Stripe docs: Webhooks](https://docs.stripe.com/webhooks). Source for returning a quick 2xx, duplicate deliveries and unordered events.
+- [Make Help: Webhooks](https://help.make.com/webhooks). Source for the request rate limit, queue behavior and the 5 day deactivation rule.
+- [Zapier Platform: Troubleshoot throttles](https://docs.zapier.com/integrations/build/troubleshoot-throttles.md). Source for the 429 response and the retry and back-off advice.
+- [n8n docs: Endpoints environment variables](https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/use-environment-variables/endpoints). Source for the default 16 MiB payload limit.
+
+## Related guides
+
+- [Webhooks, APIs and iPaaS: Integration Patterns for Operations Teams Who Are Not Engineers](/blog/webhooks-apis-ipaas-integration-patterns)
+- [How to Monitor Business Automations: Alerts, Checks and Reviews](/blog/automation-monitoring-alerting-operations-teams)
+- [Zapier vs. Make vs. n8n: How Operations Teams Should Choose an Automation Platform](/blog/zapier-vs-make-vs-n8n-ops-teams)

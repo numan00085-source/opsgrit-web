@@ -1,0 +1,5 @@
+Tier,Amount from,Amount to,Approver role,Extra requirement,Notes
+Tier 1,0,1000,Budget owner,PO match,Illustrative amounts: set your own
+Tier 2,1000.01,10000,Department head,PO match and budget check,
+Tier 3,10000.01,,Finance lead,Contract on file,
+Exception,Any,,Finance lead,Written reason,Any invoice with no PO or a failed match

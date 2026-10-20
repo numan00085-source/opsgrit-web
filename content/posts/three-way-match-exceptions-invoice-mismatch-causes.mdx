@@ -1,0 +1,198 @@
+---
+title: "Three-Way Match Exceptions: Why Invoices Fail the Match and How to Clear Them"
+seoTitle: "Three-Way Match Exceptions: Causes and Fixes"
+slug: "three-way-match-exceptions-invoice-mismatch-causes"
+category: "Process SOPs"
+excerpt: "Most invoice delays come from a handful of three-way match exceptions. Learn the common causes, who should clear each one, how to set tolerances and how to track the queue."
+date: "2026-10-19"
+author: "OpsGrit Research Desk"
+coverImage: "/images/three-way-match-exceptions-invoice-mismatch-causes-cover.webp"
+featured: false
+shortAnswer: "A three-way match compares the purchase order, the goods receipt and the supplier invoice. Invoices fail when quantity, price, tax, supplier or timing differ, or when a document is missing. Sort each exception by cause, route it to the person who can fix that cause, set written tolerances, and track the age and cause of every open exception."
+faq:
+  - q: "What is a three-way match exception?"
+    a: "It is an invoice that does not agree with its purchase order and goods receipt, or that is missing one of them. The invoice is held until someone resolves the difference or approves it as an exception."
+  - q: "What causes most three-way match failures?"
+    a: "The usual causes are a quantity difference, a price difference, a missing or late goods receipt, a missing purchase order, tax or freight differences and a supplier record that does not match."
+  - q: "Who should resolve a match exception?"
+    a: "The person who can fix the cause. Receiving fixes missing receipts, purchasing fixes price and purchase order issues, the supplier fixes invoice errors and finance decides on tolerance exceptions."
+  - q: "Should you set a tolerance for small differences?"
+    a: "Many teams do, using a small percentage or amount that is written down and approved by finance. A tolerance stops tiny differences from clogging the queue, but it should be reviewed so it does not hide a pattern."
+  - q: "How do you reduce the number of exceptions?"
+    a: "Track the cause of each exception, fix the top two or three causes at the source, such as late receipting or unclear purchase orders, and share the numbers with the people who create the documents."
+---
+
+A three-way match looks simple on paper. The invoice should agree with the purchase order and the goods receipt, and when it does, it moves on to payment. In practice, a lot of invoices do not agree on the first pass, and the exceptions pile up in someone's inbox while suppliers wait and ask where their money is.
+
+This guide is about that pile. It does not explain what a three-way match is in general, because our guide to [invoice approval workflows](/blog/invoice-approval-workflow-thresholds-controls) covers when to require one. It focuses on what happens after a match fails: the usual causes, who should fix each one, how to set tolerances, and how to measure the queue so that it shrinks over time instead of growing.
+
+## What a match exception is
+
+An exception is any invoice that cannot be approved automatically because something does not agree. The system, or a person, compares three documents:
+
+- The **purchase order** records what you agreed to buy, in what quantity and at what price.
+- The **goods receipt** records what actually arrived, or what service was delivered.
+- The **invoice** records what the supplier is asking you to pay.
+
+If all three agree within the rules you set, the invoice passes. If they do not, it becomes an exception. The point of the match is a control: you do not pay for things you did not order or did not receive, and you do not pay more than you agreed.
+
+Exceptions are therefore not a failure of the process. They are the process working. The real problem is an exception queue with no owners, no ageing and no cause recorded, because then every invoice is handled as a one-off and nothing gets better.
+
+## The common causes of match failures
+
+Most exceptions come from a short list of causes. Knowing the list lets you route each one to the right person at once, rather than sending everything to accounts payable to chase.
+
+| Cause | What it looks like | Who can fix it |
+|---|---|---|
+| Missing goods receipt | Invoice arrives before anyone recorded that the goods or service arrived | Receiving or the requester |
+| Quantity difference | Invoice quantity is higher or lower than received or ordered | Receiving, then the supplier |
+| Price difference | Unit price differs from the purchase order | Purchasing, then the supplier |
+| No purchase order | Invoice references no order or a closed order | Requester and purchasing |
+| Tax, freight or fee lines | Extra lines that were not on the order | Purchasing or finance |
+| Supplier mismatch | Invoice name or bank details differ from the supplier record | Procurement or vendor master owner |
+| Duplicate invoice | Same invoice number or amount seen before | Accounts payable |
+| Partial delivery | Only part of the order has arrived | Receiving and purchasing |
+| Currency or rounding | Totals differ by small amounts | Finance |
+| Timing | Receipt dated after the invoice, or an order raised after the work | Requester and purchasing |
+
+Treat this table as a starting point and add your own causes. Every team has a few that are specific to its industry, such as services that are delivered over time or goods that are received in several shipments.
+
+## Sort by cause first, then by amount
+
+The natural way to work a queue is to start with the largest invoice. That is sensible, but it hides the cause. A better method is two-step.
+
+First, give every exception a cause code from your list. Do this when the exception is created, not at the end. The code decides who receives it.
+
+Second, within each owner's queue, work by age and amount. Old exceptions get attention before new ones, because they are the ones that turn into late fees and unhappy suppliers.
+
+The code also gives you a record. After a month, you can see that, for example, a large share of your exceptions are missing receipts. That is a finding you can act on, which a pile of unlabeled invoices never gives you.
+
+## Set tolerances, and write them down
+
+A strict match, where every figure must agree exactly, produces many exceptions for differences that do not matter. A tolerance is a rule that says small differences pass automatically.
+
+Tolerances usually come in two forms:
+
+- A **percentage**, such as the invoice total may differ from the order by a small percentage.
+- A **fixed amount**, such as differences below a set amount pass.
+
+Many teams use both and apply the lower of the two, so a small tolerance cannot turn into a large payment on a big invoice. The numbers are your choice and depend on your risk. Finance should approve them and write them in the SOP, so they are a policy, not something a clerk adjusts to clear a queue.
+
+Three cautions apply:
+
+- **Tolerance on price is not tolerance on quantity.** Paying for items you did not receive is a different risk from a small price rounding difference. Set them separately.
+- **Review tolerances on a schedule.** If a tolerance is always used by one supplier, ask whether the supplier is systematically billing high.
+- **Do not let tolerance cover missing documents.** A missing receipt or order is not a small difference. It is a missing control.
+
+If you use AI to read invoices, keep these rules in code and out of the model. Our guide to [AI invoice processing](/blog/ai-invoice-processing-accounts-payable) explains why matching and tolerance belong with rules, and AI is better used to help explain why an exception happened.
+
+## How to clear each type of exception
+
+A clear routine for each cause saves hours. Here is one way to describe it. Adapt the details to your tools.
+
+### Missing receipt
+
+Ask the requester or receiving team to confirm that the goods or service arrived. If they did, they record the receipt and the match reruns. If they did not, the invoice is on hold and the supplier is told why. Record the date of the confirmation, because it is your evidence.
+
+### Quantity difference
+
+Compare the invoice quantity with the receipt. If the supplier billed for more than arrived, ask for a credit note or a corrected invoice. If the receipt was wrong, correct the receipt and keep a note of why. Never edit the invoice to force a match.
+
+### Price difference
+
+Compare the invoice price with the order and with any contract. If the order was wrong, purchasing corrects it and records the reason. If the supplier billed the wrong price, ask for a corrected invoice. Pay only after one of the two is fixed.
+
+### No purchase order
+
+Decide first whether this spend should have had an order. If the spend is allowed without one, such as a utility bill, it follows the non-order route. If it should have had an order, the requester raises one after the fact, and you record the reason so you can see repeat cases.
+
+### Supplier mismatch
+
+Stop. A different name or bank account on an invoice is a fraud signal as well as a data problem. Verify through a known contact, not through details printed on the invoice. Our guide to the [fraud checks to keep](/blog/invoice-approval-workflow-thresholds-controls) when you speed up approval covers the callback habit.
+
+### Duplicate
+
+Check whether the original was paid. If so, reject the duplicate and tell the supplier. If not, pay only one. Systems differ in how they detect duplicates, so a manual check on invoice number, supplier and amount is a sensible backup.
+
+### Partial delivery
+
+Decide whether to pay for what arrived or wait. The answer depends on your terms. Record the decision and keep the order open for the remainder.
+
+## Write the exception SOP
+
+An exception queue works when people know what to do without asking. Put the rules in a short procedure using the structure in our guide to [writing an SOP people follow](/blog/how-to-write-an-sop-people-follow). It should cover:
+
+- The cause codes and what each one means.
+- The owner for each code, and a backup when the owner is away.
+- Response times, for example, owners reply within a set number of working days.
+- The tolerance rules and who approves exceptions to them.
+- The escalation path for old items.
+- What evidence to attach when an exception is approved.
+
+Name an owner for the whole queue as well. Someone should look at it daily, and look at the ageing report weekly. Without that, each person assumes someone else is chasing.
+
+## Measure the queue
+
+You cannot improve what you cannot see. A few simple measures give most of the insight.
+
+| Measure | What it tells you |
+|---|---|
+| Exceptions as a share of invoices | Whether the process is getting cleaner |
+| Count by cause code | Which causes to fix first |
+| Age of open exceptions | Where invoices are stuck |
+| Time to clear by owner | Whether ownership is working |
+| Exceptions by supplier | Which suppliers bill incorrectly |
+| Tolerance approvals | Whether tolerances are being relied on too much |
+
+Look at the cause counts monthly and pick the top two or three. Fixing the cause at the source reduces the queue much more than clearing the same exception faster. For example, if missing receipts are the top cause, a short reminder to receivers and a simpler way to confirm delivery will do more than another person chasing receipts.
+
+Share the numbers with the teams who create the documents. People often change habits when they can see the effect: a purchasing team that sees price mismatches by supplier will tidy its order templates.
+
+## An illustrative week
+
+The following example is invented to show how the pieces fit. The numbers are examples only.
+
+On Monday, an invoice for equipment arrives and fails the match. The cause code is missing receipt. It goes to the requester, who confirms the equipment arrived last week and records it. The match reruns on Tuesday and the invoice moves to approval.
+
+A second invoice fails on price. Purchasing finds the order carried an old price, corrects it with a note and asks the approver to confirm. A third invoice has a different bank account from the supplier record. Accounts payable holds it, phones the supplier on a number from the vendor file and finds the change is genuine. The vendor master owner updates the record with evidence, and the invoice is paid.
+
+At the end of the week, the owner of the queue sees three exceptions with three different causes, all cleared within a few days, each with a note. Nothing was approved by editing an invoice, and nothing waited without an owner.
+
+## Common mistakes
+
+- **No cause code.** Without it, nothing can be routed or counted.
+- **One person clears everything.** It creates a bottleneck and hides the cause.
+- **Editing documents to force a match.** The match is a control. Changing the record to pass it defeats the point.
+- **Tolerances that nobody reviews.** They drift upward unnoticed.
+- **No supplier communication.** Suppliers who are not told why an invoice is held keep emailing.
+- **No ageing report.** Old items are the ones that cost you.
+- **Treating a supplier mismatch as a data problem only.** It may be fraud, so verify independently.
+
+<Download href="/downloads/invoice-approval-log.csv" title="Invoice approval log (CSV)">A log with PO, match result, exception reason, approver and dates. Add your cause codes to the exception column.</Download>
+
+## Key takeaways
+
+- A match exception is the control working, but an unmanaged queue is the problem.
+- Most exceptions come from missing receipts, quantity, price, missing orders, tax or freight lines, supplier mismatch, duplicates and timing.
+- Give each exception a cause code when it is created and route it to the person who can fix that cause.
+- Set written tolerances for price and quantity separately, approved by finance and reviewed regularly.
+- Never use a tolerance to cover a missing document, and never edit a record to force a match.
+- Verify supplier detail changes through a known contact before paying.
+- Measure exceptions by cause, age, owner and supplier, then fix the top causes at the source.
+
+This week, take the last month of exceptions and label each with a cause. The two or three most common labels tell you where to start.
+
+## A note on sources
+
+This guide is written by the OpsGrit Research Desk from common accounts payable practice. The tolerances, timings and the worked week are examples to adapt, and it does not cite outside statistics. If you spot something that looks wrong, [tell us](/contact).
+
+**Further reading.** The warning about changed supplier bank details is covered by the FBI's guidance on business email compromise:
+
+- [FBI: Business email compromise](https://www.fbi.gov/how-we-can-help-you/common-frauds-and-scams/business-email-compromise)
+
+## Related guides
+
+- [Invoice Approval Workflow: Steps, Thresholds and Controls That Work](/blog/invoice-approval-workflow-thresholds-controls)
+- [How to Automate Invoice Processing With AI Without Losing Financial Control](/blog/ai-invoice-processing-accounts-payable)
+- [Vendor Onboarding SOP: Due Diligence, Approvals and Controls](/blog/vendor-onboarding-sop-procurement)
+

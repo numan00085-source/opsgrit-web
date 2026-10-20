@@ -1,0 +1,8 @@
+Task or decision,Ops lead,Data owner,IT,Finance,Support lead,Notes
+Approve migration scope,A,C,C,I,I,Example row: replace with your own
+Sign off on field mapping,C,A,R,I,I,
+Run reconciliation checks,I,A,R,,,
+Approve the cutover date,A,C,C,C,C,
+Decide whether to roll back,A,C,R,I,I,
+Send the customer notice,C,,,,A/R,
+Rule: every row needs exactly one A. Delete this line before use.,,,,,,

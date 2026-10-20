@@ -1,0 +1,229 @@
+---
+title: "AI Tool Vendor Review: Questions to Ask Before You Connect Business Data"
+seoTitle: "AI Tool Vendor Review: Questions for Business Data"
+slug: "ai-tool-vendor-review-questions-business-data"
+category: "AI Automation"
+excerpt: "Before an AI tool touches customer, finance or employee data, review the vendor. Use these questions on data use, retention, access, logging, exit and cost, with a scoring sheet."
+date: "2026-10-19"
+author: "OpsGrit Research Desk"
+coverImage: "/images/ai-tool-vendor-review-questions-business-data-cover.webp"
+featured: false
+shortAnswer: "Before connecting business data to an AI tool, classify the data, then ask the vendor how it uses and stores that data, who can access it, what is logged, which agreements and security reports exist, how you leave and what it costs at your volume. Start with low-risk data, pilot with a small group and record the decision and a review date."
+faq:
+  - q: "What should you check before connecting an AI tool to company data?"
+    a: "Check what data the tool will see, whether the vendor uses it to train models, where it is stored and for how long, who can access it, what is logged, which agreements and security reports exist and how you can export and delete your data."
+  - q: "How do you know if an AI vendor uses your data for training?"
+    a: "Read the vendor's terms and data policy for your specific plan, and ask in writing. Settings and terms often differ between consumer, business and enterprise plans, so confirm the plan you will actually use."
+  - q: "Do you need a security report from every AI vendor?"
+    a: "Scale the request to the risk. For low-risk data a short review may be enough. For customer, financial or employee data, ask for the vendor's security documentation and the data processing terms."
+  - q: "How do you handle employees using AI tools on their own?"
+    a: "Publish a short list of approved tools and data rules, make approval fast so people do not work around it and review what is actually in use."
+  - q: "How often should you review an AI vendor?"
+    a: "Review when the vendor changes its terms, models or features, when your use changes, and at least once a year for tools that touch sensitive data."
+---
+
+An AI tool that looks harmless in a demo can become a serious data decision the moment you connect it to your inbox, your CRM or your accounting system. The tool now reads things it did not see before, it may send them to servers you do not control, and it may keep them for a period you never agreed to.
+
+Most small teams do not have a security department, and they should not have to build a long procurement process to adopt a writing assistant. But they do need a short, repeatable review. This guide gives one: a set of questions to ask before an AI tool touches business data, a way to score the answers, and a lightweight routine for keeping the decision current. It sits alongside our guides to [auditing AI tools and automations](/blog/how-to-audit-ai-tools-and-automations) and [securing AI workflows](/blog/securing-ai-workflows-prompt-injection-operations), and uses the same approach as our [vendor onboarding SOP](/blog/vendor-onboarding-sop-procurement).
+
+## Start with the data, not the vendor
+
+The right depth of review depends on what the tool will see. Before you read a single policy, classify the data.
+
+| Data class | Examples | Review depth |
+|---|---|---|
+| Public | Published articles, public product information | Light |
+| Internal | Process documents, internal notes, meeting summaries | Standard |
+| Confidential | Customer lists, contracts, pricing, financial records | Full |
+| Regulated or sensitive | Employee records, health or payment data, government identifiers | Full, plus legal advice |
+
+Write down which class applies, and which systems the tool will connect to. A tool that only drafts text from a prompt you type is a much smaller risk than one with an integration that can read every message in a shared mailbox.
+
+Also write down what the tool can do. Reading is one thing. Sending email, changing records or paying invoices are others. The more it can do, the more review it needs, and the more you should follow the approval principles in our guide to [human-in-the-loop approvals](/blog/human-in-the-loop-ai-approvals).
+
+## The vendor review questions
+
+Group the questions so that you can work through them quickly. Ask the vendor in writing for anything the public documentation does not answer, and keep the replies.
+
+### 1. How the vendor uses your data
+
+- Is your data used to train or improve models? Is that the default, and can you turn it off?
+- Does the answer depend on your plan? Consumer, team and enterprise plans often have different terms, so confirm the plan you will use.
+- Is your data shared with other parties, such as model providers or subprocessors?
+- Which of those parties are involved, and can you see the list?
+
+### 2. Where the data is stored and for how long
+
+- Where is data processed and stored, and can you choose a region?
+- How long are prompts, files and outputs retained?
+- Can you delete data, and does deletion also cover backups and logs?
+- What happens to your data if you cancel?
+
+### 3. Who can access it
+
+- Which of the vendor's staff can see your content, and under what conditions?
+- Does the tool support single sign-on and multi-factor authentication?
+- Can you control which of your own people see which data?
+- Are there admin roles, and can you limit them?
+
+### 4. What is logged and what you can see
+
+- Does the tool record who did what, and can you export the logs?
+- Can you see what data the tool accessed and what actions it took?
+- How long are logs kept?
+
+Logging matters because you cannot investigate a problem you cannot see. It is also the basis for the monitoring in our guide to [monitoring business automations](/blog/automation-monitoring-alerting-operations-teams).
+
+### 5. Agreements and assurance
+
+- Is there a data processing agreement, and does it cover your data and region?
+- Does the vendor publish security documentation or independent audit reports, and will it share them under an agreement?
+- How does the vendor notify you of a security incident, and how quickly?
+- Who is the contact for a security or privacy question?
+
+You do not need to read every report in full. Check that they exist, that they cover the product you will use and that they are recent. If you are subject to rules about personal data or regulated information, take legal advice on the agreement.
+
+### 6. Controls on the AI itself
+
+- Can you restrict what the tool can connect to and do?
+- Does it support approval steps for actions that change things?
+- How does the vendor handle untrusted content, such as emails or web pages the tool reads? Ask what protections exist against prompt injection, and treat the answer as a claim to test.
+- Can you set data masking or exclusion rules?
+
+The UK National Cyber Security Centre has written that prompt injection may never be fully eliminated and that organizations should reduce its impact with safeguards outside the model. That is a reason to rely on your own controls and not only the vendor's assurances.
+
+### 7. Change and continuity
+
+- How are you told about changes to terms, models or features?
+- Can a model update change the tool's behavior without warning?
+- Can you pin a version or test before a change?
+- What happens if the vendor is acquired or shuts down?
+
+### 8. Leaving
+
+- Can you export your data in a usable format?
+- Is there any lock-in, such as proprietary formats or workflows only the vendor can run?
+- How long does it take to exit, and what does it cost?
+
+Our guide to [build versus buy](/blog/build-vs-buy-operations-software) covers exit costs and lock-in in more detail.
+
+### 9. Cost and limits
+
+- How is the tool priced, and what does it cost at your expected volume?
+- What happens at usage limits: a slowdown, an extra charge or a stop?
+- Are there caps and alerts to avoid a surprise bill?
+
+AI tools that charge by usage can grow quickly. See our guide to [AI workflow cost and budget control](/blog/ai-workflow-cost-budget-control) for ways to set limits.
+
+## Score the answers
+
+A simple scoring sheet makes the decision easier to explain later. For each of the nine groups, give a score:
+
+- **2 = Good.** The answer is clear, documented and fits your data class.
+- **1 = Acceptable with conditions.** Gaps exist, but you can close them with settings or limits.
+- **0 = Not acceptable.** The answer is missing, unclear or conflicts with your needs.
+
+Then apply rules that match your data class:
+
+| Data class | Suggested rule |
+|---|---|
+| Public | Any score, as long as no group is 0 for data use |
+| Internal | No 0 on data use, access or leaving |
+| Confidential | No 0 on any group, and written answers on file |
+| Regulated or sensitive | No 0 anywhere, legal review and an approved agreement |
+
+The scoring is a prompt for judgement, not a replacement for it. Where an answer is unclear, ask again, and if the vendor cannot give a straight answer about data use, treat that as the answer.
+
+## Pilot before you commit
+
+A review on paper is only half the work. The other half is a controlled trial.
+
+1. **Start with low-risk data.** Use public or non-sensitive internal data first.
+2. **Use a small group.** A few named users who know the rules.
+3. **Limit permissions.** Read-only where possible, no actions without approval.
+4. **Test with realistic cases.** Include odd inputs and attempts to make the tool misbehave. See our guide to [evaluating AI workflows with a test set](/blog/evaluate-ai-workflow-test-set-accuracy).
+5. **Review the logs.** After a few weeks, look at what the tool actually did.
+6. **Decide.** Approve, approve with conditions, or stop.
+
+Widen the use only when the pilot shows that the tool behaves as expected.
+
+## Record the decision
+
+Write down the decision in one place. A short entry is enough:
+
+- Tool, owner and plan.
+- Data class and systems connected.
+- What it is allowed to do.
+- Review score and any conditions, such as "no customer data" or "approval for sending".
+- Date of review and next review date.
+- Where the vendor's written answers are stored.
+
+Add the tool to your [AI and automation register](/downloads/ai-automation-register.csv) so that it is counted in future audits.
+
+## Handle shadow AI sensibly
+
+People will try AI tools whether or not you have reviewed them. They are usually trying to save time, not break rules. A ban often pushes use out of sight.
+
+A better approach is a short policy and a fast path.
+
+- **Publish a short list of approved tools** and the data each may be used with.
+- **State the rules in plain words.** For example, no customer lists, contracts or employee records in unapproved tools.
+- **Make approval quick.** A review that takes months teaches people to skip it.
+- **Ask what people already use.** A short survey or conversation shows what you need to review.
+- **Review the list regularly.**
+
+## Keep the review current
+
+Vendors change terms, features and models. A review done once goes out of date.
+
+- Set a review date for each tool, at least yearly for tools with sensitive data.
+- Re-review when the vendor announces changes to terms, data handling or models.
+- Re-review when your use changes, such as connecting a new system or turning on an action.
+- Subscribe to the vendor's change notices and assign someone to read them.
+
+## An illustrative example
+
+This scenario is invented. A finance team wants an AI assistant that reads supplier invoices and suggests coding. The data class is confidential, since invoices include supplier details and amounts, and the tool would connect to the shared AP inbox.
+
+The reviewer works through the nine groups. Data use is clear: the business plan states that customer content is not used to train models, and the vendor confirms in writing. Retention can be set to a short period. Single sign-on is supported. Logging is available but only for 30 days, which scores 1, with a condition to export logs monthly. There is a data processing agreement. The tool can only suggest coding and cannot post entries, which keeps approvals with people. Exit is by export to a spreadsheet. Cost is by volume, so the team sets a monthly cap.
+
+The decision is approved with conditions: suggest-only mode, a monthly log export, a usage cap and a review in twelve months. A pilot of four weeks with one team compares suggestions with the final coding before wider use.
+
+## Common mistakes
+
+- **Reviewing the vendor, not the data.** Depth should follow what the tool sees.
+- **Trusting the marketing page.** Ask for written answers on the plan you will use.
+- **Assuming plan terms are the same.** Consumer and business terms often differ.
+- **Skipping the exit question.** It is hardest to ask after you are locked in.
+- **No owner.** Every tool needs a named person responsible for it.
+- **One-time review.** Terms and models change.
+- **A ban with no alternative.** It moves use out of sight.
+
+## Key takeaways
+
+- Classify the data first, because the depth of review depends on what the tool will see and do.
+- Ask about data use, storage and retention, access, logging, agreements, AI controls, change, exit and cost.
+- Confirm the answers for the exact plan you will use, in writing.
+- Score the answers and set rules that match each data class.
+- Pilot with low-risk data and a small group, and review the logs before widening use.
+- Record the decision, the conditions and a review date, and add the tool to your register.
+- Offer approved tools and a fast review path so that people do not work around the rules.
+
+This week, list the AI tools your team already uses and the data each can reach. Start the review with the tool that touches the most sensitive data.
+
+<Download href="/downloads/ai-automation-register.csv" title="AI and automation register (CSV)">One row per tool: owners, data touched, whether it can act without approval, credentials, review dates and risk level.</Download>
+
+## A note on sources
+
+This guide is written by the OpsGrit Research Desk from common vendor-review practice. The questions, scoring and example are illustrations to adapt, and they are not legal advice. If you spot something that looks wrong, [tell us](/contact).
+
+**Further reading.** These sources back the points about reducing prompt injection impact and about a risk-based approach to generative AI:
+
+- [NCSC: Prompt injection is not SQL injection (it may be worse)](https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection). Explains why prompt injection may never be fully eliminated and recommends reducing impact with safeguards.
+- [NIST AI Risk Management Framework: Generative AI Profile (NIST AI 600-1)](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence). A companion to the voluntary AI RMF that applies its approach to generative AI risks.
+
+## Related guides
+
+- [How to Audit AI Tools and Automations: A Quarterly Review Template](/blog/how-to-audit-ai-tools-and-automations)
+- [Securing AI Workflows: Prompt Injection, Permissions and Data Handling for Operations Teams](/blog/securing-ai-workflows-prompt-injection-operations)
+- [Vendor Onboarding SOP: Due Diligence, Approvals and Controls](/blog/vendor-onboarding-sop-procurement)

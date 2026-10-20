@@ -228,6 +228,22 @@ Whichever you choose, a few habits protect you.
 
 This is also where the broader question of your stack matters. If you have not yet mapped what you run today, our guide to [auditing your operations tech stack](/blog/operations-tech-stack-audit) is a good first step, and the principles in [webhooks, APIs and iPaaS integration patterns](/blog/webhooks-apis-ipaas-integration-patterns) will help you design workflows that last.
 
+## Limits that cause quiet failures
+
+Feature lists rarely mention the edges where a workflow stops working. These are limits stated in each vendor's own documentation, retrieved on October 19, 2026. They change, so treat them as a prompt to read the current page, not as permanent facts.
+
+| Platform | Limit in the documentation | What to design for |
+|---|---|---|
+| Make | A custom webhook queue holds 667 items per 10,000 licensed monthly credits, up to 10,000 items. When it is full, extra data is rejected with a "Queue is full" response. | A burst of events with a slow or stopped scenario can lose data. Alert on queue depth, and make senders retry. |
+| Make | Up to 300 incoming requests per 10 seconds are processed. Requests beyond that return HTTP 429. | Senders that fire in bursts need back-off. |
+| Make | A webhook not connected to any scenario for more than 5 days (120 hours) is deactivated and returns 410 Gone. | A paused or abandoned scenario can break the sender later. Remove or update the sender when you retire a scenario. |
+| n8n | The maximum payload size defaults to 16 MiB (`N8N_PAYLOAD_SIZE_MAX`) on a self-hosted instance, and a restart is needed to change it. Higher values need more memory and CPU. | Large attachments sent as webhook bodies can be refused. Send a link to the file instead of the file. |
+| Zapier | In the developer platform documentation, a REST hook trigger is limited to 10,000 webhooks per 5 minutes and 30 per second, and a 429 response is returned when a sender exceeds the limits. The same page gives a 30 second limit for requests and scripting in triggers and actions. | These figures describe app integrations built on Zapier's platform. Check the limits for the exact trigger you use, and make senders retry on 429. |
+
+Zapier's own guidance for senders that hit a limit is to support a retry and back-off schedule so the data is eventually received. That is good advice for every platform in the table, and it is the reason to design every workflow to be safe to run twice. See the [idempotency section](/blog/webhooks-apis-ipaas-integration-patterns) of our integration guide.
+
+For your own team, the practical step is small. Before you commit to a platform, write down the largest payload, the busiest burst and the longest step you expect, and check each against the current documentation.
+
 ## Key takeaways
 
 - All three platforms can automate most operations tasks. The decision is about fit, not capability.
@@ -246,3 +262,11 @@ Links were checked on October 11, 2026. Pricing, limits and rules change, so con
 - [Zapier Help: Tasks in Zapier](https://help.zapier.com/hc/en-us/articles/8496196837261-Tasks-in-Zapier). States that only successful action steps count as tasks; triggers, filters and paths do not.
 - [Make Help: Credits](https://help.make.com/credits). Explains that for most apps one operation equals one credit, with dynamic credits for some AI and advanced features.
 - [n8n pricing](https://n8n.io/pricing/). Shows that n8n Cloud meters whole-workflow executions, and lists current plans and limits.
+- [Make Help: Webhooks](https://help.make.com/webhooks). States the queue size, the 300 requests per 10 seconds limit, the 429 and 400 responses and the 5 day deactivation rule.
+- [n8n docs: Endpoints environment variables](https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/use-environment-variables/endpoints). Lists the default maximum payload size of 16 MiB and the webhook path settings.
+- [Zapier Platform: Operating constraints](https://docs.zapier.com/platform/build/operating-constraints). Lists time, size and throttle limits for integration triggers and actions.
+- [Zapier Platform: Troubleshoot throttles](https://docs.zapier.com/integrations/build/troubleshoot-throttles.md). Describes the 429 response and the advice to support retry and back-off.
+
+## Related guides
+
+- [Webhook Failures: Troubleshooting Timeouts, Retries and Missing Events](/blog/webhook-failures-troubleshooting-timeouts-retries)
