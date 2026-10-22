@@ -34,6 +34,7 @@ ${sections}
 - [Invoice generator](${SITE.url}/tools/invoice-generator): build and print or save a clean invoice with tax, discount and payment terms.
 - [RACI matrix generator](${SITE.url}/tools/raci-generator): assign R, A, C and I and check that every task has exactly one owner.
 - [Out-of-office email generator](${SITE.url}/tools/out-of-office-generator): write an auto-reply for clients and colleagues.
+- [Ops Runner](${SITE.url}/tools/ops-runner): a free arcade game where a bot jumps over busywork and collects hours saved.
 - [Automation readiness scorecard](${SITE.url}/tools/readiness-scorecard): ten questions that show whether a process is ready to automate and what to fix first.
 - [Tech stack audit](${SITE.url}/tools/stack-audit): review the tools your operations team depends on.
 - [OpsGrit bot](${SITE.url}/tools/ops-bot): ask questions and get answers from OpsGrit guides.

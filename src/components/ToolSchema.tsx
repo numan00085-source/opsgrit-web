@@ -1,14 +1,14 @@
 import { SITE } from "@/lib/site";
 
 /** WebApplication structured data for a free in-browser tool. */
-export default function ToolSchema({ name, description, path }: { name: string; description: string; path: string }) {
+export default function ToolSchema({ name, description, path, category = "BusinessApplication" }: { name: string; description: string; path: string; category?: string }) {
   const ld = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name,
     description,
     url: `${SITE.url}${path}`,
-    applicationCategory: "BusinessApplication",
+    applicationCategory: category,
     operatingSystem: "Any (runs in a web browser)",
     browserRequirements: "Requires JavaScript",
     isAccessibleForFree: true,
