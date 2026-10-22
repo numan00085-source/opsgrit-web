@@ -7,7 +7,8 @@ const nextConfig = {
   async redirects() {
     return [
       { source: "/tools/daily-puzzle", destination: "/tools", permanent: true },
-      { source: "/tools/ops-runner", destination: "/tools/ops-cup", permanent: true },
+      { source: "/tools/ops-runner", destination: "/tools", permanent: true },
+      { source: "/tools/ops-cup", destination: "/tools", permanent: true },
     ];
   },
   async headers() {

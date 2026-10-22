@@ -132,7 +132,6 @@ export default function HomePage() {
             { href: "/tools/ops-bot", t: "OpsGrit Bot", d: "A free assistant that answers operations and automation questions from our guides." },
             { href: "/tools/roi-calculator", t: "Automation ROI calculator", d: "Hours saved, payback and first-year ROI from your own numbers." },
             { href: "/tools/readiness-scorecard", t: "Automation readiness scorecard", d: "Ten questions. See if a process is ready to automate and what to fix first." },
-            { href: "/tools/ops-cup", t: "OpsGrit Cup", d: "A free full-screen football game. Play the computer or a friend online with a code." },
             { href: "/tools/sop-builder", t: "SOP builder", d: "Answer a few prompts, get a structured procedure to copy or download." },
             { href: "/tools/stack-audit", t: "Tech stack audit worksheet", d: "Inventory your tools, see total cost and what to merge or retire." },
             { href: "/tools", t: "All free tools", d: "RACI matrix, invoice and out-of-office generators, the cutover simulator and more." },
