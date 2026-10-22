@@ -127,12 +127,14 @@ export default function HomePage() {
       <section className="container-page pb-4" aria-labelledby="tools-heading">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-700">Free tools</p>
         <h2 id="tools-heading" className="mt-2 text-3xl font-extrabold tracking-tight text-ink-900">Use it today, no signup</h2>
-        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {[
             { href: "/tools/ops-bot", t: "OpsGrit Bot", d: "A free assistant that answers operations and automation questions from our guides." },
             { href: "/tools/roi-calculator", t: "Automation ROI calculator", d: "Hours saved, payback and first-year ROI from your own numbers." },
+            { href: "/tools/readiness-scorecard", t: "Automation readiness scorecard", d: "Ten questions. See if a process is ready to automate and what to fix first." },
             { href: "/tools/sop-builder", t: "SOP builder", d: "Answer a few prompts, get a structured procedure to copy or download." },
             { href: "/tools/stack-audit", t: "Tech stack audit worksheet", d: "Inventory your tools, see total cost and what to merge or retire." },
+            { href: "/tools", t: "All free tools", d: "RACI matrix, invoice and out-of-office generators, the cutover simulator and more." },
           ].map((x) => (
             <Link key={x.href} href={x.href} className="card group p-6">
               <h3 className="text-lg font-bold text-ink-900 group-hover:text-gold-700">{x.t}</h3>

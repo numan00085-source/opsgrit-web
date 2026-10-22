@@ -96,10 +96,31 @@ const FIELDS: { key: keyof Form; label: string; multi?: boolean; rows?: number; 
   { key: "review", label: "Review every" },
 ];
 
+const VERBS = /^(open|check|confirm|match|enter|submit|send|save|review|approve|call|create|add|update|record|log|verify|select|click|copy|attach|file|assign|notify|email|download|upload|run|stop|ask|compare|collect|prepare|print|sign|post|schedule|close|archive|export|import|read|write|mark|move|remove|delete|find|search|choose|set|use|start|finish|complete|forward|escalate|contact|request|issue|pay|invoice|test|apply|follow|wait|reset|log in|sign in)\b/i;
+
+/** Plain checks that a person can act on. No score is claimed to predict results. */
+function qualityChecks(f: Form): { ok: boolean; label: string; fix: string }[] {
+  const steps = lines(f.steps);
+  const verbSteps = steps.filter((s) => VERBS.test(s.replace(/^\d+[.)]\s*/, "")));
+  const long = steps.filter((s) => s.length > 220).length;
+  return [
+    { ok: f.title.trim().length > 5, label: "Has a clear title", fix: "Use a verb plus an object, such as Process a supplier payment." },
+    { ok: f.owner.trim().length > 2, label: "Has a named owner", fix: "A role or person who keeps it up to date." },
+    { ok: f.purpose.trim().length > 20, label: "States the purpose", fix: "One or two sentences on why it exists." },
+    { ok: f.appliesTo.trim().length > 3 && f.excludes.trim().length > 3, label: "Says what is in and out of scope", fix: "Fill in both Applies to and Does not apply to." },
+    { ok: steps.length >= 3 && steps.length <= 15, label: "Has 3 to 15 steps", fix: steps.length < 3 ? "Add the missing steps." : "Split it into two SOPs." },
+    { ok: steps.length > 0 && verbSteps.length / steps.length >= 0.7 && long === 0, label: "Steps start with an action and stay short", fix: "Start each step with a verb and keep it to one action." },
+    { ok: lines(f.exceptions).length > 0, label: "Covers exceptions and who to ask", fix: "Say what to do when it does not match." },
+    { ok: f.check.trim().length > 5, label: "Has a quality check", fix: "How does the reader know it worked?" },
+  ];
+}
+
 export default function SopBuilder() {
   const [f, setF] = useState<Form>(EXAMPLE);
   const [copied, setCopied] = useState(false);
   const out = useMemo(() => build(f), [f]);
+  const checks = useMemo(() => qualityChecks(f), [f]);
+  const passed = checks.filter((c) => c.ok).length;
 
   const download = () => {
     const blob = new Blob([out], { type: "text/markdown;charset=utf-8" });
@@ -152,6 +173,18 @@ export default function SopBuilder() {
         <div className="mb-3 flex gap-3">
           <button type="button" onClick={copy} className="btn-primary">{copied ? "Copied" : "Copy"}</button>
           <button type="button" onClick={download} className="btn-ghost">Download .md</button>
+        </div>
+        <div className="mb-3 rounded-2xl border border-cream-300 bg-white/70 p-4">
+          <p className="text-sm font-bold text-ink-900">Quality check: {passed} of {checks.length} passed</p>
+          <ul className="mt-2 space-y-1.5 text-sm">
+            {checks.map((c) => (
+              <li key={c.label} className={c.ok ? "text-ink-600" : "text-ink-900"}>
+                <span aria-hidden className={c.ok ? "text-emerald-600" : "text-amber-600"}>{c.ok ? "\u2713 " : "\u2022 "}</span>
+                {c.label}
+                {!c.ok && <span className="block pl-4 text-xs text-ink-500">{c.fix}</span>}
+              </li>
+            ))}
+          </ul>
         </div>
         <pre className="max-h-[70vh] overflow-auto whitespace-pre-wrap rounded-2xl bg-night-950 p-5 text-xs leading-relaxed text-slate-200">{out}</pre>
         <p className="mt-3 text-xs text-ink-500">

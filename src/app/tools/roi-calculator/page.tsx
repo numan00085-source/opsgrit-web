@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import RoiCalculator from "./RoiCalculator";
+import ToolNext from "@/components/ToolNext";
 
 export const metadata: Metadata = {
   title: "Automation ROI calculator",
@@ -36,6 +37,13 @@ export default function Page() {
           redirected to valuable work or reduce paid hours.
         </p>
       </div>
+      <ToolNext
+        items={[
+          { href: "/tools/readiness-scorecard", tag: "Scorecard", title: "Is the process ready to automate?", body: "Ten quick questions. See what to fix before you spend on a build." },
+          { href: "/blog/what-to-automate-first-process-prioritization", tag: "Guide", title: "What to automate first", body: "A way to rank processes by value, effort and risk." },
+          { href: "/blog/ai-workflow-cost-budget-control", tag: "Guide", title: "What an AI workflow really costs", body: "Budget the running cost, not only the build." },
+        ]}
+      />
     </div>
   );
 }

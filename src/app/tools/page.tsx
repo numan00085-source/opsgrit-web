@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Free operations tools",
   description:
-    "Free, no-signup tools for operations teams: OpsGrit Bot, a migration cutover simulator, an automation ROI calculator, an SOP builder, an invoice generator, a RACI matrix generator, an out-of-office email generator and a technology stack audit worksheet.",
+    "Free, no-signup tools for operations teams: OpsGrit Bot, a migration cutover simulator, an automation ROI calculator, an automation readiness scorecard, an SOP builder, an invoice generator, a RACI matrix generator, an out-of-office email generator and a technology stack audit worksheet.",
   alternates: { canonical: "/tools" },
 };
 
@@ -26,6 +26,12 @@ const TOOLS = [
     title: "Automation ROI calculator",
     body: "Estimate hours saved, monthly and first-year savings and payback time for an automation, using your own numbers.",
     tag: "Calculator",
+  },
+  {
+    href: "/tools/readiness-scorecard",
+    title: "Automation readiness scorecard",
+    body: "Ten questions about one process. Get a score, your weakest areas and what to fix before you automate it.",
+    tag: "Scorecard",
   },
   {
     href: "/tools/sop-builder",

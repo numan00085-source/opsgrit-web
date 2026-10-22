@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SopBuilder from "./SopBuilder";
+import ToolNext from "@/components/ToolNext";
 
 export const metadata: Metadata = {
   title: "SOP builder",
@@ -20,6 +21,13 @@ export default function Page() {
         <Link className="underline underline-offset-2" href="/blog/how-to-write-an-sop-people-follow">writing an SOP people follow</Link>.
       </p>
       <SopBuilder />
+      <ToolNext
+        items={[
+          { href: "/blog/sop-templates-every-ops-team-needs", tag: "Guide", title: "10 SOP templates for ops teams", body: "Checklist, runbook, handoff note, access request and more." },
+          { href: "/blog/sop-governance-ownership-versioning", tag: "Guide", title: "SOP governance", body: "Ownership, versioning and review cycles so documents stay current." },
+          { href: "/tools/raci-generator", tag: "Generator", title: "RACI matrix generator", body: "Decide who does, approves, is consulted and is informed." },
+        ]}
+      />
     </div>
   );
 }
