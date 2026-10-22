@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Free operations tools",
   description:
-    "Free, no-signup tools for operations teams: OpsGrit Bot, a migration cutover simulator, an automation ROI calculator, an automation readiness scorecard, an arcade game, an SOP builder, an invoice generator, a RACI matrix generator, an out-of-office email generator and a technology stack audit worksheet.",
+    "Free, no-signup tools for operations teams: OpsGrit Bot, a migration cutover simulator, an automation ROI calculator, an automation readiness scorecard, an SOP builder, an invoice generator, a RACI matrix generator, an out-of-office email generator and a technology stack audit worksheet, plus a free football game.",
   alternates: { canonical: "/tools" },
 };
 
@@ -13,12 +13,6 @@ const TOOLS = [
     href: "/tools/cutover-simulator",
     title: "Cutover Simulator",
     body: "A three-minute game. Make six migration decisions and see if your cutover is clean or ends in a rollback.",
-    tag: "Game",
-  },
-  {
-    href: "/tools/ops-runner",
-    title: "Ops Runner",
-    body: "An arcade game. Jump over Reply All and spreadsheets, grab the clocks and see how many hours you can save.",
     tag: "Game",
   },
   {
@@ -32,6 +26,12 @@ const TOOLS = [
     title: "Automation ROI calculator",
     body: "Estimate hours saved, monthly and first-year savings and payback time for an automation, using your own numbers.",
     tag: "Calculator",
+  },
+  {
+    href: "/tools/ops-cup",
+    title: "OpsGrit Cup",
+    body: "A full-screen 6-a-side football game. Play the computer, or share a 5-letter code and play a friend online.",
+    tag: "Game",
   },
   {
     href: "/tools/readiness-scorecard",

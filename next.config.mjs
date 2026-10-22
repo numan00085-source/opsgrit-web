@@ -5,7 +5,10 @@ const nextConfig = {
   // Safe baseline headers. No Content-Security-Policy on purpose: a strict one would block Google AdSense.
   // The Daily Ops Puzzle was removed. Send old links to the tools index.
   async redirects() {
-    return [{ source: "/tools/daily-puzzle", destination: "/tools", permanent: true }];
+    return [
+      { source: "/tools/daily-puzzle", destination: "/tools", permanent: true },
+      { source: "/tools/ops-runner", destination: "/tools/ops-cup", permanent: true },
+    ];
   },
   async headers() {
     return [
