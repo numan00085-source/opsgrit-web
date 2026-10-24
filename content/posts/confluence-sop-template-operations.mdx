@@ -1,0 +1,205 @@
+---
+title: "Confluence SOP Template: How to Build, Index and Maintain SOPs in Confluence"
+seoTitle: "Confluence SOP Template: Build and Maintain SOPs"
+metaDescription: "A copy-ready Confluence SOP template plus how to set it up: space template, page properties, labels, an SOP index report, verified status and a review routine that keeps procedures current."
+slug: "confluence-sop-template-operations"
+category: "Process SOPs"
+excerpt: "A copy-ready SOP template for Confluence, and the setup that makes it work: a space template, a properties table, labels, an automatic SOP index, the Verified status and a review routine so procedures do not go stale."
+date: "2026-10-24"
+author: "OpsGrit Research Desk"
+coverImage: "/images/confluence-sop-template-operations-cover.webp"
+featured: false
+shortAnswer: "To build SOPs in Confluence, create one space template with a properties table (owner, version, review date, status) and a fixed section layout, add a shared label so every SOP carries it, and use a Page Properties Report to build an automatic SOP index. Mark reviewed pages with the Verified status, assign a named owner to every page and review each SOP on a schedule. Menus differ between Confluence Cloud and Data Center, so check the current Atlassian documentation for exact clicks."
+faq:
+  - q: "How do I create an SOP template in Confluence?"
+    a: "Open the space settings, go to templates and create a new template. Add your headings, a properties table with owner, version and review date, and instructional text that tells authors what to write. Add a label to the template so every page made from it carries that label. Menus differ by Confluence version, so follow Atlassian's current documentation for the exact path."
+  - q: "How do I make a list of all SOPs in Confluence automatically?"
+    a: "Put the key details of each SOP in a Page Properties macro, give every SOP the same label, then add a Page Properties Report macro to an index page and point it at that label. The report builds a table with one row per SOP and shows the columns you choose."
+  - q: "Can Confluence remind people to review SOPs?"
+    a: "Confluence has a Verified content status that shows a page has been checked. Atlassian has described an automation that finds inactive verified pages, removes the status and emails the page owner. Automation features can depend on your plan, so confirm availability before you rely on it. A recurring review task for each SOP owner works on any plan."
+  - q: "Who should own SOPs in Confluence?"
+    a: "Each SOP needs one named owner who does or manages the work, not a team name. Page owners and space admins can manage the Verified status, so make sure the owner field and the actual page owner match."
+  - q: "How should I structure a Confluence space for SOPs?"
+    a: "Use one space for company-wide procedures or one space per department. Inside, group pages by process area, such as Finance, People and IT, and keep an index page at the top. Use labels for filtering, not deep nesting."
+  - q: "What are common mistakes when keeping SOPs in Confluence?"
+    a: "Common mistakes are no owner, no review date, copies of the same procedure in several places, long pages that cover several processes and no way to see which pages are out of date. A fixed template and an index fix most of them."
+---
+
+Confluence is a good home for procedures. Pages are easy to edit, permissions are built in, and search works across everything. It is also easy to end up with a space full of half-finished pages, five versions of the same process and nobody sure which one to trust.
+
+The fix is not more pages. It is a **single template, a shared label and a review habit**. This guide gives you a copy-ready SOP template, shows how to set it up in Confluence so every new SOP starts the same way, and explains how to build an automatic index and keep pages current.
+
+A note on accuracy: Confluence changes, and menus differ between Cloud and Data Center. Where this guide describes clicks, it follows Atlassian's documentation at the time of writing. Check Atlassian's current help pages for your version before you roll anything out. The structure of a good SOP, on the other hand, does not depend on the tool. If you want the craft first, read [how to write an SOP people actually follow](/blog/how-to-write-an-sop-people-follow).
+
+## The Confluence SOP template (copy this)
+
+Paste this into a new page, then turn it into a template. The first block is a table you will wrap in a Page Properties macro in a moment, so the index can read it.
+
+**Properties table (two columns, header column on the left)**
+
+| | |
+|---|---|
+| SOP title | *Short, specific name, for example "Process a customer refund"* |
+| Owner | *One named person* |
+| Department | *Finance, People, IT, Support, Operations* |
+| Version | *1.0* |
+| Last reviewed | *Date* |
+| Next review | *Date, usually 6 or 12 months out* |
+| Status | *Draft, In review, Active, Retired* |
+
+**Body**
+
+**1. Purpose**  
+One or two sentences: why this procedure exists and what good looks like.
+
+**2. Scope**  
+Who it applies to, what it covers and what it does not cover.
+
+**3. Before you start**  
+Access, tools, documents or approvals needed. Link to them.
+
+**4. Steps**  
+1. Verb-first action, with a result you can check.  
+2. Next action.  
+3. Continue. Use sub-steps sparingly and link to screenshots or short videos where they help.
+
+**5. If something goes wrong**  
+Common problems and what to do. Who to contact, and in what order.
+
+**6. Related documents**  
+Links to policies, forms, checklists and related SOPs.
+
+**7. Change log**  
+
+| Version | Date | Change | Author |
+|---|---|---|---|
+| 1.0 | | First version | |
+
+Notice the table at the top holds the facts that tell you whether the document is healthy: owner, version and review dates. That is what makes an index and a review routine possible.
+
+## Step 1: Turn it into a space template
+
+A template means every new SOP starts with the same structure, with no copying and pasting of old pages.
+
+According to Atlassian's documentation, a **space template** is available only within one space and can be created by space administrators, while a **global template** is available across the site and needs a Confluence administrator. For SOPs, a space template is usually right.
+
+In the template editor you can:
+
+- **Add instructional text.** This is placeholder guidance that shows only while someone is editing, so each heading can tell the author what to write. Use it generously: "List every system the person needs access to" is more useful than an empty heading.
+- **Add variables.** Variables appear as form fields when someone creates a page from the template, and you can reuse the same variable in several places. A variable for the SOP title, for example, can fill the page heading and the properties table.
+- **Add labels to the template.** Every page created from the template receives them. Atlassian's documentation describes a labels option next to the breadcrumbs in the template editor.
+
+Give the template a clear name such as "SOP: standard procedure," and tell the team that it is the only way to start an SOP.
+
+## Step 2: Wrap the properties table in a Page Properties macro
+
+This step makes your SOPs machine-readable. From Atlassian's documentation, the macro works like this:
+
+1. In the editor, type `/properties` and choose the Page Properties (also called Content Properties) macro.
+2. Inside it, use a **two-column table** with the **header column turned on** and the header row off, so the labels sit on the left and the values on the right.
+3. The left-column labels (Owner, Version, Next review and so on) become the **keys** the index will use.
+4. Give the macro a **unique ID**, for example `sop-details`.
+
+Keep the key names identical in every SOP. "Next review" in one page and "Review date" in another will show up as two different columns in your index.
+
+## Step 3: Add a shared label
+
+Choose a label that every SOP carries, such as `sop`. If you added it to the template, it is applied automatically. Then add a second-level label for the area, for example `sop-finance` or `sop-it`, if you want filtered views.
+
+Labels do the work that deep page trees try to do, without the problems. A page can have several labels but only one place in a tree, and people searching rarely know which branch a document lives in.
+
+## Step 4: Build an automatic SOP index
+
+Now the reward. The Page Properties Report macro reads the properties tables on all pages with a given label and displays them as a single table.
+
+From Atlassian's documentation:
+
+1. On your index page, type `/properties` and choose the report macro, then edit it.
+2. In the **Label** field, enter the label your SOPs carry (for example `sop`).
+3. Under **Options**, list the **columns to show**. Use the exact keys from your properties table: Owner, Department, Version, Next review, Status.
+4. If the SOPs live in a different space from the index, set the **In Space** option.
+5. Optionally limit the report to one macro by entering its ID.
+6. Save.
+
+The result is a live table of every SOP with its owner and review date. New SOPs appear automatically as soon as they are created from the template. This index is also the best tool you have for governance: sort it by Next review and you can see what is due or overdue.
+
+## Step 5: Show whether a page can be trusted
+
+Readers need to know whether a procedure is current. Two signals help.
+
+**The Status field in your properties table** (Draft, In review, Active, Retired) is simple and works everywhere.
+
+**The Verified content status.** Atlassian has described Verified as a built-in content status with a check mark, meant to show that content is current. According to that announcement, page owners and space or site admins can add or remove it, and space admins manage the list of statuses in space settings. It has also described an automation template that finds inactive verified pages, removes the status and emails the owner to review. The announcement did not give plan requirements for the status itself, and automation features may depend on your plan, so confirm what is available to you before you build a process around it.
+
+Whichever you use, define what the label means and who may apply it. "Verified" should mean *the owner has read this procedure against current practice on this date*, not *someone fixed a typo*.
+
+## Step 6: Set up a review routine
+
+A template and an index are not enough. SOPs go stale quietly, so give each one a heartbeat.
+
+1. **Every SOP has one owner** who does the work or manages the people who do it.
+2. **Every SOP has a Next review date** in its properties table, usually six or twelve months out. Review high-risk processes, such as payments and access, more often.
+3. **A monthly 20-minute check.** The operations lead opens the index, sorts by Next review and sends each overdue owner a reminder.
+4. **A review is a real read-through.** The owner follows the steps, fixes what changed, updates the version and change log, and resets the dates.
+5. **Retire, do not delete.** Set Status to Retired and link to the replacement, so old links still lead somewhere useful.
+
+For ownership, versioning and review in more depth, see [SOP governance: ownership, versioning and review](/blog/sop-governance-ownership-versioning).
+
+## How to organize a space for SOPs
+
+- **One top-level index page** with the Page Properties Report and a short "how we write SOPs" note.
+- **Few folders, many labels.** Group by process area (Finance, People, IT, Support) but do not nest more than two levels.
+- **One SOP per page.** If a page covers three processes, split it. Short pages are easier to follow and easier to review.
+- **One home per procedure.** If another team needs it, link to it. Do not copy it.
+- **Permissions that match risk.** Let everyone read. Limit editing to owners and a small group of editors, particularly for procedures with financial or security impact. Confluence includes page restrictions and space permissions for this.
+
+## Writing better steps in Confluence
+
+The tool gives you a few features that make procedures easier to follow:
+
+- **Numbered lists** for steps, so people can say "I am on step 6."
+- **Tables** for decision rules such as approval limits.
+- **Task lists** for checklists people tick through.
+- **Links to other pages** instead of repeating text. A link to the access request form is better than a pasted copy that will be out of date next quarter.
+- **Short screenshots or videos** when words are not enough. Add a caption that says what to look for, since screenshots go stale when a screen changes.
+
+If you need real examples to model, see [six filled-in SOP examples](/blog/sop-examples-filled-in-operations) and [ten SOP templates every operations team needs](/blog/sop-templates-every-ops-team-needs).
+
+<ToolCard href="/tools/sop-builder" title="SOP builder">Answer a few prompts and get a structured procedure with purpose, scope, roles, steps and a change log. Copy it into a Confluence page.</ToolCard>
+
+## Common mistakes
+
+- **No owner.** Pages without an owner are the first to go out of date. Make the owner a required field.
+- **No review date.** If the page does not say when it was checked, readers cannot judge it.
+- **Different key names.** "Owner" in one SOP and "Process owner" in another breaks the index. Fix the names in the template.
+- **Too many statuses.** Four is plenty. More create arguments, not clarity.
+- **Duplicates.** Two versions of the same process guarantee that someone follows the wrong one. Link, do not copy.
+- **Treating the tool as the process.** Confluence stores procedures. It does not make people read them. Link SOPs from where the work happens, such as your ticketing tool, onboarding checklist or team handbook.
+
+## When Confluence is not the right place
+
+Confluence works best when procedures are read by people. If you need step-by-step runbooks that change often, such as incident response, consider keeping them close to the tools engineers use, and link to them from Confluence. If your team is very small and nobody else maintains a wiki, a simpler tool may be easier to keep up. The template and routine in this guide work in most tools. Only the index and verification features are Confluence-specific.
+
+## Key takeaways
+
+- Create one space template with a properties table and a fixed layout, and make it the only way to start an SOP.
+- Use the Page Properties macro with consistent key names, a shared label and a Page Properties Report to build an automatic index.
+- Signal trust with a Status field and, if available to you, the Verified status, and define exactly what it means.
+- Give every SOP a named owner and a Next review date, and check the index monthly.
+- Keep one home per procedure, link instead of copying and retire instead of deleting.
+- Menus and plan features change, so check Atlassian's current documentation before you roll out.
+
+## Sources and further reading
+
+Links were checked on October 24, 2026. Features, menus and plan requirements change, so confirm on the source before you act.
+
+- [Atlassian: Create a custom report](https://support.atlassian.com/confluence-cloud/docs/create-a-custom-report/). Explains the Page Properties and Page Properties Report macros, including the two-column table, labels and unique IDs.
+- [Atlassian: Create a template](https://confluence.atlassian.com/conf716/create-a-template-1108681923.html). Describes space and global templates, variables, instructional text and template labels. This page documents a Data Center release, so Cloud menus may differ.
+- [Atlassian Community: Verified pages now available in Confluence](https://community.atlassian.com/forums/Confluence-articles/Verified-Pages-Now-Available-in-Confluence/ba-p/2664827). Describes the Verified content status and an automation for reviewing inactive verified pages.
+
+## Related guides
+
+- [SOP Examples: 6 Filled-In Standard Operating Procedures You Can Copy](/blog/sop-examples-filled-in-operations)
+- [SOP Templates: 10 Templates Every Operations Team Needs](/blog/sop-templates-every-ops-team-needs)
+- [SOP Governance: Ownership, Versioning and Review](/blog/sop-governance-ownership-versioning)
+- [How to Write an SOP People Actually Follow](/blog/how-to-write-an-sop-people-follow)
