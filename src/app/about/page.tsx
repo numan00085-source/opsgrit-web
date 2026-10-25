@@ -17,11 +17,23 @@ export default function AboutPage() {
         revops and finance-ops teams, automation engineers and the founders who still do all of the above on Fridays.
       </p>
       <h2 id="sam">Who is Sam?</h2>
+      <div className="not-prose my-4 flex items-center gap-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/sam-avatar.webp" alt="Default profile picture for Sam, the OpsGrit byline" width={72} height={72} className="h-[72px] w-[72px] rounded-full border border-cream-300 object-cover" />
+        <p className="text-sm text-ink-600"><strong className="text-ink-900">Sam</strong>, OpsGrit editorial byline</p>
+      </div>
       <p>
         <strong>Sam</strong> is the OpsGrit editorial byline. Guides are researched from primary sources such as vendor
         documentation and standards bodies, drafted with AI assistance, checked by an automated editorial review and
         spot-checked by the publisher. We do not claim professional credentials for the byline. Read exactly how this works in our{" "}
         <Link href="/editorial-policy">editorial policy</Link>, or <Link href="/contact">tell Sam</Link> about a mistake.
+      </p>
+      <h2>About the founder</h2>
+      <p>
+        OpsGrit was started by a founder who has chosen to stay private for now and prefers not to share personal details.
+        The founder took the initiative to build OpsGrit to help people who run operations: practical guides, templates and
+        free tools that anyone can use without signing up. The publication stands on the quality of its work, which is
+        why the <Link href="/editorial-policy">editorial policy</Link> explains openly how every article is made.
       </p>
       <h2>What we cover</h2>
       <ul>

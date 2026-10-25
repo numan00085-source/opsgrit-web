@@ -99,7 +99,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
     description: post.excerpt,
     datePublished: post.date,
     dateModified: post.updated,
-    author: { "@type": "Person", name: post.author, url: `${SITE.url}/about#sam` },
+    author: { "@type": "Person", name: post.author, url: `${SITE.url}/about#sam`, image: `${SITE.url}/images/sam-avatar.webp` },
     publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
     mainEntityOfPage: `${SITE.url}/blog/${post.slug}`,
     image: post.coverImage
@@ -223,7 +223,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
             className="card mt-14 flex gap-4 p-6"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-mark.svg" alt="" width={48} height={48} className="h-12 w-12 shrink-0 rounded-xl shadow-[0_2px_10px_-2px_rgba(212,175,79,0.5)]" />
+            <img src="/images/sam-avatar.webp" alt="Default profile picture for Sam, the OpsGrit byline" width={56} height={56} className="h-14 w-14 shrink-0 rounded-full border border-cream-300 object-cover" />
             <div>
               <p className="font-semibold text-ink-900"><Link href="/about#sam" className="hover:underline">{post.author}</Link>, OpsGrit</p>
               <p className="mt-1 text-sm leading-relaxed text-ink-600">

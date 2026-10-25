@@ -26,6 +26,13 @@ export default function EditorialPolicyPage() {
         <Link href="/contact">contact page</Link> reaches Sam.
       </p>
 
+      <h2>Who runs OpsGrit?</h2>
+      <p>
+        OpsGrit was started by a founder who prefers to stay private for now. The founder took the initiative to build a
+        free resource that helps people who run operations. Nothing here depends on a personal profile: the way every article is
+        researched, checked and corrected is described on this page.
+      </p>
+
       <h2>How we use AI</h2>
       <p>
         We use AI tools to help research and draft. We say so plainly because it matters. The process looks like this:
