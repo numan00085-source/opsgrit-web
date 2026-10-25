@@ -1,3 +1,4 @@
+import ToolNext from "@/components/ToolNext";
 import type { Metadata } from "next";
 import Link from "next/link";
 import InvoiceGenerator from "./InvoiceGenerator";
@@ -45,6 +46,13 @@ export default function Page() {
           <Link className="underline underline-offset-2" href="/blog/ai-invoice-processing-accounts-payable">AI invoice processing</Link>.
         </p>
       </section>
+      <ToolNext
+        items={[
+          { href: "/tools/roi-calculator", tag: "Calculator", title: "Automation ROI calculator", body: "Estimate what automating invoice handling would save." },
+          { href: "/blog/invoice-approval-workflow-thresholds-controls", tag: "Guide", title: "Invoice approval thresholds and controls", body: "Set approval limits that make sense." },
+          { href: "/tools/stack-audit", tag: "Worksheet", title: "Tech stack audit worksheet", body: "See what your tools cost and which to retire." },
+        ]}
+      />
     </div>
   );
 }

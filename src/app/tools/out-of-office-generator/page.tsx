@@ -1,3 +1,4 @@
+import ToolNext from "@/components/ToolNext";
 import type { Metadata } from "next";
 import Link from "next/link";
 import OutOfOfficeGenerator from "./OutOfOfficeGenerator";
@@ -41,6 +42,13 @@ export default function Page() {
           instead.
         </p>
       </section>
+      <ToolNext
+        items={[
+          { href: "/tools/raci-generator", tag: "Generator", title: "RACI matrix generator", body: "Make it clear who covers what while you are away." },
+          { href: "/blog/employee-offboarding-sop-deprovisioning-assets-audit", tag: "Guide", title: "Offboarding SOP", body: "For when someone leaves rather than goes on leave." },
+          { href: "/tools/sop-builder", tag: "Builder", title: "SOP builder", body: "Document a handover as a repeatable procedure." },
+        ]}
+      />
     </div>
   );
 }

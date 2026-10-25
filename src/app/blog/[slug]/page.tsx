@@ -99,7 +99,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
     description: post.excerpt,
     datePublished: post.date,
     dateModified: post.updated,
-    author: { "@type": "Organization", name: post.author, url: `${SITE.url}/editorial-policy` },
+    author: { "@type": "Person", name: post.author, url: `${SITE.url}/about#sam` },
     publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
     mainEntityOfPage: `${SITE.url}/blog/${post.slug}`,
     image: post.coverImage
@@ -129,7 +129,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
             <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-5xl">{post.title}</h1>
             {post.excerpt && <p className="mt-5 text-xl leading-relaxed text-ink-600">{post.excerpt}</p>}
             <p className="mt-6 text-sm text-ink-500">
-              By <Link href="/editorial-policy" className="font-medium text-ink-800 underline decoration-gold-500 underline-offset-2">{post.author}</Link> · Published {formatDate(post.date)}
+              By <Link href="/about#sam" className="font-medium text-ink-800 underline decoration-gold-500 underline-offset-2">{post.author}</Link> · Published {formatDate(post.date)}
               {post.updated !== post.date && <> · Updated {formatDate(post.updated)}</>}
             </p>
             <p className="mt-1 text-xs text-ink-500">
@@ -225,10 +225,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo-mark.svg" alt="" width={48} height={48} className="h-12 w-12 shrink-0 rounded-xl shadow-[0_2px_10px_-2px_rgba(212,175,79,0.5)]" />
             <div>
-              <p className="font-semibold text-ink-900">{post.author}</p>
+              <p className="font-semibold text-ink-900"><Link href="/about#sam" className="hover:underline">{post.author}</Link>, OpsGrit</p>
               <p className="mt-1 text-sm leading-relaxed text-ink-600">
-                A team byline, not an individual. Articles are researched and drafted with AI assistance, checked by our
-                automated editorial review before publication and spot-checked by the publisher from time to time. Prices and features change, so check the vendor before
+                Sam is the editorial byline of OpsGrit. Articles are researched from primary sources and drafted with AI assistance, checked by our
+                automated editorial review before publication and spot-checked by the publisher from time to time. We do not claim professional credentials for the byline. Prices and features change, so check the vendor before
                 you buy. See our <Link className="font-semibold underline decoration-gold-500 underline-offset-2" href="/editorial-policy">editorial policy</Link>{" "}
                 or <Link className="font-semibold underline decoration-gold-500 underline-offset-2" href="/contact">report an error</Link>.
               </p>

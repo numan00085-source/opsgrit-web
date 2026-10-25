@@ -16,6 +16,13 @@ export default function AboutPage() {
         {SITE.name} is an independent B2B publication for the people who keep companies running: operations leaders,
         revops and finance-ops teams, automation engineers and the founders who still do all of the above on Fridays.
       </p>
+      <h2 id="sam">Who is Sam?</h2>
+      <p>
+        <strong>Sam</strong> is the OpsGrit editorial byline. Guides are researched from primary sources such as vendor
+        documentation and standards bodies, drafted with AI assistance, checked by an automated editorial review and
+        spot-checked by the publisher. We do not claim professional credentials for the byline. Read exactly how this works in our{" "}
+        <Link href="/editorial-policy">editorial policy</Link>, or <Link href="/contact">tell Sam</Link> about a mistake.
+      </p>
       <h2>What we cover</h2>
       <ul>
         <li><strong>AI Automation:</strong> agents, copilots and LLM-powered workflows, with an honest view of what works and what breaks.</li>
@@ -26,7 +33,7 @@ export default function AboutPage() {
       <p>
         Every article is written to be useful first. We cite primary sources where they exist, state our assumptions,
         and update articles when facts change. We use AI tools to help research and draft, and every article passes an
-        automated editorial review before it is published, and the publisher spot-checks articles from time to time. The OpsGrit Research Desk takes responsibility for what
+        automated editorial review before it is published, and the publisher spot-checks articles from time to time. Sam, the OpsGrit byline, takes responsibility for what
         we publish and corrects errors when readers report them.
       </p>
       <h2>Independence and sponsorship</h2>

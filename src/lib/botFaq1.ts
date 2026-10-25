@@ -20,7 +20,7 @@ export const FAQ1: Faq[] = [
   {
     q: "Who writes OpsGrit articles?",
     k: "author writer byline team research desk who wrote",
-    a: "Articles are published under the byline OpsGrit Research Desk. That is a team byline, not one named person. We research and draft with AI assistance, then each article goes through an automated editorial review before it goes live, and the publisher spot-checks articles. The full process is public.",
+    a: "Articles are published under the byline Sam, the OpsGrit editorial byline. It stands for our editorial process, and we do not claim professional credentials for it. We research and draft with AI assistance, then each article goes through an automated editorial review before it goes live, and the publisher spot-checks articles. The full process is public.",
     l: ["/editorial-policy"],
   },
   {

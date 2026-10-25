@@ -40,8 +40,31 @@ export default function StackAudit() {
     const unused = rows.reduce((a, r) => a + (r.seats > 0 ? r.cost * (1 - Math.min(r.active, r.seats) / r.seats) : 0), 0);
     const noOwner = rows.filter((r) => r.tool && !r.owner.trim()).length;
     const savings = rows.filter((r) => r.decision === "Retire" || r.decision === "Merge").reduce((a, r) => a + r.cost, 0);
-    return { monthly, annual: monthly * 12, unused, noOwner, savings };
+    const named = rows.filter((r) => r.tool.trim());
+    const waste = named
+      .map((r) => ({ tool: r.tool, wasted: r.seats > 0 ? r.cost * (1 - Math.min(r.active, r.seats) / r.seats) : 0, perUser: r.active > 0 ? r.cost / r.active : r.cost }))
+      .filter((x) => x.wasted > 0)
+      .sort((a, b) => b.wasted - a.wasted)
+      .slice(0, 3);
+    const key = (p: string) => p.toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+    const groups: Record<string, string[]> = {};
+    for (const r of named) if (key(r.purpose)) (groups[key(r.purpose)] ??= []).push(r.tool);
+    const overlaps = Object.values(groups).filter((g) => g.length > 1);
+    return { monthly, annual: monthly * 12, unused, noOwner, savings, waste, overlaps };
   }, [rows]);
+
+  const [note, setNote] = useState("");
+  const summary = () => {
+    const lines = [
+      `Tech stack audit: ${rows.filter((r) => r.tool.trim()).length} tools, ${usd(t.monthly)} per month (${usd(t.annual)} per year).`,
+      `Paid but unused (estimate): ${usd(t.unused)} per month. Tools without an owner: ${t.noOwner}.`,
+      `Potential saving from Merge or Retire: ${usd(t.savings)} per month.`,
+      ...(t.waste.length ? ["Biggest unused spend: " + t.waste.map((w) => `${w.tool} (${usd(w.wasted)})`).join(", ") + "."] : []),
+      ...(t.overlaps.length ? ["Possible overlaps: " + t.overlaps.map((g) => g.join(" + ")).join("; ") + "."] : []),
+    ];
+    void navigator.clipboard.writeText(lines.join("\n")).then(() => setNote("Summary copied."), () => setNote("Copy is blocked in this browser."));
+    setTimeout(() => setNote(""), 2200);
+  };
 
   const csv = () => {
     const esc = (s: string | number) => `"${String(s).replace(/"/g, '""')}"`;
@@ -65,6 +88,29 @@ export default function StackAudit() {
         <Stat label="Tools without an owner" value={String(t.noOwner)} sub="every tool needs a named owner" />
         <Stat label="Potential monthly saving" value={usd(t.savings)} sub="tools marked Merge or Retire" />
       </div>
+
+      {(t.waste.length > 0 || t.overlaps.length > 0) && (
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {t.waste.length > 0 && (
+            <div className="card p-5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">Look here first</p>
+              <ol className="mt-2 space-y-1 text-sm text-ink-700">
+                {t.waste.map((w) => (
+                  <li key={w.tool}><strong className="text-ink-900">{w.tool}</strong>: about {usd(w.wasted)} per month in unused seats, {usd(w.perUser)} per active user.</li>
+                ))}
+              </ol>
+            </div>
+          )}
+          {t.overlaps.length > 0 && (
+            <div className="card p-5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">Possible overlap</p>
+              <ul className="mt-2 space-y-1 text-sm text-ink-700">
+                {t.overlaps.map((g) => <li key={g.join()}>{g.join(" and ")} have the same purpose. Do you need both?</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="mt-6 overflow-x-auto rounded-2xl border border-cream-300 bg-white">
         <table className="w-full min-w-[860px] text-left">
@@ -101,9 +147,11 @@ export default function StackAudit() {
       <div className="mt-4 flex flex-wrap gap-3">
         <button type="button" className="btn-primary" onClick={() => setRows((p) => [...p, { id: next, tool: "", purpose: "", owner: "", cost: 0, seats: 0, active: 0, decision: "Review" }])}>Add a tool</button>
         <button type="button" className="btn-ghost" onClick={csv}>Download CSV</button>
+        <button type="button" className="btn-ghost" onClick={summary}>Copy summary</button>
         <button type="button" className="btn-ghost" onClick={() => setRows([])}>Clear all</button>
       </div>
-      <p className="mt-4 max-w-3xl text-sm text-ink-500">
+      <p className="mt-2 h-5 text-sm font-medium text-gold-700" role="status" aria-live="polite">{note}</p>
+      <p className="mt-2 max-w-3xl text-sm text-ink-500">
         Nothing is saved or sent anywhere. Download the CSV before you leave the page. &ldquo;Paid but unused&rdquo; is a
         rough estimate (cost × share of seats with no active user), so confirm it in the vendor&rsquo;s admin console
         before you cancel anything.

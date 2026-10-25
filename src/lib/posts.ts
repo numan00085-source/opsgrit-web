@@ -107,7 +107,7 @@ function parse(file: string): Post {
     date,
     updated:
       data.updated instanceof Date ? data.updated.toISOString().slice(0, 10) : String(data.updated ?? date),
-    author: String(data.author ?? "OpsGrit Research Desk"),
+    author: String(data.author ?? "Sam"),
     coverImage: String(data.coverImage ?? ""),
     readTime: readingTime(content).text.replace("read", "").trim(),
     featured: Boolean(data.featured),

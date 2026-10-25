@@ -17,13 +17,13 @@ export default function EditorialPolicyPage() {
         AI, how we check facts and what we do when we get something wrong.
       </p>
 
-      <h2>Who is the OpsGrit Research Desk?</h2>
+      <h2>Who is Sam?</h2>
       <p>
-        Articles are published under the byline <strong>OpsGrit Research Desk</strong>. That is a team byline, not a
-        named individual, and we do not invent personal profiles or credentials. The desk is responsible for every
+        Articles are published under the byline <strong>Sam</strong>, the editorial byline of OpsGrit. It stands for the
+        OpsGrit editorial process, and we do not invent personal profiles or professional credentials for it. Sam is responsible for every
         article. Every article passes an automated editorial review before it goes live, the publisher checks articles
-        from time to time, and the desk reads reader reports and corrects or removes content when it is wrong. If you disagree with something, the{" "}
-        <Link href="/contact">contact page</Link> reaches the desk.
+        from time to time, and Sam reads reader reports and corrects or removes content when it is wrong. If you disagree with something, the{" "}
+        <Link href="/contact">contact page</Link> reaches Sam.
       </p>
 
       <h2>How we use AI</h2>

@@ -1,3 +1,4 @@
+import ToolNext from "@/components/ToolNext";
 import type { Metadata } from "next";
 import Link from "next/link";
 import RaciGenerator from "./RaciGenerator";
@@ -38,6 +39,13 @@ export default function Page() {
           for keeping ownership current.
         </p>
       </section>
+      <ToolNext
+        items={[
+          { href: "/tools/sop-builder", tag: "Builder", title: "SOP builder", body: "Write the steps once roles are clear." },
+          { href: "/tools/readiness-scorecard", tag: "Scorecard", title: "Automation readiness scorecard", body: "See whether a process is ready to automate." },
+          { href: "/blog/raci-matrix-operations-teams-template", tag: "Guide", title: "RACI matrix for operations teams", body: "Examples, mistakes and a rollout plan." },
+        ]}
+      />
     </div>
   );
 }

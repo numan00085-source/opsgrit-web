@@ -5,7 +5,7 @@ slug: "webhook-failures-troubleshooting-timeouts-retries"
 category: "Ops Stack"
 excerpt: "When a webhook stops working, the cause is usually one of a few things. Follow a step-by-step checklist for timeouts, retries, duplicates, rate limits and missing events."
 date: "2026-10-19"
-author: "OpsGrit Research Desk"
+author: "Sam"
 coverImage: "/images/webhook-failures-troubleshooting-timeouts-retries-cover.webp"
 featured: false
 shortAnswer: "When webhook events go missing, check in order: is the sender sending, is the receiver reachable, is the receiver answering quickly with a success code, is a limit being hit, and is a retry or duplicate hiding the problem. Fix it by returning a fast 2xx, processing the work after you respond, handling duplicates safely and alerting when retries run out."
@@ -171,7 +171,7 @@ This week, choose your most important webhook and write down where its delivery 
 
 ## A note on sources
 
-This guide is written by the OpsGrit Research Desk from common integration practice. Platform limits were taken from each vendor's documentation on October 19, 2026 and change, so check the current pages. The example is invented. If you spot something that looks wrong, [tell us](/contact).
+This guide is written by Sam at OpsGrit from common integration practice. Platform limits were taken from each vendor's documentation on October 19, 2026 and change, so check the current pages. The example is invented. If you spot something that looks wrong, [tell us](/contact).
 
 **Further reading.**
 
