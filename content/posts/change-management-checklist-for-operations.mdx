@@ -136,8 +136,8 @@ Break the release into waves. A typical pattern:
 
 | Wave | Target | Duration | Success criteria |
 |------|--------|----------|------------------|
-| Canary | 1–2 low-risk accounts or a single sandbox | 30–60 min | No critical alerts, latency within baseline |
-| Pilot | 5–10% of production volume, representative segments | 2–4 hours | Error rate &lt; 0.1%, throughput steady |
+| Canary | 1 to 2 low-risk accounts or a single sandbox | 30 to 60 min | No critical alerts, latency within baseline |
+| Pilot | 5 to 10% of production volume, representative segments | 2 to 4 hours | Error rate &lt; 0.1%, throughput steady |
 | Full | All remaining instances | Per runbook | All health checks green for 30 min |
 
 Adjust wave sizes to your risk tolerance. For high-impact changes, add a **shadow wave** that mirrors production traffic to the new version without serving customers.
@@ -156,7 +156,7 @@ Enable enhanced alerting for the deployment window. Add temporary dashboards tha
 Post a one-line status update in the designated channel at each wave boundary: *Canary green, moving to pilot at 14:15*. Tag the change owner, the on-call engineer, and the business stakeholder. If a wave exceeds its timebox, announce the delay and the new target. Silence is a signal, treat it as a blocker.
 
 **6. Post-deployment validation** 
-After full rollout, run the acceptance tests defined in the approval gate. Verify data integrity on a sample of processed records. Keep enhanced monitoring active for at least one full business cycle (24–48 hours) before declaring the change stable. 
+After full rollout, run the acceptance tests defined in the approval gate. Verify data integrity on a sample of processed records. Keep enhanced monitoring active for at least one full business cycle (24 to 48 hours) before declaring the change stable. 
 
 ## Post-deployment review and stabilization
 
@@ -184,36 +184,36 @@ After go-live the work shifts from execution to evidence. You need proof the cha
 
 Copy the block below into your ticketing system, Confluence page, or shared spreadsheet. Replace every placeholder with the details for the specific change. Keep the structure intact so reviewers can scan the same fields every time.
 
-### Change‑management template
+### Change-management template
 
 | Field | Guidance | Example entry |
 |-------|----------|---------------|
-| **Change ID** | Auto‑generated or sequential number | CHG‑2024‑0142 |
-| **Title** | One‑line summary of what is changing | Add retry logic to Order‑API webhook |
-| **Description** | Two‑to‑three sentences describing the change and why it is needed | The current webhook drops payloads on 5xx responses. Adding exponential back‑off reduces lost orders. |
-| **Owner** | Person accountable for end‑to‑end delivery | Maya Patel |
+| **Change ID** | Auto-generated or sequential number | CHG-0142 |
+| **Title** | One-line summary of what is changing | Add retry logic to Order-API webhook |
+| **Description** | Two-to-three sentences describing the change and why it is needed | The current webhook drops payloads on 5xx responses. Adding exponential back-off reduces lost orders. |
+| **Owner** | Person accountable for end-to-end delivery | Change lead |
 | **Stakeholders** | Names or groups who must be informed or consulted | Finance Ops, Customer Success, Platform Engineering |
-| **Scope** | Systems, processes, and teams affected | Order‑API, fulfillment queue, Slack alerts |
+| **Scope** | Systems, processes, and teams affected | Order-API, fulfillment queue, Slack alerts |
 | **Impact assessment** | Rate each dimension (Low/Medium/High) and add notes | Performance, Medium (adds 150 ms latency); Data, Low; Compliance, Low |
 | **Risk level** | Overall rating derived from impact table | Medium |
-| **Approval gates** | List each gate, required approver, and due date | 1️⃣ Architecture review, Alex Chen, 2024‑03‑10 2️⃣ Security sign‑off, Priya Rao, 2024‑03‑12 |
+| **Approval gates** | List each gate, required approver, and due date | 1 Architecture review, Alex Chen, 2024-03-10 2 Security sign-off, Priya Rao, 2024-03-12 |
 | **Test plan** | Test cases, environment, and pass criteria | Unit tests ≥ 90 % coverage; Staging load test 5k req/min with &lt; 2 % error |
 | **Deployment steps** | Ordered, atomic actions with rollback point markers | 1. Merge feature branch 2. Run DB migration (rollback: `down` script) 3. Deploy to canary (10 % traffic) 4. Promote to full fleet |
 | **Rollback plan** | Exact commands or runbooks to revert | `kubectl rollout undo deployment/order-api`; run `down` migration |
-| **Communication plan** | Channels, timing, and audience for each announcement | Pre‑deploy Slack #ops‑changes 24 h before; post‑deploy email to stakeholders |
-| **Post‑deploy review** | Metrics to watch, review window, and owner | Error rate &lt; 0.5 % for 48 h; latency p95 &lt; 300 ms, Owner: Maya Patel |
-| **Sign‑offs** | Checkboxes for each gate and final go/no‑go | ☐ Architecture ☐ Security ☐ Ops lead ☐ Go/No‑go |
+| **Communication plan** | Channels, timing, and audience for each announcement | Pre-deploy Slack #ops-changes 24 h before; post-deploy email to stakeholders |
+| **Post-deploy review** | Metrics to watch, review window, and owner | Error rate &lt; 0.5 % for 48 h; latency p95 &lt; 300 ms, Owner: Change lead |
+| **Sign-offs** | Checkboxes for each gate and final go/no-go | ☐ Architecture ☐ Security ☐ Ops lead ☐ Go/No-go |
 
 ### How to use the template
 
 1. **Create a new record** for every change request. 
-2. **Fill in the fields** in the order shown; the sequence mirrors the gates in sections 2‑4 of the overall checklist. 
+2. **Fill in the fields** in the order shown; the sequence mirrors the gates in sections 2-4 of the overall checklist. 
 3. **Attach supporting artifacts** (design docs, test results, runbooks) directly to the record. 
 4. **Route for approvals** using the “Approval gates” row; each approver adds a timestamp and comment. 
 5. **Execute deployment** following the “Deployment steps” column; mark each step complete. 
-6. **Close the loop** by completing the “Post‑deploy review” and obtaining the final sign‑offs.
+6. **Close the loop** by completing the “Post-deploy review” and obtaining the final sign-offs.
 
-The table works in any markdown‑aware tool. If your team prefers a spreadsheet, paste the header row and keep one change per row. 
+The table works in any markdown-aware tool. If your team prefers a spreadsheet, paste the header row and keep one change per row. 
 
 ## Common mistakes and how to avoid them
 
@@ -239,20 +239,20 @@ One person holds the context and the approve button. When they are out, changes 
 Escalate a change when it crosses a clear impact or risk threshold that the owning team cannot resolve within the normal change window. Use the following decision rules to keep escalation objective and fast.
 
 **Scope breach**, The change touches more than three production systems or alters a shared data model used by finance, revenue ops, and customer success simultaneously. 
-**Error‑rate spike**, Automated health checks show a >5 % increase in failure rate for any critical path within the first 15 minutes of rollout. 
+**Error-rate spike**, Automated health checks show a >5 % increase in failure rate for any critical path within the first 15 minutes of rollout. 
 **Rollback failure**, The automated rollback script does not complete cleanly, leaving the system in a mixed state. 
-**Security or compliance flag**, A static‑analysis or policy scan returns a high‑severity finding that was not part of the original risk assessment. 
-**Stakeholder blocker**, A business owner reports a revenue‑impacting issue that cannot be mitigated by a quick config tweak.
+**Security or compliance flag**, A static-analysis or policy scan returns a high-severity finding that was not part of the original risk assessment. 
+**Stakeholder blocker**, A business owner reports a revenue-impacting issue that cannot be mitigated by a quick config tweak.
 
 | Severity | Trigger | Escalation target | Response window |
 |----------|---------|-------------------|-----------------|
 | P1 | Any scope breach or rollback failure | Senior ops lead + platform engineering | Immediate (≤5 min) |
-| P2 | Error‑rate spike or security flag | Ops manager + security engineer | ≤15 min |
+| P2 | Error-rate spike or security flag | Ops manager + security engineer | ≤15 min |
 | P3 | Stakeholder blocker without quick fix | Business owner + change owner | ≤30 min |
 
-When a trigger fires, the change owner posts a concise incident note in the shared runbook channel: change ID, trigger, current state, and attempted mitigation. The escalation target acknowledges within the response window and either authorizes a controlled rollback, approves a hot‑fix, or calls a war‑room. Document the decision and outcome in the change record for the post‑deployment review (see the monitoring guide for alert routing details). 
+When a trigger fires, the change owner posts a concise incident note in the shared runbook channel: change ID, trigger, current state, and attempted mitigation. The escalation target acknowledges within the response window and either authorizes a controlled rollback, approves a hot-fix, or calls a war-room. Document the decision and outcome in the change record for the post-deployment review (see the monitoring guide for alert routing details). 
 
-A quick‑reference card with the table above can be pinned in the ops Slack channel so every engineer can decide in seconds whether to raise the flag. This keeps small issues from turning into major incidents.
+A quick-reference card with the table above can be pinned in the ops Slack channel so every engineer can decide in seconds whether to raise the flag. This keeps small issues from turning into major incidents.
 
 ## Integrating change management into daily ops rhythm
 

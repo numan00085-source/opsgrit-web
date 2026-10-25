@@ -122,6 +122,45 @@ Every automation needs a named owner who watches it, handles exceptions and deci
 
 Run it for a few weeks, compare against your baseline and fix the most common problems. Then pick the next process. Each automation should make the next one easier, because the documentation, owners and habits already exist. To keep a running automation healthy, use a [weekly and monthly review cadence](/blog/automation-alert-review-cadence-weekly-monthly).
 
+## Rules, AI or a person: how to decide
+
+Not every step needs the same kind of help. A quick way to choose is to ask what the step needs.
+
+| The step needs | Best fit | Example |
+|---|---|---|
+| The same decision every time, based on clear fields | **Rules** | Route an invoice under a set amount to the budget owner |
+| Reading messy text or documents, then a standard action | **AI, with a check** | Pull the vendor name and total from an emailed invoice, then confirm against the purchase order |
+| Judgment, trade-offs or accountability | **A person** | Approve an unusual contract term or a large exception |
+| A mix of the above | **Rules first, AI where needed, a person for exceptions** | Most real processes |
+
+Start with rules. They are cheap, predictable and easy to explain. Add AI only to the steps where the input is unstructured, and always keep a way for a person to see what the automation did and why.
+
+## A worked example: purchase request approvals
+
+Imagine a team where staff ask for equipment and software by email. A manager reads each message, asks for missing details, finds the budget owner and chases the approval. It works, but requests get lost and nobody can say how long approvals take.
+
+Here is how the five steps apply, with illustrative numbers.
+
+1. **Write it down.** The team lists the steps: request, check budget, approve, order, confirm delivery. They discover that two approvals exist only because of a rule that changed two years ago.
+2. **Measure.** For a month they count requests, time to approval and requests that needed follow-up questions. Suppose they find 60 requests a month, three days to approve on average and one in three needing a follow-up.
+3. **Automate the simple path.** A short form replaces the email and makes the missing fields required. A rule sends requests under a set amount to the budget owner and sends larger ones to the department head. A reminder goes out after one working day.
+4. **Keep a person responsible.** The operations lead owns the workflow, reviews requests that fail the form checks and watches a simple list of items waiting longer than expected.
+5. **Review.** After a month they compare against the baseline. Fewer follow-up questions and a shorter wait are the signs it works. If not, they change one rule and measure again.
+
+The point of the example is the order of work: describe, measure, simplify, then automate. The tool comes last.
+
+## Questions teams ask before they start
+
+**Will automation replace our team?** Automation removes repetitive steps, not the need for people who understand the process. In practice the work shifts toward exceptions, quality checks and improvement. Tell the team early what will change and what will not.
+
+**Do we need to buy something new?** Often not. Check what your accounting, helpdesk, project and HR tools already offer before adding another platform.
+
+**How much will it save?** That depends on volume and how long the task takes today. Use your own numbers in the [ROI calculator](/tools/roi-calculator) instead of a figure from someone else's case study.
+
+**What if it makes a mistake?** Design for it. Keep a log of what the automation did, a visible place for failed items and a person who can pause it. Start with low-risk steps, and add approvals where money, access or people are affected.
+
+**How long does a first project take?** A small, well-chosen automation can often be built and tested in days or a few weeks. Writing down the process and agreeing the rules usually takes more time than building the workflow.
+
 ## What can go wrong
 
 - **Automating a broken process.** The software will do the wrong thing quickly. Fix the process first.

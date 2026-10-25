@@ -138,36 +138,36 @@ Start by pulling the real spend from every provider invoice and the usage logs f
 4. Plot actual versus forecast in a simple spreadsheet; highlight any line where actual cost per run is more than 1.2× the forecast.
 
 **Attribute costs to teams** 
-Create a cost‑allocation table that every owner updates at the end of the quarter.
+Create a cost-allocation table that every owner updates at the end of the quarter.
 
 | Automation | Owner | Business outcome | Forecast $ | Actual $ | Variance % | Cost per run $ |
 |------------|-------|------------------|------------|----------|------------|----------------|
-| Invoice‑extractor | Finance Ops | Faster close | 4,200 | 5,100 | +21 | 0.42 |
-| Lead‑scorer | RevOps | Higher MQL rate | 3,800 | 3,600 | –5 | 0.18 |
-| Ticket‑router | Support | Lower MTTR | 2,500 | 2,900 | +16 | 0.31 |
+| Invoice-extractor | Finance Ops | Faster close | 4,200 | 5,100 | +21 | 0.42 |
+| Lead-scorer | RevOps | Higher MQL rate | 3,800 | 3,600 | -5 | 0.18 |
+| Ticket-router | Support | Lower MTTR | 2,500 | 2,900 | +16 | 0.31 |
 
 Owners use this table to justify budget requests or to negotiate volume discounts.
 
-**Set usage‑spike alerts** 
+**Set usage-spike alerts** 
 - Define a baseline: average daily runs and average cost per run for the last three months. 
 - Configure an alert in your monitoring stack (see [How to Monitor Business Automations: Alerts, Checks and Reviews](/blog/automation-monitoring-alerting-operations-teams)) that triggers when daily cost exceeds 1.5× baseline or when token consumption jumps more than 30 % in a single day. 
 - Route alerts to the automation owner and the finance partner so they can investigate before the next invoice lands.
 
-**Quarterly cost‑review checklist** 
+**Quarterly cost-review checklist** 
 - [ ] All vendor invoices imported and matched to usage logs. 
 - [ ] Variance >10 % documented with root cause. 
-- [ ] Cost‑allocation table completed and signed off by each owner. 
+- [ ] Cost-allocation table completed and signed off by each owner. 
 - [ ] Alert thresholds reviewed and adjusted for new volume expectations. 
 - [ ] Summary sent to finance with recommended budget adjustments.
 
-For a deeper dive on building a cost model from scratch, see [What an AI Workflow Really Costs: A Budgeting and Cost‑Control Guide for Operations Teams](/blog/ai-workflow-cost-budget-control).
+For a deeper dive on building a cost model from scratch, see [What an AI Workflow Really Costs: A Budgeting and Cost-Control Guide for Operations Teams](/blog/ai-workflow-cost-budget-control).
 
 ## Quarterly AI automation audit checklist and scorecard
 
 Start with a one-page checklist you can duplicate each quarter. Score every automation 1 to 5 on each line. Anything below 3 gets a fix ticket; anything at 1 gets a decommission review.
 
 ### Performance and accuracy
-| Check | What to verify | Score 1–5 |
+| Check | What to verify | Score 1 to 5 |
 |-------|----------------|-----------|
 | Output quality | Sample 20 recent runs against the test set from [How to Evaluate an AI Workflow: Building a Test Set and Measuring Accuracy](/blog/evaluate-ai-workflow-test-set-accuracy). Pass rate ≥ target. | |
 | Latency | P95 response time within SLA for the last 30 days. | |
@@ -175,7 +175,7 @@ Start with a one-page checklist you can duplicate each quarter. Score every auto
 | Drift signal | No statistically significant shift in input distribution or model confidence scores. | |
 
 ### Security and data handling
-| Check | What to verify | Score 1–5 |
+| Check | What to verify | Score 1 to 5 |
 |-------|----------------|-----------|
 | Access scope | Only the service account and named human reviewers have write access. | |
 | Data retention | Logs and payloads purged per policy; no PII in prompt history. | |
@@ -183,7 +183,7 @@ Start with a one-page checklist you can duplicate each quarter. Score every auto
 | Vendor risk | Sub-processor list reviewed; no new high-risk vendors added without approval. | |
 
 ### Cost and usage
-| Check | What to verify | Score 1–5 |
+| Check | What to verify | Score 1 to 5 |
 |-------|----------------|-----------|
 | Spend vs budget | Quarter-to-date cost within 10% of forecast from [What an AI Workflow Really Costs: A Budgeting and Cost-Control Guide for Operations Teams](/blog/ai-workflow-cost-budget-control). | |
 | Unit economics | Cost per successful outcome stable or improving. | |
@@ -191,7 +191,7 @@ Start with a one-page checklist you can duplicate each quarter. Score every auto
 | Token efficiency | Prompt and completion tokens per run trending flat or down. | |
 
 ### Governance and ownership
-| Check | What to verify | Score 1–5 |
+| Check | What to verify | Score 1 to 5 |
 |-------|----------------|-----------|
 | Owner assigned | A named person accountable for uptime, cost, and compliance. | |
 | Documentation current | Runbook, data-flow diagram, and rollback steps updated this quarter. | |
@@ -208,7 +208,7 @@ Start with a one-page checklist you can duplicate each quarter. Score every auto
 ### How to use it
 1. Duplicate the table into your tracker (Notion, Airtable, Google Sheets).
 2. Fill scores during the audit meeting; capture evidence links in a notes column.
-3. Sum scores per automation. Total ≥ 18 = keep. 12–17 = fix. &lt; 12 = decommission candidate.
+3. Sum scores per automation. Total ≥ 18 = keep. 12 to 17 = fix. &lt; 12 = decommission candidate.
 4. Export the scored sheet to the quarterly audit folder for audit trail and trend comparison.
 
 ## Decide when to keep, fix, or decommission

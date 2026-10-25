@@ -31,9 +31,9 @@ Include keyword "AI agent guardrails" once. Use it naturally. Ensure not to prev
 
 Let's draft and count words.
 
-Paragraph 1: "Operations teams are deploying AI agents that can read customer emails, update CRM records, and trigger payments without a written boundary. Without a written boundary, a single mis‑configured prompt can expose customer data, trigger unauthorized transactions, or spin up costly compute resources." Count words: Operations(1) teams2 are3 shipping4 AI5 agents6 into7 production8 faster9 than10 they11 can12 document13 what14 those15 agents16 are17 allowed18 to19 do.20 Without21 a22 written23 boundary,24 a25 single26 mis‑configured27 prompt28 can29 expose30 customer31 data,32 trigger33 unauthorized34 transactions,35 or36 spin37 up38 costly39 compute40 resources41. That's 41 words.
+Paragraph 1: "Operations teams are deploying AI agents that can read customer emails, update CRM records, and trigger payments without a written boundary. Without a written boundary, a single mis-configured prompt can expose customer data, trigger unauthorized transactions, or spin up costly compute resources." Count words: Operations(1) teams2 are3 shipping4 AI5 agents6 into7 production8 faster9 than10 they11 can12 document13 what14 those15 agents16 are17 allowed18 to19 do.20 Without21 a22 written23 boundary,24 a25 single26 mis-configured27 prompt28 can29 expose30 customer31 data,32 trigger33 unauthorized34 transactions,35 or36 spin37 up38 costly39 compute40 resources41. That's 41 words.
 
-Paragraph 2: "This guide hands you a fillable AI agent guardrails template that turns vague policy into a concrete, version‑controlled document. It walks through the essential fields, purpose, data classification, tool access, escalation triggers, and test criteria, so you can hand the same sheet to every builder and get a consistent sign‑off before anything goes live." Count words: This1 guide2 hands3 you4 a5 fillable6 AI7 agent8 guardrails9 template10 that11 turns12 vague13 policy14 into15 a16 concrete,17 version‑controlled18 document.19 It20 walks21 through22 the23 essential24 fields25, 26 purpose,27 data28 classification,29 tool30 access,31 escalation32 triggers,33 and34 test35 criteria36, 37 so38 you39 can40 hand41 the42 same43 sheet44 to45 every46 builder47 and48 get49 a50 consistent51 sign‑off52 before53 anything54 goes55 live56. That's 56 words.
+Paragraph 2: "This guide hands you a fillable AI agent guardrails template that turns vague policy into a concrete, version-controlled document. It walks through the essential fields, purpose, data classification, tool access, escalation triggers, and test criteria, so you can hand the same sheet to every builder and get a consistent sign-off before anything goes live." Count words: This1 guide2 hands3 you4 a5 fillable6 AI7 agent8 guardrails9 template10 that11 turns12 vague13 policy14 into15 a16 concrete,17 version-controlled18 document.19 It20 walks21 through22 the23 essential24 fields25, 26 purpose,27 data28 classification,29 tool30 access,31 escalation32 triggers,33 and34 test35 criteria36, 37 so38 you39 can40 hand41 the42 same43 sheet44 to45 every46 builder47 and48 get49 a50 consistent51 sign-off52 before53 anything54 goes55 live56. That's 56 words.
 
 Paragraph 3: "When the template is in place, new agents follow a standardized review process, auditors can trace decisions, and teams reduce reactive fixes. The result is a repeatable process that scales with every additional model you add." Count words: When1 the2 template3 is4 in5 place,6 new7 agents8 can9 be10 onboarded11 in12 hours13 instead14 of15 weeks,16 auditors17 see18 a19 clear20 trail21 of22 decisions,23 and24 the25 team26 spends27 less28 time29 firefighting30 unexpected31 behavior.32 The33 result34 is35 a36 repeatable37 process38 that39 scales40 with41 every42 additional4
 
@@ -149,30 +149,30 @@ For a deeper dive on defining what an agent can touch, see [Agent Safety Boundar
 
 Match each template section to the agent type and risk tier you are governing. Start by classifying the agent (support triage, AP automation, sales enrichment) and then assign a risk tier (low, medium, high) based on the data it touches and the impact of a mistake.
 
-**Agent‑type adjustments**
+**Agent-type adjustments**
 
 - **Support triage**, reads ticket text, writes routing tags. Keep the “Data Access” row limited to ticket metadata. Add a “Response Draft” row only if the agent can propose replies.
-- **AP automation**, reads invoices, writes payment requests. Expand the “Financial Actions” row to include amount thresholds and vendor‑master‑data checks.
-- **Sales enrichment**, reads CRM contacts, writes enrichment fields. Add a “External API Calls” row with rate‑limit and consent flags.
+- **AP automation**, reads invoices, writes payment requests. Expand the “Financial Actions” row to include amount thresholds and vendor-master-data checks.
+- **Sales enrichment**, reads CRM contacts, writes enrichment fields. Add a “External API Calls” row with rate-limit and consent flags.
 
-**Risk‑tier scaling**
+**Risk-tier scaling**
 
 | Risk tier | Data sensitivity | Required approval layers | Example guardrail tweaks |
 |-----------|------------------|--------------------------|--------------------------|
-| Low | Public / internal non‑PII | None (auto‑execute) | Allow read‑only queries; no write actions |
-| Medium | Internal PII or financial totals | Manager sign‑off | Require human review before any write; log every read |
-| High | Regulated (PCI, HIPAA) or confidential IP | Compliance + legal sign‑off | Enforce encryption at rest; block external calls; mandate audit trail |
+| Low | Public / internal non-PII | None (auto-execute) | Allow read-only queries; no write actions |
+| Medium | Internal PII or financial totals | Manager sign-off | Require human review before any write; log every read |
+| High | Regulated (PCI, HIPAA) or confidential IP | Compliance + legal sign-off | Enforce encryption at rest; block external calls; mandate audit trail |
 
 **Decision matrix, data sensitivity → approval layers**
 
 | Data classification | Approval needed |
 |---------------------|-----------------|
 | Public | None |
-| Internal (non‑PII) | Team lead |
+| Internal (non-PII) | Team lead |
 | Confidential (PII, financial) | Manager + compliance |
 | Regulated (PCI, HIPAA, GDPR) | Compliance + legal |
 
-Apply the matrix to every “Data Access” and “Action” row in the template. For a medium‑risk AP agent, the “Create Payment” row gets a manager approval flag; for a high‑risk sales enrichment agent, the “Call Third‑Party Enrichment API” row gets both compliance and legal flags.
+Apply the matrix to every “Data Access” and “Action” row in the template. For a medium-risk AP agent, the “Create Payment” row gets a manager approval flag; for a high-risk sales enrichment agent, the “Call Third-Party Enrichment API” row gets both compliance and legal flags.
 
 **Quick customization checklist**
 
@@ -180,9 +180,9 @@ Apply the matrix to every “Data Access” and “Action” row in the template
 - **Classify** each store using the matrix above. 
 - **Map** each agent action to the corresponding approval layer. 
 - **Document** the mapping in the “Approval Rules” section of the template. 
-- **Review** with the owner of the data store and the compliance lead before lock‑in.
+- **Review** with the owner of the data store and the compliance lead before lock-in.
 
-Link the approval rules to your human‑in‑the‑loop design ([Human-in-the-Loop Design: Where AI Should Ask Before It Acts](/blog/human-in-the-loop-ai-approvals)) and to the broader security controls ([Securing AI Workflows: Prompt Injection, Permissions and Data Handling for Operations Teams](/blog/securing-ai-workflows-prompt-injection-operations)). This keeps the guardrails document aligned with both process and policy.
+Link the approval rules to your human-in-the-loop design ([Human-in-the-Loop Design: Where AI Should Ask Before It Acts](/blog/human-in-the-loop-ai-approvals)) and to the broader security controls ([Securing AI Workflows: Prompt Injection, Permissions and Data Handling for Operations Teams](/blog/securing-ai-workflows-prompt-injection-operations)). This keeps the guardrails document aligned with both process and policy.
 
 ## Defining data access boundaries and classification rules
 
@@ -300,21 +300,21 @@ Most guardrails failures come from six predictable gaps. Fix them before the fir
 
 **Skipping version control on the guardrails doc itself**, The boundary document changes every sprint. Store it in Git with signed commits, required reviewers, and a changelog that ties each edit to a ticket. Treat it like infrastructure code. See [SOP Governance: Ownership, Versioning and Review Cycles](/blog/sop-governance-ownership-versioning).
 
-**Treating the template as a one-time exercise**, Guardrails rot. Schedule a 30‑minute review every two weeks: new tools, new data classifications, new failure modes. Assign a rotating owner so the work does not stall.
+**Treating the template as a one-time exercise**, Guardrails rot. Schedule a 30-minute review every two weeks: new tools, new data classifications, new failure modes. Assign a rotating owner so the work does not stall.
 
 ## Governance: versioning, review cadence, and audit trails
 
 Treat the guardrails document like any other controlled SOP: version it, schedule reviews, and keep an immutable change log. Start with semantic versioning (MAJOR.MINOR.PATCH). Increment MAJOR when an agent gains a new capability or crosses a risk tier. Increment MINOR for scope changes such as added data domains or revised escalation paths. Increment PATCH for wording fixes or typo corrections.
 
 **Review cadence tied to signals** 
-Run a formal review at least quarterly, but trigger an off‑cycle review when any of these occur:
+Run a formal review at least quarterly, but trigger an off-cycle review when any of these occur:
 
 - **Performance drift**: error rate or latency moves outside the baseline by more than 20 percent for two consecutive sprints 
 - **Scope change**: the agent is granted access to a new system, API, or data classification level 
-- **Incident**: a guardrail breach or near‑miss is recorded in the audit log 
+- **Incident**: a guardrail breach or near-miss is recorded in the audit log 
 - **Regulatory update**: new guidance affects data handling or automated decision rules 
 
-Assign a single document owner (usually the automation lead) and a required approver (security or compliance). Record every change in an append‑only log with fields: version, date, author, approver, change summary, and linked ticket or incident ID. Store the log in your existing SOP governance tool so it inherits the same retention and access controls. See [SOP Governance: Ownership, Versioning and Review Cycles](/blog/sop-governance-ownership-versioning) for the standard template.
+Assign a single document owner (usually the automation lead) and a required approver (security or compliance). Record every change in an append-only log with fields: version, date, author, approver, change summary, and linked ticket or incident ID. Store the log in your existing SOP governance tool so it inherits the same retention and access controls. See [SOP Governance: Ownership, Versioning and Review Cycles](/blog/sop-governance-ownership-versioning) for the standard template.
 
 **Audit trail checklist**
 
@@ -324,8 +324,8 @@ Assign a single document owner (usually the automation lead) and a required appr
 | Date | 2025-01-15 |
 | Author | A. Patel |
 | Approver | M. Chen (Security) |
-| Change summary | Added CRM write access for tier‑2 support agent; updated escalation matrix |
-| Linked ticket | JIRA‑AUTO‑842 |
+| Change summary | Added CRM write access for tier-2 support agent; updated escalation matrix |
+| Linked ticket | JIRA-AUTO-842 |
 
 Keep the last three major versions accessible for rollback. Archive older versions in cold storage with the same metadata. This approach ensures the guardrails lifecycle meets standard audit expectations for controlled documentation.
 
@@ -343,15 +343,15 @@ When a new agent spins up, the team copies the nearest variant, fills the templa
 
 ## Key takeaways
 
-- Use a fillable guardrails template to turn vague policy into a version‑controlled boundary document.
+- Use a fillable guardrails template to turn vague policy into a version-controlled boundary document.
 - Define identity, allowed actions, forbidden actions, data classifications, access scopes, escalation triggers, and audit requirements for every agent.
 - Classify each data store with a sensitivity tag and map it to explicit read/write permissions before the agent runs.
-- Encode concrete human‑in‑the‑loop triggers such as confidence thresholds, dollar limits, and PII detection with named owners and SLAs.
-- Test guardrails in three phases: static review, sandbox edge‑case suite, and a 48‑hour shadow run with zero unapproved calls.
-- Avoid common gaps like overly broad allow‑lists, missing time windows, and vague escalation language by specifying exact scopes and responders.
-- Govern the document with semantic versioning, quarterly reviews, incident‑driven off‑cycle reviews, and an immutable change log.
+- Encode concrete human-in-the-loop triggers such as confidence thresholds, dollar limits, and PII detection with named owners and SLAs.
+- Test guardrails in three phases: static review, sandbox edge-case suite, and a 48-hour shadow run with zero unapproved calls.
+- Avoid common gaps like overly broad allow-lists, missing time windows, and vague escalation language by specifying exact scopes and responders.
+- Govern the document with semantic versioning, quarterly reviews, incident-driven off-cycle reviews, and an immutable change log.
 
-Pick your highest‑risk agent, duplicate the template into your workspace, and fill in the seven sections with the owner, security reviewer, and escalation contacts. Run the three‑phase test before promoting to production. Schedule a bi‑weekly guardrails review so the document stays current as tools and data change.
+Pick your highest-risk agent, duplicate the template into your workspace, and fill in the seven sections with the owner, security reviewer, and escalation contacts. Run the three-phase test before promoting to production. Schedule a bi-weekly guardrails review so the document stays current as tools and data change.
 
 ## A note on sources
 

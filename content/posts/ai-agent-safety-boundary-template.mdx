@@ -225,25 +225,25 @@ Keep the boundary document in the same repository as your access policies so ver
 Monitoring starts with three signal types: access events, action events, and policy drift. Access events log every read or write the agent performs against a data store or API. Action events capture each external call the agent initiates, sending email, creating a ticket, updating a record. Policy drift signals appear when the agent’s configured scopes change without a matching change request.
 
 **Alert cadences** 
-- Real‑time: any write to a restricted table or any call to a payment API. 
-- Hourly roll‑up: count of actions per agent, flagged when volume exceeds the 95th percentile of the last 30 days. 
+- Real-time: any write to a restricted table or any call to a payment API. 
+- Hourly roll-up: count of actions per agent, flagged when volume exceeds the 95th percentile of the last 30 days. 
 - Daily digest: summary of new scopes granted, revoked, or modified. 
-- Weekly exception report: agents that attempted an out‑of‑scope action but were blocked by the gateway.
+- Weekly exception report: agents that attempted an out-of-scope action but were blocked by the gateway.
 
 **Audit checks** (run monthly, feed into the quarterly review) 
 1. Compare the live agent manifest against the approved boundary document. 
 2. Verify that every data source the agent touches appears in the boundary’s “allowed reads” list. 
 3. Confirm that every external endpoint the agent calls appears in the “allowed actions” list. 
-4. Review all human‑in‑the‑loop overrides for pattern, repeated overrides suggest a boundary gap. 
-5. Cross‑reference access logs with the [Joiner, Mover, Leaver: An Access Workflow Template for Small Teams](/blog/joiner-mover-leaver-access-workflow-template) to catch orphaned permissions.
+4. Review all human-in-the-loop overrides for pattern, repeated overrides suggest a boundary gap. 
+5. Cross-reference access logs with the [Joiner, Mover, Leaver: An Access Workflow Template for Small Teams](/blog/joiner-mover-leaver-access-workflow-template) to catch orphaned permissions.
 
 **Quarterly review integration** 
-Treat the boundary audit as a workstream inside the existing [How to Audit AI Tools and Automations: A Quarterly Review Template](/blog/how-to-audit-ai-tools-and-automations). The output is a one‑page compliance scorecard: agent name, boundary version, findings count, remediation owner, due date.
+Treat the boundary audit as a workstream inside the existing [How to Audit AI Tools and Automations: A Quarterly Review Template](/blog/how-to-audit-ai-tools-and-automations). The output is a one-page compliance scorecard: agent name, boundary version, findings count, remediation owner, due date.
 
 **Ongoing verification checklist** 
 - [ ] Automated schema diff runs nightly against the boundary spec. 
-- [ ] Alert thresholds reviewed after each incident post‑mortem. 
-- [ ] New agent onboarding includes a boundary sign‑off by data owner and security. 
+- [ ] Alert thresholds reviewed after each incident post-mortem. 
+- [ ] New agent onboarding includes a boundary sign-off by data owner and security. 
 - [ ] Retired agents have their scopes revoked within 24 hours of decommission. 
 - [ ] Boundary document version bumped and stored in the same repo as the agent code.
 
@@ -293,7 +293,7 @@ This guide is written by Sam at OpsGrit from common operating practice. It does 
 
 - [US orders federal agencies to remove China’s DeepSeek AI from their systems](https://techcrunch.com/2026/10/20/us-orders-federal-agencies-to-remove-chinas-deepseek-ai-from-their-systems/) (TechCrunch AI)
 - [As AI Agents Gain More Autonomy, Adoption Depends on Clear Processes and Human Expertise](https://news.google.com/rss/articles/CBMiuwFBVV95cUxPY0htc0lJTGxYX0x4UG1aQnFaRWd5NndCbmpTVVhHLUNqellHejBVUEFOd0xadU1meHdCOGhCU3RwMHVuT0ZuLXhWd1k3UUhOQ1p1b2wyVFQtVTdDZG5XWVVHMDhHV1paamo0a0JpSHJaVk91N0Z3X2dHVldhQVl6cjRWSjNfN2tZQnhZZmQ5VUVoRTZ1ZkI2YkMxalZlZDNmcEo4VkJpd0t0RDIzR09Vc2pCTkphajJFQWFR?oc=5) (News)
-- [Evals for High-Stakes AI Agents — Doneyli De Jesus & Annabell Schäfer, Langfuse｜AI Engineer](https://news.google.com/rss/articles/CBMiX0FVX3lxTE55RHppTnloYmFZeVRwandDWTNPVlRWaVczOWcxYncydkg1cVV1dC1sS1dITmFLdFVXQThZOGJRMEk1NkFvM0RBNnU1Z1pHWXVIQktjQk84OWp3WlBYRktF?oc=5) (News)
+- [Evals for High-Stakes AI Agents, Doneyli De Jesus & Annabell Schäfer, Langfuse｜AI Engineer](https://news.google.com/rss/articles/CBMiX0FVX3lxTE55RHppTnloYmFZeVRwandDWTNPVlRWaVczOWcxYncydkg1cVV1dC1sS1dITmFLdFVXQThZOGJRMEk1NkFvM0RBNnU1Z1pHWXVIQktjQk84OWp3WlBYRktF?oc=5) (News)
 
 **Further reading.** Official pages for tools, standards or rules mentioned in or related to this guide:
 
