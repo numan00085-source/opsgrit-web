@@ -1,0 +1,205 @@
+---
+title: "Procure-to-Pay Process: 8 Steps, the Controls That Matter and Where to Automate"
+seoTitle: "Procure-to-Pay Process: 8 Steps, Controls, Automation"
+metaDescription: "The procure-to-pay process explained in eight steps, with the controls that stop wrong or duplicate payments, a RACI, common failure points and where automation helps. Includes a checklist."
+slug: "procure-to-pay-process-steps-controls"
+category: "Ops Stack"
+excerpt: "Procure-to-pay is the path from needing something to paying for it. Eight steps, the controls that stop wrong and duplicate payments, who owns each step, the failure points to watch and where automation pays off."
+date: "2026-10-25"
+author: "Sam"
+coverImage: "/images/procure-to-pay-process-steps-controls-cover.webp"
+featured: false
+shortAnswer: "Procure-to-pay (P2P) is the end-to-end process of buying and paying for goods and services: identify a need, request and approve it, select a supplier, issue a purchase order, receive the goods or service, match the invoice, approve it and pay. The controls that matter most are approval limits, a purchase order before the commitment, a three-way match of order, receipt and invoice, a check for duplicate invoices, verified supplier bank details and separate people for requesting, approving and paying."
+faq:
+  - q: "What is the procure-to-pay process?"
+    a: "It is the full cycle of buying and paying for goods or services, from the initial request and approval through ordering, receiving, invoice matching and payment. It joins purchasing and accounts payable into one process."
+  - q: "What are the steps in procure-to-pay?"
+    a: "The usual steps are: identify the need, raise a requisition, approve it, choose the supplier, issue a purchase order, receive the goods or service, match the invoice to the order and receipt, and approve and pay. Each step has an owner and a control."
+  - q: "What is the difference between procure-to-pay and purchase-to-pay?"
+    a: "The terms are often used for the same end-to-end process. Some teams use procure-to-pay to include sourcing and supplier selection and purchase-to-pay to start at the purchase order. Check how your team defines the scope."
+  - q: "What is a three-way match?"
+    a: "It compares three documents before an invoice is paid: the purchase order (what was ordered), the goods receipt or service confirmation (what arrived) and the supplier invoice (what is being charged). If they agree within your tolerance, the invoice can move forward."
+  - q: "Which controls matter most in procure-to-pay?"
+    a: "Approval limits, a purchase order before commitment, a three-way match, duplicate invoice checks, verification of supplier bank details and separation of duties so no single person can request, approve and pay."
+  - q: "Can procure-to-pay be automated?"
+    a: "Yes, in parts: routing requests for approval, creating purchase orders from approved requests, capturing invoice data, matching and payment scheduling. Keep a person responsible for exceptions, new suppliers and unusual payments."
+---
+
+Every company buys things: software, equipment, services, supplies. How it buys them decides whether money is spent on purpose or by accident. When the process is loose, the symptoms are familiar: invoices that arrive for things nobody remembers ordering, two payments for the same bill, a supplier paid to the wrong bank account and a month-end scramble to work out what was spent.
+
+**Procure-to-pay (P2P)** is the name for the whole path, from the moment someone needs something to the moment the supplier is paid. This guide walks through the eight steps, the controls that belong at each one, who should own what and where automation pays off. It is written for operations and finance teams who want a process that is simple enough to follow and strong enough to trust.
+
+## The eight steps at a glance
+
+| # | Step | Question it answers | Typical owner |
+|---|---|---|---|
+| 1 | Identify the need | What do we need and why? | Requester |
+| 2 | Raise a requisition | What exactly, how much, from when? | Requester |
+| 3 | Approve it | Is it within budget and policy? | Budget owner |
+| 4 | Choose the supplier | Who can supply it at the right quality and price? | Procurement |
+| 5 | Issue a purchase order | What are we committing to, in writing? | Procurement |
+| 6 | Receive the goods or service | Did we get what we ordered? | Requester or receiving team |
+| 7 | Match the invoice | Do order, receipt and invoice agree? | Accounts payable |
+| 8 | Approve and pay | Is it correct, approved and due? | AP and Finance |
+
+Each step produces a record. If a step leaves no record, it will be the one that breaks when someone asks "who approved this?"
+
+## Step 1: Identify the need
+
+A purchase begins when someone needs something. The control at this step is simple: **ask whether a need already has a solution inside the company.** The same tool, laptop or service is often already paid for and unused. A quick check against your tool list or inventory prevents duplicate spending. The [tech stack audit worksheet](/tools/stack-audit) is a good place to see what you already pay for.
+
+## Step 2: Raise a requisition
+
+A requisition is the formal request. Use a short form, not an email thread, and make these fields required:
+
+- What is being bought, quantity and expected cost
+- Why it is needed and by when
+- Budget or cost center
+- Suggested supplier, if any
+- Requester and approving manager
+
+Required fields are the cheapest control you can add. Incomplete requests cause most of the follow-up questions that slow the process down.
+
+## Step 3: Approve it
+
+Approval answers two questions: *Is it within budget?* and *Is it allowed by policy?* Set approval limits by amount, and write them down. For example (illustrative numbers only):
+
+| Request amount | Approver |
+|---|---|
+| Up to $1,000 | Budget owner |
+| $1,001 to $10,000 | Department head |
+| Above $10,000 | Finance lead plus department head |
+
+Your own limits should come from your finance and risk owners. The important points are that **limits exist, are applied before the commitment**, and are not worked around by splitting one purchase into several smaller ones. For approval design, see [invoice approval thresholds and controls](/blog/invoice-approval-workflow-thresholds-controls).
+
+## Step 4: Choose the supplier
+
+For larger or recurring purchases, compare at least a few options on price, quality, reliability, terms and risk. For new suppliers, complete onboarding before the first order. That means confirming the business is real, collecting tax details and verifying bank details through an independent channel. The full process is in [the vendor onboarding SOP](/blog/vendor-onboarding-sop-procurement).
+
+**The bank detail check is the most important control in this step.** Requests to change a supplier's bank account are a well-known route for payment fraud. Confirm any change by calling a number you already hold on file, not one given in the request, and record who confirmed it.
+
+## Step 5: Issue a purchase order
+
+A purchase order (PO) is a written commitment to buy specific items at an agreed price and terms. It protects you in three ways: it records what you agreed, it gives AP something to match the invoice against and it makes spending visible before it happens, not after.
+
+A useful rule is **"no PO, no pay"** for purchases above a threshold you choose, with a clear list of exceptions such as utilities, rent and subscriptions that are covered by a contract. Exceptions should be approved in advance and listed, not decided one invoice at a time.
+
+## Step 6: Receive the goods or service
+
+Receiving confirms that what you ordered actually arrived. For goods, that is a goods receipt: someone checks the delivery against the PO and records the quantity. For services and software, it is a confirmation from the requester that the work was done or the service is active.
+
+This is the step most often skipped. Without it, the invoice can only be matched against the PO, which proves what you ordered, not what you got. Make receipt confirmation easy: a one-click confirmation sent to the requester is better than a form nobody opens.
+
+## Step 7: Match the invoice
+
+When the invoice arrives, accounts payable compares three things:
+
+1. **Purchase order:** what was ordered, at what price.
+2. **Receipt:** what was received.
+3. **Invoice:** what the supplier is charging.
+
+This is the **three-way match**. If they agree within your tolerance, the invoice moves to payment. If not, it goes to an exceptions queue with the reason noted. Before matching, check for duplicates: search by supplier and invoice number, and by supplier, amount and date.
+
+Common mismatches include price changes, partial deliveries, freight and tax differences, and invoices for items never received. [Three-way match exceptions](/blog/three-way-match-exceptions-invoice-mismatch-causes) explains the usual causes and how to resolve them.
+
+## Step 8: Approve and pay
+
+After the match, the invoice is approved by the right person and scheduled for payment. Good practice at this step:
+
+- **Pay on the due date,** not earlier, unless there is an early-payment discount worth taking.
+- **Separate duties.** The person who set up the supplier, the person who approves the invoice and the person who releases the payment should not all be the same person. In a very small team, add a periodic review by the owner or an outside accountant.
+- **Record the payment** against the invoice and keep the reference.
+- **Review the payment run** before it is released, looking for unusual amounts, new suppliers and changed bank details.
+
+Keep the purchase order, receipt, invoice, approvals and payment record together. They are the evidence that the purchase was authorized and delivered. For how long to keep them, check the retention rules that apply to your business. The IRS explains US federal tax record periods in [How long should I keep records?](https://irs.gov/businesses/small-businesses-self-employed/how-long-should-i-keep-records), and your accountant can advise on state and other requirements.
+
+## Who does what: a simple RACI
+
+R is responsible, A is accountable, C is consulted and I is informed.
+
+| Step | Requester | Budget owner | Procurement | AP | Finance lead |
+|---|---|---|---|---|---|
+| Raise requisition | A/R | I | I | | |
+| Approve | I | A/R | C | | C |
+| Choose supplier | C | C | A/R | I | |
+| Issue PO | I | I | A/R | I | |
+| Receive | A/R | I | C | I | |
+| Match invoice | C | | | A/R | I |
+| Approve and pay | | C | | R | A |
+
+Use it as a starting point, then adjust to the way your team really works. The [RACI matrix generator](/tools/raci-generator) will build and copy one for you.
+
+## The controls that matter, in one checklist
+
+- [ ] Requests use a form with required fields, not email
+- [ ] Approval limits are written down and applied before ordering
+- [ ] Purchases above a threshold need a purchase order
+- [ ] New suppliers are onboarded and bank details verified independently
+- [ ] Goods or services are confirmed received before payment
+- [ ] Invoices are matched to order and receipt
+- [ ] Duplicate invoices are checked before payment
+- [ ] Preparer, approver and payer are different people where possible
+- [ ] Payment runs are reviewed before release
+- [ ] Records are stored together and kept for the required period
+
+## Where automation helps
+
+The process is repetitive and rule-based, which makes it a good candidate. Start with the steps that are stable and easy to check.
+
+| Step | Automation that works | Keep a person for |
+|---|---|---|
+| Requisition | Standard form with required fields and routing | Unusual or high-value requests |
+| Approval | Route by amount, remind, escalate after a set time | Final approval of exceptions |
+| Purchase order | Create from the approved request | Price or terms changes |
+| Receipt | One-click confirmation to the requester | Disputed deliveries |
+| Invoice capture | Read invoice data into the system | Low-confidence reads and new suppliers |
+| Matching | Automatic match within tolerance | Every exception |
+| Payment | Schedule on due date | Release of the payment run |
+
+[AI invoice processing for accounts payable](/blog/ai-invoice-processing-accounts-payable) explains how invoice capture and matching work. If you are choosing where to start, the [what to automate first](/blog/what-to-automate-first-process-prioritization) guide helps rank your options, and the [automation ROI calculator](/tools/roi-calculator) turns your own volumes into hours saved.
+
+<ToolCard href="/tools/roi-calculator" title="Automation ROI calculator">Turn invoice and approval volumes into hours saved, monthly savings and payback time using your own numbers.</ToolCard>
+
+## Common failure points
+
+- **Approval after the fact.** The purchase is made first and approved later. Fix by requiring a PO for purchases above a threshold.
+- **Split purchases.** One large purchase is divided into several small ones to avoid approval. Watch for repeated purchases from the same supplier in a short period.
+- **No receipt step.** Invoices are paid without anyone confirming delivery. Add a simple confirmation.
+- **Duplicate payments.** The same invoice arrives twice, by email and by post, or with a slightly different number. Check before every payment.
+- **Unverified bank changes.** A supplier's details are changed on request without independent confirmation.
+- **Approvals stuck with one person.** A single approver on leave blocks everything. Name a backup.
+- **Spreadsheets nobody owns.** Tracking by spreadsheet works until the person who built it leaves. Give each tool and process an owner, as described in [SOP governance](/blog/sop-governance-ownership-versioning).
+
+## How to improve the process in 30 days
+
+1. **Week 1: Map it.** Write down how a purchase really flows today, including the workarounds. Ask requesters and AP what slows them down.
+2. **Week 2: Measure.** Count purchase requests, average time to approve, invoices needing follow-up and duplicate or exception cases.
+3. **Week 3: Fix the biggest gap.** Often it is approval limits, a form with required fields or a missing receipt step.
+4. **Week 4: Document and train.** Write the process as an SOP and share it. [SOP examples](/blog/sop-examples-filled-in-operations) shows the level of detail to aim for.
+
+Then measure again. The comparison between week 2 and a month later is your evidence that the changes worked.
+
+## Key takeaways
+
+- Procure-to-pay is one process from need to payment. Treat purchasing and accounts payable as parts of the same flow.
+- The controls that matter most are approval limits, a PO before commitment, receipt confirmation, a three-way match, duplicate checks and verified supplier bank details.
+- Separate the people who request, approve and pay wherever team size allows.
+- Keep order, receipt, invoice, approval and payment records together.
+- Automate the stable, rule-based steps first and keep people responsible for exceptions.
+- Measure before and after so you can show what improved.
+
+## Sources and further reading
+
+Links were checked on October 25, 2026. Rules and guidance change, so confirm on the source before you act.
+
+- [IRS: How long should I keep records?](https://irs.gov/businesses/small-businesses-self-employed/how-long-should-i-keep-records). Explains US federal tax record retention periods.
+- [COSO: Internal Control, Integrated Framework](https://www.coso.org/guidance-on-ic). Describes the purpose of a widely used internal control framework, which is a useful background for designing approvals and separation of duties.
+
+The approval limits, RACI and checklist in this guide are illustrative templates written by OpsGrit. Set your own limits with your finance and risk owners, and check your obligations with your accountant.
+
+## Related guides
+
+- [Month-End Close Checklist: A Day-by-Day Template for Small Finance Teams](/blog/month-end-close-checklist-template)
+- [Vendor Onboarding SOP for Procurement](/blog/vendor-onboarding-sop-procurement)
+- [Three-Way Match Exceptions: Causes of Invoice Mismatches](/blog/three-way-match-exceptions-invoice-mismatch-causes)
+- [AI Invoice Processing for Accounts Payable](/blog/ai-invoice-processing-accounts-payable)
