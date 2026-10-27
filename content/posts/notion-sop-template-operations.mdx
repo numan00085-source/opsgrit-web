@@ -1,0 +1,204 @@
+---
+title: "Notion SOP Template: Build a Searchable, Verified SOP Library in Notion"
+seoTitle: "Notion SOP Template: Build a Verified SOP Library"
+metaDescription: "A copy-ready Notion SOP template, plus how to set up the database properties, wiki and verified pages, link SOPs to your tools with relations and run a review routine that keeps procedures current."
+slug: "notion-sop-template-operations"
+category: "Ops Stack"
+excerpt: "A copy-ready SOP template for Notion and the setup behind it: database properties, wiki versus database, verified pages, relations to your tools and a review routine, with the plan limits and trade-offs spelled out."
+date: "2026-10-26"
+author: "Sam"
+coverImage: "/images/notion-sop-template-operations-cover.webp"
+featured: false
+shortAnswer: "To build SOPs in Notion, choose between a wiki of pages and a database of SOPs, give every SOP an owner, status, version and next-review date, use the Verification feature to show a procedure was checked, link SOPs to the tools and roles they involve with relations, and review anything due each month. Notion does not let you turn a database into a wiki, and verification for individual pages and databases is limited to some plans, so decide the structure first and confirm your plan."
+faq:
+  - q: "How do I create an SOP template in Notion?"
+    a: "Write one model SOP page with your standard headings and properties, then save it as a template for your SOP database or add it through the Templates option. Menu names change, so follow Notion's current help pages for the exact clicks."
+  - q: "Should I use a Notion wiki or a database for SOPs?"
+    a: "A wiki is a hub page with default views and page owners, and it is quick to start. A database gives you structured properties such as owner, status and review date. Notion's help page says only pages can be turned into wikis, not databases, so you choose one structure or combine them by linking."
+  - q: "What are verified pages in Notion?"
+    a: "Verification is a feature that shows content is up to date. Verified pages display a check mark in search and mentions. You can verify until a chosen time or indefinitely, and the page owner is notified when verification expires."
+  - q: "Do verified pages work on every Notion plan?"
+    a: "According to Notion's help page, verification of individual pages and database pages is limited to Business and Enterprise plans. The page does not state plan requirements for wiki page verification, so check your own workspace."
+  - q: "How do I link SOPs to the tools or roles they involve?"
+    a: "Add a relation property to the SOP database that points to a second database, such as Systems or Roles. You can limit a relation to one page or allow many, and turn on the two-way option to see the link from both sides."
+  - q: "How often should SOPs be reviewed in Notion?"
+    a: "Set a next-review date on every SOP and review high-risk procedures, such as payments and access, more often. A saved view that shows SOPs due in the next 30 days makes the monthly check quick."
+---
+
+Notion is popular for SOPs because it is easy to start. Anyone can create a page, add a checklist and share a link. That ease is also the problem: six months later there are three versions of the refund process, nobody knows which one is current and the page that matters most was last edited by someone who left.
+
+The fix is structure, not more pages. This guide gives you a copy-ready SOP template for Notion and explains the setup around it: how to organize SOPs, how to show which ones can be trusted, how to link them to the tools and roles they involve and how to run a simple review routine. It also covers what Notion's own help pages say about the limits, so you do not build a system on a feature your plan does not include.
+
+A note on accuracy: Notion changes menus, names and plan features often. Where this guide describes features, it follows Notion's help pages at the time of writing. Check the current help pages before you roll anything out. The shape of a good SOP, on the other hand, does not depend on the tool. If you want the craft first, read [how to write an SOP people actually follow](/blog/how-to-write-an-sop-people-follow).
+
+## Notion for SOPs: when it fits and when it does not
+
+**It fits when** your team already works in Notion, procedures are mostly read by people (not run by software), and you want links between procedures, tools and owners.
+
+**Think twice when** you need strict approval workflows, formal audit trails or document control for a regulated process. In those cases a dedicated document control system, or at least a documented review process outside Notion, may be needed. Notion can still hold the procedures, but it should not be the only control.
+
+If your team uses Atlassian tools, see the companion guide on [building SOPs in Confluence](/blog/confluence-sop-template-operations). The template and routine below work in either.
+
+## The Notion SOP template (copy this)
+
+Create a new page and paste this structure. The first block is the set of properties. If your SOPs live in a database, these become database properties instead of text.
+
+**Properties**
+
+| Property | Type | Purpose |
+|---|---|---|
+| Name | Title | Short, specific, for example "Process a customer refund" |
+| Owner | Person | One named person who does or manages the work |
+| Department | Select | Finance, People, IT, Support, Operations |
+| Status | Select | Draft, In review, Active, Retired |
+| Version | Text | 1.0, 1.1, 2.0 |
+| Last reviewed | Date | When the owner last checked it against reality |
+| Next review | Date | Usually 6 or 12 months out |
+| Systems | Relation | The tools this procedure touches |
+| Verification | Verification | Shows the procedure was checked (plan limits apply) |
+
+**Page body**
+
+**1. Purpose.** One or two sentences: why this procedure exists and what good looks like.
+
+**2. Scope.** Who it applies to, what it covers and what it does not cover.
+
+**3. Before you start.** Access, tools, documents or approvals needed. Link to them.
+
+**4. Steps.** Numbered, verb-first, each ending in something you can check. Use to-do blocks when the SOP is a checklist someone ticks through.
+
+**5. If something goes wrong.** Common problems, who to contact and in what order.
+
+**6. Related documents.** Links to policies, forms and related SOPs.
+
+**7. Change log.**
+
+| Version | Date | Change | Author |
+|---|---|---|---|
+| 1.0 | | First version | |
+
+The properties are what make the library manageable. A procedure with no owner or review date cannot be tracked, so make them required habits, not optional extras.
+
+## Step 1: Choose the structure (wiki or database)
+
+Notion offers two natural ways to organize SOPs, and the choice matters because they do not combine in one object.
+
+According to Notion's help page, a **wiki** is a page you turn into a central hub. It comes with three default views: Home (all pages, with room for blocks and headings), All pages (a database view of every page) and Pages I own. You create one from the page menu with the option to turn a page into a wiki. The help page also states the limits: only pages can become wikis, not databases, and you need Full access to the standalone page you convert.
+
+A **database** is a table where every row is a page, with properties such as owner, status and review date.
+
+| | Wiki | Database |
+|---|---|---|
+| Quick to start | Yes | Needs a little setup |
+| Structured properties (owner, status, review date) | Page owners and a verification property | Any properties you define |
+| Filters and views such as "due for review" | Through the All pages view | Full control |
+| Relations to other databases | Check your workspace | Yes |
+| Best for | A small library that needs a clear home | A library you want to manage and report on |
+
+**A practical recommendation:** if you expect more than a handful of SOPs, use a **database** for the SOPs themselves, so every procedure has the same properties, and keep a simple **home page** that explains how SOPs work and links to the database views. If you prefer the wiki, add the properties you need to its pages and keep names consistent.
+
+## Step 2: Turn the template into a one-click start
+
+A template means every new SOP starts with the same structure. Notion's help pages describe adding templates through the Templates button in the sidebar or when creating a new page, and database entries can also use templates set up for that database. Menu names and options change, so follow the current help page for the exact steps in your version.
+
+Put the headings from the template above in the model page, add short placeholder guidance under each one ("List every system the person needs access to") and set sensible defaults, such as Status = Draft. Tell the team that new SOPs start from the template, and only from the template.
+
+## Step 3: Show which SOPs can be trusted with verification
+
+Notion's verification feature is built for this. According to its help page, verification shows that content is up to date. Verified pages display a check mark when mentioned and in search results, and you can verify a page until a specific time or indefinitely. When verification expires, the page owner is notified in their Notion inbox and by email and asked to re-verify.
+
+Key details from the help page:
+
+- **Owners:** A verified page must have at least one owner. In a wiki, the creator of a page becomes its owner by default, and owners can be changed at any time. For a database you can set the Owner property to allow one person or no limit, and set a default such as the person who created the page.
+- **Who can verify:** On wiki pages, the page owner verifies. On individual pages and database pages, people with edit or full access can verify.
+- **How:** For a database, add a Verification property (which also adds an Owner property), then choose a duration on each page.
+- **Plans:** The help page says verification of individual pages and database pages is available on the Business and Enterprise plans. It does not list plan requirements for wiki page verification, so confirm for your workspace.
+- **Overview:** A Verified pages area in settings lets you search pages and filter by owner or teamspace.
+
+**How to use it well.** Do not verify "indefinitely" for an SOP. Choose an expiry that matches your review cycle, for example six or twelve months, so the system reminds the owner when the procedure needs another look. Define what the check mark means in your team: *the owner has read this against current practice on this date*, not *someone fixed a typo*.
+
+If your plan does not include verification, you can do the same job with the Status, Last reviewed and Next review properties and a monthly review of anything overdue.
+
+## Step 4: Link SOPs to systems and roles with relations
+
+SOPs rarely stand alone. A refund procedure involves the payment system, the helpdesk and a finance approver. Notion relations let you record that.
+
+According to Notion's help page, a relation links pages in one database to pages in another, and a rollup calculates summaries from related pages. To add a relation, add a new property to the SOP database, set its type to Relation, choose the database to connect to and confirm.
+
+Useful setups:
+
+- **SOPs to Systems.** Create a small database of tools (CRM, accounting, helpdesk). Relate each SOP to the systems it uses. When a tool changes or is retired, you can see every SOP that needs updating. This pairs well with a [tech stack audit](/blog/operations-tech-stack-audit).
+- **SOPs to Roles or Teams.** Show which SOPs each role must know, which helps with onboarding.
+
+Limits to know, from the same help page: a relation is one-way by default, so you turn on the toggle to show it on the other database; you can limit a relation to one page or allow many; you cannot roll up a rollup; and exporting a database to CSV turns relations into plain text, so do not rely on a CSV as a full backup of your links.
+
+## Step 5: Build the views that run the library
+
+A database is only as useful as its views. Create these saved views:
+
+| View | Filter | Why |
+|---|---|---|
+| **Due for review** | Next review within the next 30 days, status Active | Your monthly review list |
+| **Needs an owner** | Owner is empty | No SOP should be ownerless |
+| **Drafts** | Status is Draft | Work in progress, hidden from the main view |
+| **By department** | Grouped by Department | How people browse |
+| **Retired** | Status is Retired | Keep history without clutter |
+
+Filter and view names differ slightly between Notion versions, but the idea is the same: **make the problems visible**. An overdue review that appears in a list gets done. One that is buried in a page does not.
+
+## Step 6: Run a simple review routine
+
+1. **One owner per SOP.** The person who does or manages the work.
+2. **Monthly check.** Spend 20 minutes with the "Due for review" view. Remind owners of anything due or overdue.
+3. **A real review.** The owner follows the steps, fixes what changed, updates the version and change log, resets the dates and re-verifies if you use verification.
+4. **Retire, do not delete.** Set Status to Retired and link to the replacement, so old links still land somewhere useful.
+5. **Quarterly clean-up.** Merge duplicates, remove SOPs nobody uses and look at the ownerless view.
+
+For the governance behind this, see [SOP governance: ownership, versioning and review](/blog/sop-governance-ownership-versioning).
+
+<ToolCard href="/tools/sop-builder" title="SOP builder">Answer a few prompts and get a structured procedure with purpose, scope, roles, steps and a change log. Paste it into a Notion page.</ToolCard>
+
+## Writing better SOPs inside Notion
+
+- **Numbered lists** for steps, so people can say "I am on step 6".
+- **To-do blocks** when the SOP is a checklist someone completes each time.
+- **Tables** for decision rules such as approval limits.
+- **Links, not copies.** Link to the access request form instead of pasting it. A copy goes stale the day the original changes.
+- **Short screenshots or videos** where words are not enough, with a caption that says what to look for.
+
+For worked examples of the level of detail to aim for, see [six filled-in SOP examples](/blog/sop-examples-filled-in-operations) and [ten SOP templates](/blog/sop-templates-every-ops-team-needs).
+
+## Common mistakes
+
+- **No owner.** Pages without an owner are the first to go stale. Make the owner property a habit and use the ownerless view.
+- **Verifying indefinitely.** The check mark never expires, so it stops meaning anything. Match the expiry to your review cycle.
+- **Mixing structures.** Half the SOPs in a wiki and half in a database means nobody knows where to look. Pick one home.
+- **Copies in several places.** Duplicated procedures drift apart. Link instead.
+- **Over-engineering.** Nine properties and six views are plenty. Start smaller if your team is small.
+- **Treating Notion as the control.** The tool stores procedures. It does not make people follow them. Link SOPs from where the work happens, such as your helpdesk or onboarding checklist.
+
+## Key takeaways
+
+- Choose the structure first. Notion's help page says databases cannot be turned into wikis, so decide whether your SOPs live in a database, a wiki or a database with a simple home page.
+- Give every SOP an owner, status, version and next-review date.
+- Use verification to show a procedure was checked, but confirm your plan, because individual and database verification are limited to some plans.
+- Set the verification expiry to match your review cycle.
+- Link SOPs to the systems and roles they involve with relations, and keep a regular review view.
+- Review monthly, retire instead of deleting and keep one home for every procedure.
+
+## Sources and further reading
+
+Links were checked on October 26, 2026. Features, menus and plan requirements change, so confirm on the source before you act.
+
+- [Notion Help: Wikis & verified pages](https://notion.com/help/wikis-and-verified-pages). Describes wikis, verified pages, owners, how to verify and the plan and structure limits.
+- [Notion Help: Relations & rollups](https://www.notion.com/help/relations-and-rollups). Explains how to add a relation property and the limits of relations and rollups.
+- [Notion Help: Getting started with templates for your team](https://Notion.com/help/guides/getting-started-with-templates-for-your-team). Describes adding templates through the sidebar or when creating a page.
+
+The template, properties and review routine in this guide are illustrative and written by OpsGrit. Adapt them to your team, and confirm any compliance or document-control requirements with the people responsible.
+
+## Related guides
+
+- [Confluence SOP Template: How to Build, Index and Maintain SOPs in Confluence](/blog/confluence-sop-template-operations)
+- [SOP Examples: 6 Filled-In Standard Operating Procedures You Can Copy](/blog/sop-examples-filled-in-operations)
+- [SOP Governance: Ownership, Versioning and Review](/blog/sop-governance-ownership-versioning)
+- [Operations Tech Stack Audit](/blog/operations-tech-stack-audit)
