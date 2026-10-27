@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useIdleEffect } from "@/lib/useIdleEffect";
 
 /**
  * The homepage hero: a night sky with a living "operations constellation".
@@ -66,7 +67,7 @@ export default function HeroScene({ children }: { children: React.ReactNode }) {
     return () => clearInterval(id);
   }, [choose]);
 
-  useEffect(() => {
+  useIdleEffect(() => {
     const cv = canvas.current;
     const host = wrap.current;
     if (!cv || !host) return;
@@ -475,8 +476,10 @@ export default function HeroScene({ children }: { children: React.ReactNode }) {
                   onClick={() => choose(i)}
                   aria-label={`Show tip: ${x.label}`}
                   aria-current={i === active ? "true" : undefined}
-                  className={`h-1.5 rounded-full transition-all ${i === active ? "w-6 bg-gold-300" : "w-1.5 bg-white/25 hover:bg-white/50"}`}
-                />
+                  className="group flex h-6 items-center justify-center px-1"
+                >
+                  <span className={`block h-1.5 rounded-full transition-all ${i === active ? "w-6 bg-gold-300" : "w-1.5 bg-white/25 group-hover:bg-white/50"}`} />
+                </button>
               ))}
             </div>
           </div>

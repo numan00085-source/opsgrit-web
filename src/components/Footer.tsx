@@ -75,7 +75,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-night-700 py-6 text-center text-xs text-slate-500">
+      <div className="border-t border-night-700 py-6 text-center text-xs text-slate-400">
         © {new Date().getFullYear()} {SITE.name}. All rights reserved.
       </div>
     </footer>

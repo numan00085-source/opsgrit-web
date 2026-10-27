@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useIdleEffect } from "@/lib/useIdleEffect";
 import { usePathname } from "next/navigation";
 
 /**
@@ -14,7 +15,7 @@ export default function AmbientDust() {
   const ref = useRef<HTMLCanvasElement>(null);
   const hidden = path === "/tools/ops-bot"; // that page has its own night sky
 
-  useEffect(() => {
+  useIdleEffect(() => {
     if (hidden) return;
     const canvas = ref.current;
     if (!canvas) return;
