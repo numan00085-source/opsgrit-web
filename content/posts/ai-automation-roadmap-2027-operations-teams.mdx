@@ -1,0 +1,249 @@
+---
+title: "AI and Automation Roadmap for 2027: How Operations Teams Plan, Budget and Govern"
+seoTitle: "2027 AI and Automation Roadmap for Operations Teams"
+metaDescription: "Plan your 2027 AI and automation roadmap: build a backlog, score projects, budget usage-based costs, set governance and review quarterly. Includes a roadmap template."
+slug: "ai-automation-roadmap-2027-operations-teams"
+category: "AI Automation"
+excerpt: "Annual planning season is when automation wish lists meet real budgets. This guide shows operations teams how to inventory what they run, score a backlog, translate usage-based pricing into a budget, set governance and review progress every quarter."
+date: "2026-10-30"
+author: "Sam"
+coverImage: "/images/ai-automation-roadmap-2027-operations-teams-cover.webp"
+featured: false
+shortAnswer: "An AI and automation roadmap is a short, scored plan for which processes you will automate, in what order, at what cost and under what controls. Build it by inventorying what you already run, scoring a backlog on value, effort, risk and readiness, limiting active projects per quarter, budgeting the full cost including usage fees and review time, setting owners and approval rules, and reviewing results every quarter with a keep, change or stop decision."
+faq:
+  - q: "What is an AI and automation roadmap?"
+    a: "It is a plan, usually for a year, that lists which processes you will automate or improve with AI, in what order, with what budget, owners and controls. A good one is short enough to fit on a page and specific enough to say what you will not do."
+  - q: "How do you prioritize automation projects?"
+    a: "Score each candidate on value, effort, risk and readiness, then rank by the result. Favor processes that are frequent, stable, rule-based and easy to check. Delay processes that depend on unclear rules, poor data or high-stakes judgment."
+  - q: "How many automation projects should you run at once?"
+    a: "Fewer than you think. A small operations team often does best with two or three active projects per quarter, so each one gets design, testing, training and review time. This is a planning guideline, not a rule."
+  - q: "How do you budget for usage-based automation tools?"
+    a: "Estimate monthly volume, then translate it into the unit each vendor bills in. Zapier, for example, counts successful action steps as tasks and does not count triggers, filters or paths, while Make consumes credits tied to operations and AI usage. Use each vendor's own definitions and add a buffer for growth."
+  - q: "What is the NIST AI Risk Management Framework?"
+    a: "It is a voluntary framework from the US National Institute of Standards and Technology to help organizations incorporate trustworthiness into the design, development, use and evaluation of AI. Its core is organized around four functions: Govern, Map, Measure and Manage."
+  - q: "How often should you review the roadmap?"
+    a: "Quarterly. At each review, compare results with the success measures you set, then decide for each project whether to keep going, change it, scale it or stop. Re-score the backlog because priorities and tools change."
+---
+
+Every year around this time, operations teams are asked the same question: what are you planning for next year, and what will it cost? For AI and automation, the honest answer is often a long wish list and a rough guess. Some of it will be good. Some of it will stall, because the process was unclear, the data was messy or the tool turned out to cost more than the sheet said.
+
+A roadmap fixes that. It does not need to be long or fancy. It is a one-page plan that says what you will do, in what order, with what budget, who owns it, which controls apply and how you will know it is working. This guide shows you how to build one in a few working sessions, using methods that fit a small or mid-sized operations team.
+
+A note on scope: this is a planning method, not a prediction. Tools, prices and regulations change quickly, so treat the vendor details here as a snapshot and check the sources at the end.
+
+## What a good roadmap contains
+
+| Part | Question it answers |
+|---|---|
+| **Baseline** | What do we already run, and how well does it work? |
+| **Backlog** | What could we automate or improve? |
+| **Scores** | Which candidates are worth doing first, and why? |
+| **Sequence** | What is in progress now, next and later? |
+| **Budget** | What will it really cost, including usage and people time? |
+| **Governance** | Who owns each project, and what are the rules and approvals? |
+| **Measures** | How will we know it worked? |
+| **Review rhythm** | When do we decide to keep, change or stop? |
+
+If any one of these is missing, the plan is a wish list.
+
+## Step 1: Start with what you already run
+
+Before adding anything, list what is already in place. Many teams discover they have more automation than they thought, with no clear owner for some of it. For each existing automation, record:
+
+- What it does and which systems it touches.
+- Who owns it and who is the backup.
+- How often it runs and how often it fails.
+- What it costs, including licenses and usage fees.
+- Whether it is still needed.
+
+Our guides on [auditing AI tools and automations](/blog/how-to-audit-ai-tools-and-automations) and [auditing your operations tech stack](/blog/operations-tech-stack-audit) give step-by-step methods. The point of this step is to decide what to keep, fix or retire before you add more.
+
+Also write down what worked and what did not this year. A project that delivered, and a project that was quietly dropped, both teach you something about your team's real capacity.
+
+## Step 2: Build the backlog
+
+Collect candidates from the people who do the work. Ask each team:
+
+- Which task do you repeat every week that follows the same steps?
+- Where do you copy data from one system to another?
+- Where do errors or delays happen most often?
+- What do you wish you could look up faster?
+
+Write each candidate in one line using the same format: "When X happens, we do Y, using systems A and B." If you cannot write it that way, the process is not clear enough to automate yet, and the first project is to document it. The guide on [what to automate first](/blog/what-to-automate-first-process-prioritization) goes deeper on finding and measuring candidates.
+
+Keep the backlog honest. Include what you will not do this year, so that people see the decision rather than assume the request was ignored.
+
+## Step 3: Score each candidate
+
+Use a simple scoring sheet. Score each factor from 1 to 5, and write one sentence of evidence for each score.
+
+| Factor | What to ask | Higher score means |
+|---|---|---|
+| **Value** | How much time, error, delay or money does this affect? | More benefit |
+| **Effort** | How hard is it to design, build, test and train? | Easier |
+| **Risk** | What happens if it makes a mistake? | Safer |
+| **Readiness** | Is the process documented, stable and supported by clean data? | More ready |
+
+Add the four scores for a total out of 20, then sort. Treat the result as a conversation starter, not a verdict. A low-ranked item with a high risk score might still need attention for compliance reasons, and a high-ranked item might have an owner who is leaving.
+
+For an AI step, add two questions:
+
+1. **Can we check the output?** If a person cannot quickly tell whether the result is right, be careful.
+2. **What is the review plan?** Decide who reviews, how often and with what sample size. The guide on [evaluating an AI workflow with a test set](/blog/evaluate-ai-workflow-test-set-accuracy) shows a simple method.
+
+The [automation readiness scorecard](/tools/readiness-scorecard) can help you assess whether a given process is ready.
+
+<ToolCard href="/tools/readiness-scorecard" title="Automation readiness scorecard">Answer a few questions about a process and see how ready it is for automation, and what to fix first.</ToolCard>
+
+## Step 4: Choose what is in progress now, next and later
+
+Resist the urge to schedule everything. Put each project in one of three buckets:
+
+- **Now:** active this quarter, with an owner, a budget and a start date.
+- **Next:** approved in principle, waiting for capacity or a dependency.
+- **Later:** worth watching, not funded.
+
+A small team often does best with two or three active projects per quarter, so each one gets design, testing, training and review time. This is a planning guideline from experience, not a rule, so adjust it to your team's real capacity. Count the time your people have left after their normal work, not the time they would have in an ideal world.
+
+Decide in advance what you will stop to make room for a new project. If nothing can stop, nothing new can start.
+
+## Step 5: Budget the full cost
+
+The license fee is rarely the biggest cost. Build the budget from these parts:
+
+| Cost | What to include |
+|---|---|
+| **Licenses** | Platform and tool subscriptions |
+| **Usage fees** | Tasks, operations, credits, API calls or tokens |
+| **AI usage** | Model costs, which may be separate from the platform |
+| **Build time** | Design, configuration, testing |
+| **Review time** | People checking outputs, especially in the first months |
+| **Maintenance** | Fixing breaks, updating when tools change |
+| **Training** | Time for people to learn the new process |
+| **Security and vendor review** | Time to assess new tools and connections |
+
+Our guide on [what an AI workflow really costs](/blog/ai-workflow-cost-budget-control) walks through these costs with a worked example.
+
+### Translate volume into each vendor's unit
+
+Usage-based tools do not all count the same way, so the same workflow can give different numbers on different platforms. Two examples from the vendors' own help pages:
+
+- **Zapier** describes a task as any successful action that runs. Trigger steps, filters and paths do not count, formatter and delay steps do not count, testing in the editor does not use tasks, and steps that error or halt do not count. Its MCP product uses two tasks per successful tool call. Zapier Agents use a separate activity quota. With pay-per-task billing, extra tasks are charged once the limit is reached, and without it, new runs are held until the billing cycle resets.
+- **Make** describes credits as the currency you buy and consume to use the platform. By default, one operation equals one credit for non-AI apps, while some AI modules use more and dynamic features vary by tokens, file size, pages or run time. If you use a third-party AI module with your own connection, you pay Make credits for operations and pay the AI provider directly for tokens.
+
+Pricing and counting rules change, so confirm on each vendor's current page before you commit.
+
+### A worked example (illustrative)
+
+Suppose a workflow runs about 3,000 times a month. Each run has one trigger, one filter and four successful action steps. If your tool counts only successful action steps, that is 4 tasks per run, so about 12,000 tasks a month. If the workflow also calls an AI model, add the model's usage cost separately. If a tool bills differently, for example by operations or credits, run the same numbers through its own definition and compare. Then add a buffer for growth and for runs you will need to repeat. A buffer of 10 to 20 percent is a reasonable starting point for many teams, though your own history is a better guide.
+
+These numbers are invented to show the method. Your volumes, steps and prices will differ. The [automation ROI calculator](/tools/roi-calculator) can help you compare time saved with the full cost.
+
+<ToolCard href="/tools/roi-calculator" title="Automation ROI calculator">Enter your volumes, handling time and costs to see hours saved, monthly savings and payback time.</ToolCard>
+
+## Step 6: Set governance before you scale
+
+Governance sounds heavy, but a light version fits on one page. Decide:
+
+- **Owner.** Every project and every live automation has a named owner and a backup.
+- **Approval tiers.** Which actions need a person to approve? A common pattern is read-only and drafts at the bottom, reversible actions in the middle, and money, access and deletion at the top. See [human-in-the-loop approvals](/blog/human-in-the-loop-ai-approvals).
+- **Vendor review.** Use a standard set of questions before connecting a new tool to business data. See [AI tool vendor review questions](/blog/ai-tool-vendor-review-questions-business-data).
+- **Boundaries for agents.** If you will use assistants that can take actions, write down what they may and may not do. The [agent guardrails template](/blog/ai-agent-guardrails-template-boundary-document) and the [AI agent safety checklist](/blog/ai-agent-safety-checklist) help.
+- **New connection standards.** If you will adopt connectors such as MCP, read our [MCP guide for operations teams](/blog/mcp-model-context-protocol-operations-teams-guide) first.
+
+If your organization wants a recognized structure, the US National Institute of Standards and Technology publishes the AI Risk Management Framework. NIST describes it as intended for voluntary use to improve the ability to incorporate trustworthiness considerations into the design, development, use and evaluation of AI, and its core is organized around four functions: Govern, Map, Measure and Manage. NIST also publishes a Generative AI Profile that helps identify risks specific to generative AI. You do not need to adopt a framework to run a sensible roadmap, but it is a useful checklist for questions you may have missed.
+
+## Step 7: Define success measures
+
+Before each project starts, write down what success looks like and how you will measure it. Use measures that someone can verify:
+
+- Time per case before and after.
+- Error or rework rate.
+- Cycle time from request to completion.
+- Share of cases handled without manual touch, where that is the goal.
+- Cost per case including review time.
+
+Record the baseline now. If you wait until after launch, you will not know whether you improved anything.
+
+Also decide what would make you stop. A project that does not meet its measure after an agreed period should be changed or ended, and that is a good outcome because it frees capacity.
+
+## Step 8: Plan the people side
+
+Automation changes how people work, so plan for it.
+
+- **Time.** Give owners real hours, not "when you have a moment."
+- **Training.** People need to know how the new process works and what to do when it fails.
+- **Communication.** Tell affected teams what is changing and why, and where to ask questions.
+- **Skills.** Note where you need outside help or a new skill, and put it in the budget.
+- **Handover.** Document each automation so it survives staff changes. [SOP examples](/blog/sop-examples-filled-in-operations) show the level of detail to aim for.
+
+## Step 9: Set the review rhythm
+
+Roadmaps fail when they are written once and never read again. Set a quarterly review with a fixed agenda:
+
+1. **Results:** compare each active project with its success measures.
+2. **Decisions:** for each, keep going, change, scale or stop.
+3. **Backlog:** re-score the candidates and move items between now, next and later.
+4. **Budget:** compare actual spend with the plan, especially usage fees.
+5. **Risks:** review incidents, near misses and vendor changes.
+
+Between reviews, watch operations with a regular [alert review cadence](/blog/automation-alert-review-cadence-weekly-monthly) so problems do not wait for the next quarter.
+
+## A one-page roadmap template
+
+Copy this into a document and fill it in.
+
+| Item | Project 1 | Project 2 | Project 3 |
+|---|---|---|---|
+| **Process and goal** | | | |
+| **Owner and backup** | | | |
+| **Score (value, effort, risk, readiness)** | | | |
+| **Baseline measure** | | | |
+| **Target measure** | | | |
+| **Start and review dates** | | | |
+| **Tools and connections** | | | |
+| **Monthly cost estimate and buffer** | | | |
+| **Approval tier and controls** | | | |
+| **Stop condition** | | | |
+
+Below the table, add three lists: what is in "Next," what is in "Later," and what you have decided not to do this year.
+
+## Common mistakes
+
+- **Planning from tools instead of problems.** Start with the process, then choose the tool.
+- **No baseline.** If you do not measure before, you cannot show improvement.
+- **Too many projects at once.** Each one needs design, testing and review time.
+- **Budgeting only the license.** Usage fees, review time and maintenance often outweigh it.
+- **Comparing prices in different units.** Translate volume into each vendor's definition.
+- **Skipping governance until something goes wrong.** Owners and approval tiers are cheaper to set up first.
+- **Automating an unclear process.** Document and simplify before you automate.
+- **No stop rule.** Without one, weak projects absorb capacity forever.
+- **Never reviewing.** A roadmap that is not revisited becomes fiction.
+
+## Key takeaways
+
+- A roadmap is a short, scored plan with a baseline, a backlog, a sequence, a budget, governance, measures and a review rhythm.
+- Start by inventorying and cleaning up what you already run before adding more.
+- Score candidates on value, effort, risk and readiness, and limit active projects to what your team can really support.
+- Budget the full cost, including usage fees, AI usage, review time and maintenance, and translate volume into each vendor's own billing unit.
+- Set owners, approval tiers and vendor review standards before you scale.
+- Measure against a baseline, set stop conditions and review every quarter.
+
+## Sources and further reading
+
+The pages below are where we checked the vendor and framework details mentioned here. Prices, limits and frameworks change, so confirm on the source before you act. Written by Sam at OpsGrit with AI assistance and an automated editorial review. If you spot something wrong, [tell us](/contact).
+
+- [Zapier Help: How is task usage measured in Zapier?](https://help.zapier.com/hc/en-us/articles/8496196837261-How-is-task-usage-measured-in-Zapier). What counts as a task, what does not, and what happens at plan limits.
+- [Make Help: Credits](https://help.make.com/credits). How credits relate to operations and AI usage.
+- [NIST: AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework). A voluntary framework with Govern, Map, Measure and Manage functions, plus a Generative AI Profile and playbook.
+- [Anthropic: Building effective agents](https://www.anthropic.com/research/building-effective-agents). Background on choosing between workflows and agents.
+- [COSO: Internal Control, Integrated Framework](https://www.coso.org/guidance-on-ic). Background on control activities and monitoring.
+
+The scoring method, roadmap template and examples in this guide are OpsGrit's own and are starting points. Adapt them to your team, tools and risk level.
+
+## Related guides
+
+- [What to Automate First: A Practical Method for Finding and Scoring Automation Candidates](/blog/what-to-automate-first-process-prioritization)
+- [What an AI Workflow Really Costs: A Budgeting and Cost-Control Guide for Operations Teams](/blog/ai-workflow-cost-budget-control)
+- [Human-in-the-Loop Design: Where AI Should Ask Before It Acts](/blog/human-in-the-loop-ai-approvals)
+- [MCP for Operations Teams: What the Model Context Protocol Is and How to Adopt It Safely](/blog/mcp-model-context-protocol-operations-teams-guide)
