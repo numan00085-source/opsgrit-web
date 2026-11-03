@@ -1,0 +1,225 @@
+---
+title: "AI Agent Connector Access Review: OAuth Scopes, Owners and a Quarterly Cleanup Routine"
+seoTitle: "AI Agent Connector Access Review: Scopes, Owners, Cleanup"
+metaDescription: "One sign-in can now connect an AI assistant to dozens of apps. Learn how to inventory connectors, trim OAuth scopes, name owners and run a quarterly access review."
+slug: "ai-agent-connector-access-review-oauth-scopes-owners"
+category: "AI Automation"
+excerpt: "Connect-once connectors make it easy for an AI assistant to reach many business apps with a single approval. This guide shows operations teams how to inventory those connections, read OAuth scopes, assign owners, and run a quarterly access review that keeps agents on least privilege."
+date: "2026-11-03"
+author: "Sam"
+coverImage: "/images/ai-agent-connector-access-review-oauth-scopes-owners-cover.webp"
+featured: false
+shortAnswer: "Treat every AI connector like a new contractor account. List each connection, record who owns it and which OAuth scopes it holds, remove anything unused, downgrade write access to read where you can, and review the list every quarter. Least privilege means each agent gets only the access its task needs, and nothing standing beyond that."
+faq:
+  - q: "What is an AI connector in a business setting?"
+    a: "It is an authorized link between an AI assistant or agent and another app, such as a chat tool, a document workspace or a ticketing system. The link is usually created with an OAuth approval, and it decides what the assistant can read or change on the user's behalf."
+  - q: "What is an OAuth scope?"
+    a: "A scope is a label for a permission that an app asks for when you approve a connection, for example read-only access to files versus permission to edit them. Narrower scopes limit the damage if a token leaks or an agent misbehaves."
+  - q: "How often should we review AI connector access?"
+    a: "Quarterly is a sensible starting point for most teams, with an immediate review whenever a person leaves, changes role, or a vendor changes its permissions. Higher-risk connections, such as ones that can move money or change user access, may deserve a monthly look."
+  - q: "Who should own a connector?"
+    a: "One named person, not a team alias. The owner approves the scopes, answers questions about why the connection exists, and is the person asked to confirm or remove it during each review. If the owner leaves, ownership moves before their account is closed."
+  - q: "Should agents use a person's own login or a separate account?"
+    a: "For anything beyond personal convenience, a dedicated service identity with narrow permissions is easier to audit and to revoke than a borrowed personal login. OWASP's guidance on excessive agency also recommends enforcing authorization in the downstream system rather than trusting the model to hold back."
+  - q: "What is the first step if we have never done this?"
+    a: "Build the inventory. Ask each team which assistants and connected apps they use, and check the admin consoles of your main tools for authorized third-party apps. You cannot trim access you have not listed."
+---
+
+A few years ago, giving software access to your company data meant a project, a ticket and an engineer. Today it can mean one click on an approval screen. Assistants and coding tools are adding connect-once connectors that let a single sign-in authorize many apps at once. One industry roundup of agent news from November 2, 2026 describes a public preview in which a single sign-in can authorize about 26 third-party services, including Slack, Figma, Notion and Sentry, across several surfaces. That is convenient. It is also exactly how access piles up without anyone deciding it should.
+
+This guide is for operations, finance-ops and IT-adjacent teams who suddenly own a growing list of AI connections. It explains what you are really approving when you click Allow, how to read the permission labels called OAuth scopes, how to set up an inventory and owners, and how to run a quarterly review that does not take all week. It is a process guide, not security or legal advice, so involve your security lead for anything that touches regulated or high-risk data.
+
+## Why connectors deserve their own review
+
+A connector is a standing permission. When someone approves an assistant to read their documents, the approval does not expire when the conversation ends. It stays until someone revokes it. Three things make this different from the apps you already govern:
+
+- **It is easy to create.** Anyone with an account can often approve a connection without telling operations.
+- **It acts, not just stores.** An agent can chain steps. Read a ticket, open a document, post a message, update a record. The permission set decides how far a mistake can travel.
+- **It inherits the person's reach.** If the connection runs as a person, it can see what that person can see, including things the task never needed.
+
+None of this means you should ban connectors. It means they belong in the same routine as other access: list them, own them, trim them and recheck them.
+
+## What you are approving: a plain-language view of OAuth
+
+Most connectors use OAuth, a standard that lets one app act on your behalf in another app without sharing your password. You do not need the engineering detail, but four ideas help you review well.
+
+**Scopes.** A scope is a named permission. An approval screen might ask for "read files" or "read and write files" or "manage users." The IETF's security best-practice document for OAuth (RFC 9700) says access token privileges should be restricted to the minimum required, and that scope or authorization details can be used to limit tokens to specific resources and actions.
+
+**Audience.** A token should be meant for one specific service. RFC 9700 says access tokens should be audience-restricted to a specific resource server, so a stolen token for one service is less useful against another.
+
+**Refresh tokens.** These let a connection keep working after the first login expires. They are why a connector you approved in March may still work in November. For public clients, RFC 9700 says refresh tokens should be either sender-constrained or rotated.
+
+**Who the token acts as.** A connection can act as a person or as the app itself. This difference drives your owner and audit decisions later.
+
+The Model Context Protocol authorization specification builds on these ideas for assistants that connect to tool servers. It says servers should indicate the scopes needed, that clients should request only the scopes necessary for their intended operations, and that more access should be requested step by step when needed. It also requires servers to accept only tokens issued for them, and it states that authorization itself is optional for implementations, which is why your own policy has to require it.
+
+## Step 1: Build the connector inventory
+
+You cannot review what you have not listed. Start with a simple table, one row per connection. Do not wait for the perfect tool. A spreadsheet is fine.
+
+| Field | What to record |
+| --- | --- |
+| Connector name | The assistant or agent, and the app it connects to |
+| Owner | One named person |
+| Purpose | One sentence on the task it supports |
+| Acts as | A person, or a dedicated service identity |
+| Scopes | The permissions granted, copied from the approval screen or admin console |
+| Data touched | Customer, employee, financial, internal-only or public |
+| Can write? | Yes or no, and what it can change |
+| Approved on | Date, and who approved it |
+| Last used | From logs where available |
+| Next review | Date |
+
+**Where to find connections you did not know about:**
+
+1. Ask each team lead which assistants, plug-ins and automation tools they use.
+2. Open the admin console of your core systems, such as your chat tool, document workspace, ticketing system, CRM and source-code host, and look for the list of authorized or installed third-party apps.
+3. Check your identity provider for apps people have signed into with company accounts.
+4. Check expense reports for AI subscriptions, which often reveal tools nobody told IT about.
+
+Expect the first list to be longer than anyone guessed. That is normal and is the point of the exercise.
+
+## Step 2: Name an owner for every connection
+
+An unowned connection is the one that survives forever. Give each row exactly one owner and keep the rule simple:
+
+- The owner is a person, not a team mailbox.
+- The owner can explain why the connection exists and what breaks if it is removed.
+- The owner confirms or removes it at each review.
+- When the owner leaves or changes roles, ownership transfers before their account is closed. This links directly to your joiner-mover-leaver routine, which is covered in our [access workflow template](/blog/joiner-mover-leaver-access-workflow-template).
+
+If nobody will claim a connection, that is your answer. Revoke it. If something breaks, someone will tell you, and they become the owner.
+
+## Step 3: Trim scopes using a simple tier system
+
+Not all access is equal. Sort every connection into one of four tiers and set the review frequency by tier.
+
+| Tier | What it can do | Examples | Suggested handling |
+| --- | --- | --- | --- |
+| 0 | Public or non-sensitive read | Reading a public help center | Light review, yearly is often enough |
+| 1 | Read internal content | Searching internal docs, reading tickets | Quarterly review, owner confirms |
+| 2 | Write to internal records | Creating tickets, updating a CRM field, posting messages | Quarterly review, approval step for risky actions, logging on |
+| 3 | Money, access or deletion | Approving payments, changing user permissions, deleting data, sending external email | Human approval for every action, monthly review, security sign-off |
+
+These tiers and the review frequencies are OpsGrit's suggested starting points, not a standard. Adjust them to your risk appetite.
+
+**Practical scope-trimming moves:**
+
+- **Downgrade write to read** wherever the task is summarizing or looking things up. This single change removes most of the risk in many assistants.
+- **Narrow the target.** If an assistant only needs one folder, one project or one channel, grant that, not the whole workspace, when the app allows it.
+- **Avoid broad admin scopes** for anything an agent runs unattended.
+- **Split tasks.** Two connections, one read-only and one narrowly scoped for writing, are easier to reason about than one all-purpose connection.
+- **Skip offline or long-lived access** when the task is interactive. The MCP specification itself says servers should not list offline access as a resource requirement, since refresh tokens are not something the resource needs.
+
+## Step 4: Decide whose identity the agent uses
+
+When an agent acts as a person, it can reach whatever that person can, and the logs show the person did it. When it acts as its own service identity, you can give it narrow permissions, see its actions separately, and revoke it without touching anyone's account.
+
+OWASP's guidance on excessive agency in LLM applications names three root causes: excessive functionality, excessive permissions and excessive autonomy. Among its prevention steps are to minimize the extensions available to an agent, limit each extension to the functions it needs, avoid open-ended extensions such as shell or URL fetch, restrict permissions on downstream systems, run actions in the user's own identity and scope, require human approval for high-impact actions, and enforce authorization downstream rather than relying on the model to decide.
+
+A practical reading for operations teams:
+
+- **Personal convenience tasks**, such as summarizing your own inbox, can reasonably run as you, with read-only scopes.
+- **Shared or scheduled workflows** should run as a dedicated service identity with a named owner.
+- **Anything in Tier 3** needs a person to approve each action regardless of identity. Our guide to [human-in-the-loop approvals](/blog/human-in-the-loop-ai-approvals) covers how to design that step.
+
+## Step 5: Run the quarterly review
+
+Put it on the calendar the way you do other controls. NIST SP 800-53 control AC-6 describes least privilege as limiting every user and process, including automated ones, to the minimum access needed for assigned tasks. A recurring review is how that principle stays true after the first approval.
+
+**A 45-minute quarterly agenda:**
+
+1. **Export the list.** Pull the current inventory and compare it with the admin consoles. Add anything new.
+2. **Chase owners.** Send each owner their rows. Ask three questions: Do you still need this? Is the access still the minimum? Has the purpose changed?
+3. **Check last-used dates.** Revoke anything unused for a period you set, such as 60 or 90 days.
+4. **Re-tier.** If a connection gained write access or a new data source since the last review, move it up a tier.
+5. **Review exceptions.** Look at any Tier 3 actions logged, and confirm each had an approval.
+6. **Record the result.** Note what was removed, trimmed and kept, with the date. This record is also useful if a vendor or auditor ever asks how you govern AI access.
+
+**Triggers for an immediate review, outside the calendar:**
+
+- A person who owns connections leaves or changes role.
+- A vendor announces new permissions, new data access or a new connector model.
+- A security incident involving any connected app.
+- A new assistant or plug-in is rolled out to the whole company.
+
+## Step 6: Add guardrails around the connection
+
+Scopes limit what a connection is allowed to do. Guardrails limit what it does in practice.
+
+- **Logging.** Keep logs of connector activity where the app provides them, and know where to find them. OWASP lists logging and monitoring, and rate limiting, as ways to limit damage when other controls fail.
+- **Approvals for high-impact actions.** Do this in the workflow, not in the prompt. A sentence in a prompt is a request, not a control.
+- **Treat connected content as untrusted.** An agent that reads a document or ticket can be steered by instructions hidden in it. Our guide on [securing AI workflows against prompt injection](/blog/securing-ai-workflows-prompt-injection-operations) explains why controls have to sit outside the model.
+- **Vendor questions.** Before approving a new connector, use a short review, such as the one in our [AI tool vendor review questions](/blog/ai-tool-vendor-review-questions-business-data).
+
+## An illustrative example
+
+The numbers below are invented to show the process, not real data.
+
+A 60-person operations team runs its first inventory and finds 22 connections. The breakdown:
+
+- Nine are read-only connections to internal documents and tickets (Tier 1).
+- Seven can post messages or update records (Tier 2).
+- Two can change user access in a directory tool (Tier 3). Both were approved by one person who has since moved to another team.
+- Four have not been used in over 90 days, and nobody claims them.
+
+After the review, the team revokes the four unclaimed connections, reassigns the two Tier 3 connections to a named owner and adds a required approval step, and downgrades three Tier 2 connections to read-only because their owners only ever used them for lookups. Net result: 18 connections remain, with every row owned, tiered and dated. The review took one afternoon, and the next one is on the calendar.
+
+## Common mistakes to avoid
+
+- **Treating "it's just a chat assistant" as low risk.** A chat assistant with write access to ticketing or directory tools is an operator, not a toy.
+- **Approving with defaults.** Approval screens often request the broadest scope that is convenient for the vendor. Read it before you click.
+- **Using a personal login for a shared workflow.** When that person leaves, the workflow breaks or, worse, keeps running under a closed identity.
+- **No expiry on exceptions.** If you grant a temporary broad scope, put a removal date in the inventory the same day.
+- **Reviewing only what is in the console.** Some connections live inside automation tools, local configurations or developer machines. Ask people, not just systems.
+- **One giant connection.** A single connection that can do everything is the hardest to trim and the most damaging to lose.
+
+## A one-page checklist
+
+Copy this into your own runbook.
+
+- [ ] We have a written list of every AI assistant and connector in use.
+- [ ] Every row has one named owner.
+- [ ] Every row records scopes, data touched and whether it can write.
+- [ ] Each connection is placed in a tier.
+- [ ] Tier 3 actions need human approval each time.
+- [ ] Unused connections older than our chosen limit are revoked.
+- [ ] Shared workflows use a dedicated identity, not a personal login.
+- [ ] We know where connector logs live and who reads them.
+- [ ] Offboarding includes transferring or revoking connections the person owns.
+- [ ] The next quarterly review is on the calendar.
+
+## Where this fits in a bigger AI program
+
+Connector review is one control, not the whole program. If you are still deciding what to automate and how to roll it out, our [AI automation roadmap](/blog/ai-automation-roadmap-2027-operations-teams) shows how access, cost and testing fit together, and the [MCP guide for operations teams](/blog/mcp-model-context-protocol-operations-teams-guide) explains the connection standard behind many of these connectors. If you want to see how your wider stack looks, the stack audit tool below helps you map what you run today.
+
+<ToolCard href="/tools/stack-audit" title="Operations stack audit">List the tools your team relies on and spot overlaps, gaps and risky dependencies before you add more connections.</ToolCard>
+
+## Key takeaways
+
+- Connect-once connectors make it easy to grant broad, lasting access, so connections need an inventory and owners like any other access.
+- OAuth scopes are the permission labels to read carefully. Request and keep only the minimum, and downgrade write to read where the task allows.
+- Give every connection exactly one named owner, and move ownership before an owner's account is closed.
+- Sort connections into tiers. Anything that touches money, user access or deletion needs a human approval each time.
+- Prefer a dedicated service identity for shared workflows, and enforce authorization in the downstream system, not in the prompt.
+- Review quarterly, and immediately after owner changes, vendor permission changes or incidents. Revoke what is unused.
+
+## Sources and further reading
+
+The pages below are where we checked the facts in this guide. Standards and products change, so read the current version before relying on them. Written by Sam at OpsGrit with AI assistance and an automated editorial review. If you spot something wrong, [tell us](/contact).
+
+- [IETF: RFC 9700, Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html). Privilege restriction, audience restriction, refresh token and sender-constraining guidance.
+- [Model Context Protocol: Authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization). Scope selection, step-up authorization, token audience and refresh token handling for tool servers.
+- [OWASP GenAI Security Project: LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025). Root causes and prevention steps for over-permissioned agents.
+- [UpGuard: NIST SP 800-53 AC-6 Least Privilege](https://www.upguard.com/compliance/nist-sp-800-53/ac/ac-6). A third-party summary of the control. For the official wording, read NIST SP 800-53 Revision 5 directly.
+- [AI Agent Store: AI agent news, week of November 3, 2026](https://aiagentstore.ai/ai-agent-news/this-week). A third-party roundup that reports the connect-once connector preview mentioned above. We have not verified it against the vendor's own announcement.
+
+The inventory fields, tiers, review agenda and example are OpsGrit's own and are starting points. Adapt them with your security owners.
+
+## Related guides
+
+- [MCP for Operations Teams: What the Model Context Protocol Is and How to Adopt It Safely](/blog/mcp-model-context-protocol-operations-teams-guide)
+- [Joiner-Mover-Leaver Access Workflow Template](/blog/joiner-mover-leaver-access-workflow-template)
+- [Human-in-the-Loop AI Approvals](/blog/human-in-the-loop-ai-approvals)
+- [Securing AI Workflows: Prompt Injection and Operations](/blog/securing-ai-workflows-prompt-injection-operations)
+- [AI Agent Safety Checklist](/blog/ai-agent-safety-checklist)
