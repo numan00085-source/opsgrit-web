@@ -9,7 +9,6 @@ const ADS_CLIENT = adsenseClient(SETTINGS);
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AmbientDust from "@/components/AmbientDust";
-import HalloweenOverlay from "@/components/HalloweenOverlay";
 // Intro splash disabled: a 2s full-screen overlay delays first paint and can read as an interstitial.
 import PageViewTracker from "@/components/PageViewTracker";
 
@@ -90,7 +89,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <script key={s["@type"]} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }} />
         ))}
         <AmbientDust />
-        <HalloweenOverlay />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-gold-300 focus:px-3 focus:py-2 focus:text-ink-900"
