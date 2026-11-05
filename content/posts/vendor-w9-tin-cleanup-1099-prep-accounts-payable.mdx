@@ -1,0 +1,259 @@
+---
+title: "Vendor W-9 and TIN Cleanup Before 1099 Season: A Practical Accounts Payable Playbook"
+seoTitle: "Vendor W-9 and TIN Cleanup: 1099 Prep Playbook for AP"
+metaDescription: "A step-by-step accounts payable plan to collect W-9s, run TIN matching, fix vendor records and avoid backup withholding surprises before 1099 filing season."
+slug: "vendor-w9-tin-cleanup-1099-prep-accounts-payable"
+category: "Process SOPs"
+excerpt: "The weeks before year-end are the cheapest time to fix vendor tax data. This playbook walks accounts payable and finance-ops teams through a W-9 and TIN cleanup: which vendors to check, how to collect forms, how TIN matching works, what to do with mismatches, and how to keep the data clean all year."
+date: "2026-11-05"
+author: "Sam"
+coverImage: "/images/vendor-w9-tin-cleanup-1099-prep-accounts-payable-cover.webp"
+featured: false
+shortAnswer: "Start with a vendor list pulled from your payment data, flag everyone paid for services, collect or refresh a signed W-9 for each, validate names and taxpayer identification numbers (TINs) before January, and park any vendor that cannot supply a valid TIN in a documented exception queue. Doing this in November and December is far easier than correcting records after forms are due."
+faq:
+  - q: "What is a W-9 and why does accounts payable collect it?"
+    a: "Form W-9 is how a US vendor gives a business its name, tax classification and taxpayer identification number (TIN). The payer uses that information to prepare information returns such as Form 1099-NEC. Collecting it at onboarding, before the first payment, avoids a scramble at year-end."
+  - q: "What is the 1099-NEC reporting threshold for 2026?"
+    a: "The IRS instructions for Forms 1099-MISC and 1099-NEC (Rev. December 2026) say nonemployee compensation is reported at $2,000 or more, reflecting an increase from the earlier $600 level for tax years beginning after 2025. Rules have exceptions and can change, so confirm against the current IRS instructions or a tax professional."
+  - q: "When are Forms 1099-NEC due?"
+    a: "The IRS instructions say Form 1099-NEC is due on or before January 31, and the payee statement follows the same date. When that date falls on a weekend or legal holiday, the due date is the next business day. January 31, 2027 is a Sunday, so check the IRS instructions for the exact date that applies."
+  - q: "What is TIN matching?"
+    a: "TIN matching is a free IRS e-Services tool that lets registered payers check whether a vendor name and TIN combination matches IRS records. The IRS describes an interactive option for up to 25 combinations at a time and a bulk option for up to 100,000 combinations, with results within 24 hours."
+  - q: "What is backup withholding?"
+    a: "Backup withholding means a payer holds back tax from certain payments to a payee who has not provided a TIN, or whose TIN the IRS has told the payer is incorrect. A 2020 IRS tip states the rate as 24 percent, and the IRS instructions point to its current Publication 1099 for rate and detail. Ask your tax adviser how it applies to you."
+  - q: "Is this tax advice?"
+    a: "No. This is an operations playbook for organizing vendor data. Tax rules depend on your situation and change over time. Confirm requirements with the IRS instructions and your accountant or tax adviser."
+---
+
+Every year the same thing happens in finance teams. It is mid-January, someone opens the vendor list to prepare 1099s, and discovers that forty vendors have no W-9, a dozen have names that do not match their forms, and three are listed twice under different spellings. The fix is always possible, but it is slow, awkward and done under deadline pressure, because you are chasing people who may be on holiday for the very reason you need them.
+
+The weeks between now and the end of the year are the cheapest time to fix this. Vendors are reachable, your payment data is almost complete, and you still have time to ask follow-up questions without a filing date breathing down your neck.
+
+This playbook is written for accounts payable, finance-ops and small-business owners who handle vendor payments in the United States. It covers what to clean up, in what order, how to collect and check tax details, how to handle vendors who cannot or will not provide them, and how to stop the problem coming back next year. It is an operations guide, not tax or legal advice. Rules have exceptions and change over time, so confirm details with the IRS instructions and your accountant.
+
+## Why do this in November and December
+
+Three reasons make the end of the year the right moment.
+
+**Deadlines are fixed.** The IRS instructions for Forms 1099-MISC and 1099-NEC say Form 1099-NEC is due on or before January 31, with the next business day applying when that date falls on a weekend or legal holiday. In 2027, January 31 falls on a Sunday, so confirm the exact date on the current instructions. Either way, the time to prepare is now, not the last week.
+
+**Thresholds changed.** The IRS instructions (Rev. December 2026) state that the minimum threshold for certain information returns and backup withholding increased to $2,000 for tax years beginning after 2025, and that nonemployee compensation is reported at $2,000 or more. A vendor who would have triggered a form at $600 in a previous year may not trigger one now, and one who crosses $2,000 through several small payments still can. Your cleanup should be built around current payment totals, not last year's list.
+
+**Data decays quietly.** Vendors change names, entity types, addresses and bank details throughout the year. A W-9 from three years ago may no longer describe the vendor you pay today.
+
+## Step 1: Pull the real list of who you paid
+
+Do not start from your vendor master file. It contains vendors you set up and never paid, and it may miss vendors paid through cards, petty cash or expense reports. Start from payments.
+
+1. Export every payment made so far this calendar year: vendor name, amount, date, payment method, and expense category.
+2. Total the payments by vendor.
+3. Add vendors you expect to pay before year-end, such as scheduled December invoices.
+4. Mark each vendor as one of: services (likely reportable), goods only, employee reimbursement, government or tax payment, or other.
+
+Your accountant can tell you which categories and payment methods are reportable for your business. The point of this step is to get a list based on what actually happened, with a category on every line.
+
+**A practical tip:** Group the list into three buckets so you can focus your effort.
+
+| Bucket | Meaning | Action |
+| --- | --- | --- |
+| Clear | Paid for services, total at or above the current threshold | Must have a valid W-9 on file, checked |
+| Watch | Paid for services, total below the threshold but growing | Collect W-9 now so a December invoice does not create a problem |
+| Out of scope | Goods only, employee reimbursements, government payments, or categories your accountant says are not reportable | Document the reason and move on |
+
+## Step 2: Check what you already have
+
+For each vendor in the Clear and Watch buckets, answer five questions.
+
+1. **Is there a W-9 on file?** Not "we think so." A document you can open.
+2. **Is it signed and dated?** An unsigned form is a draft.
+3. **Is it recent enough?** Set your own rule, for example collected within the last three years, or refreshed if anything changed.
+4. **Does the legal name on the form match the vendor record and the invoices?**
+5. **Does the tax classification make sense?** A vendor that invoices as a company but submitted a form as an individual deserves a question.
+
+Record the answers in a simple tracker. A spreadsheet works. Use one row per vendor.
+
+| Field | Example |
+| --- | --- |
+| Vendor ID | V-1042 |
+| Legal name on W-9 | (as written on the form) |
+| Name on invoices | (as written on invoices) |
+| Tax classification | Individual, LLC, corporation, partnership and so on |
+| W-9 on file | Yes or no, with date received |
+| TIN validated | Yes, no or pending, with date |
+| Status | Clear, missing, mismatch, exception |
+| Owner | The person chasing it |
+| Notes | Anything that explains an odd case |
+
+Do not store full TINs in a shared sheet. Treat taxpayer identification numbers as sensitive data: keep them in your accounting or AP system with restricted access, and show only the last four digits in trackers. Follow your own security policy and your accountant's guidance.
+
+## Step 3: Collect missing and outdated forms
+
+Most vendors respond if you ask clearly and make it easy. A short, polite, specific request works far better than a generic notice.
+
+**What to include in the request:**
+
+- Why you are asking: you need a current Form W-9 to prepare year-end tax paperwork.
+- What you need: a completed, signed and dated W-9.
+- A deadline that leaves you a buffer, such as the first week of December.
+- A secure way to send it, not plain email. Use your AP portal, a secure upload link, or your document system.
+- What happens if you cannot get it: a documented hold or exception process, described neutrally, never as a threat. Check with your accountant before stating consequences.
+
+**Sequence the follow-ups:**
+
+1. First request, with the deadline.
+2. A reminder one week later to anyone who has not responded.
+3. A phone call or a message from the person who manages the relationship, for vendors who matter and still have not responded.
+4. An internal escalation to the budget owner for the rest.
+
+**Make it a habit:** Update your onboarding process so the W-9 is collected before the first payment, not after. Our [vendor onboarding SOP](/blog/vendor-onboarding-sop-procurement) shows where this fits in the vendor setup flow, and the [procure-to-pay controls guide](/blog/procure-to-pay-process-steps-controls) covers the broader payment path.
+
+## Step 4: Validate names and TINs
+
+A form can be complete and still wrong. A digit may be transposed, or the name may not match what the IRS has on file. This is why many teams run a matching check before filing.
+
+The IRS offers a free TIN Matching program through e-Services. According to the IRS, it checks a payee's TIN against the name and TIN combination in IRS records, is available to payers of reportable payments subject to backup withholding, and requires e-Services registration first. The IRS describes two modes: an interactive option for up to 25 name and TIN combinations per group with immediate results, and a bulk option for up to 100,000 combinations with results within 24 hours.
+
+Practical points for operations teams:
+
+- **Register early.** Enrollment takes time, and you do not want to learn about it on January 15.
+- **Check the legal name, not the trade name.** The name on the W-9 line one is what matters. A mismatch often comes from using a business nickname.
+- **Decide who is allowed to run it.** Treat TIN lists as sensitive data. Limit access to people who need it.
+- **Use the right tool for the volume.** For a few dozen vendors, the interactive route is usually enough. For thousands, the bulk route exists.
+- **Some AP and accounting systems offer built-in matching** or an integration. Ask your vendor what it does and what it logs. Do not assume.
+
+**What a match result does and does not mean:** A match tells you the combination is consistent with IRS records. It does not tell you the vendor is legitimate, financially stable or who they claim to be. Keep your normal vendor verification, including bank detail checks, separate from tax validation. The [three-way match guide](/blog/three-way-match-exceptions-invoice-mismatch-causes) covers invoice-side controls.
+
+## Step 5: Handle mismatches and missing forms with an exception queue
+
+Some vendors will not respond. Some forms will not validate. Plan for this before it happens.
+
+**Create a documented exception queue.** Each row needs: vendor, issue, date opened, next action, owner and a decision. Typical issues:
+
+| Issue | Typical first action |
+| --- | --- |
+| No W-9 received | Follow-up sequence, then escalate to the relationship owner |
+| Name and TIN do not match | Ask the vendor to confirm the legal name and TIN, and to resubmit if needed |
+| Form unsigned or incomplete | Return it and ask for a corrected form |
+| Vendor says they are exempt or not applicable | Ask for documentation, and take it to your accountant for a decision |
+| Vendor is outside the US | Different forms and rules may apply, so ask your tax adviser |
+| Vendor paid through a card or marketplace | Your accountant can tell you whether another party reports the payment |
+
+**Know why this matters.** The IRS describes backup withholding as applying when a payee has not given the payer a TIN, or when the IRS notifies the payer that the TIN is incorrect. The IRS tip we reviewed states the rate as 24 percent, but it is an archived 2020 page, and the current instructions refer readers to the current Publication 1099 for the rate and details. Do not decide on withholding yourself. Take any vendor in the exception queue, particularly any that is still unresolved after your follow-ups, to your accountant or tax adviser, who can tell you whether backup withholding applies and how to process it.
+
+**Do not guess.** Never fill in a TIN you inferred from another document, and never alter a vendor's submitted form. If something looks wrong, ask the vendor.
+
+## Step 6: Fix the vendor master data
+
+While you are in there, clean the vendor list itself. Tax data is the cleanest reason to do it, but the benefits go further: fewer duplicate payments, fewer fraud opportunities and easier audits.
+
+**Quick wins:**
+
+- **Merge duplicates.** The same vendor under two spellings means two payment histories and a split total. Check whether combined totals change what you owe in reporting.
+- **Standardize names.** Use the legal name on the W-9 as the primary name.
+- **Archive dormant vendors.** Mark vendors with no activity for a set period as inactive so no one can pay them without reactivation and review.
+- **Confirm entity type and address.** These should agree with the form.
+- **Lock changes.** Require a second person to approve any change to name, TIN or bank details, ideally with a call-back to a known number. Our [AP automation rollout plan](/blog/accounts-payable-automation-rollout-plan) discusses controls that fit into automated flows.
+
+## Step 7: Put a calendar around it
+
+A tidy list in November does nothing if you do not keep it that way. Build a simple rhythm.
+
+| When | What |
+| --- | --- |
+| At onboarding | Collect W-9 before first payment, validate, then activate the vendor |
+| Monthly | Review the exception queue, and run a report of vendors paid above the threshold with no validated form |
+| Quarterly | Spot-check a sample of vendors, and re-run matching on any that changed |
+| October to December | Run the full cleanup described here |
+| January | Reconcile final payments, finalize the list with your accountant, file as instructed |
+
+The [year-end close checklist](/blog/year-end-close-checklist-template) shows where vendor tax tasks sit among the other closing work.
+
+## An illustrative example
+
+The figures below are invented to show how the buckets work, not real data.
+
+A 40-person company pulls its payments and finds 180 vendors paid so far this year. After categorizing:
+
+- 64 are paid for services and are above the current threshold (Clear).
+- 21 are paid for services and below it, but five have December invoices scheduled (Watch).
+- 95 are goods suppliers, reimbursements or government payments (Out of scope).
+
+Of the 85 Clear and Watch vendors, 58 already have a W-9, 27 do not. The team sends requests to the 27, follows up twice, and gets 21 back. Of the 79 forms now on file, 6 do not pass matching. Four are fixed with a corrected legal name. Two vendors stay unresolved, and the team takes both to the company's accountant with the full history. The remaining 6 who never responded go to their budget owners. By mid-December, the team has an explainable list, a short exception queue with owners, and notes for the accountant, instead of a scramble in January.
+
+## Automation: where it helps and where it does not
+
+Several steps lend themselves to automation, and several should stay human.
+
+**Good candidates:**
+
+- Reports that flag vendors paid above a threshold with no validated form.
+- Reminder emails with a secure upload link.
+- Checks that block activating a vendor until a W-9 is attached.
+- Duplicate detection on names and addresses.
+- Logging who changed what on vendor records.
+
+**Keep humans in the loop for:**
+
+- Decisions about exemptions and unusual vendors.
+- Approving changes to TIN, legal name or bank details.
+- Anything involving backup withholding or notices from the IRS.
+- Final review of the reportable list before filing.
+
+If you use AI tools to read forms or draft requests, treat them as assistants. Never send TINs to a tool you have not reviewed for data handling, and have a person check extracted values. Our [AI tool vendor review questions](/blog/ai-tool-vendor-review-questions-business-data) give you a starting point for that conversation.
+
+## Common mistakes to avoid
+
+- **Starting from the vendor master instead of payments.** You will miss people paid outside the normal flow.
+- **Collecting forms by plain email.** TINs are sensitive. Use a secure channel.
+- **Accepting the first form without checking the name.** The legal name matters, not what the vendor calls itself.
+- **Treating a threshold as a reason to stop collecting.** Totals can cross it late in the year, and requirements can change.
+- **Handling exceptions informally.** Without a queue, they get forgotten until January.
+- **Letting anyone change vendor details.** Change control is both a tax and a fraud control.
+- **Assuming this covers every case.** Foreign vendors, payments through third-party networks and special categories have their own rules. Ask your accountant.
+
+## A one-page checklist
+
+Copy this into your runbook.
+
+- [ ] Payment export for the year, totaled by vendor, with a category on every line.
+- [ ] Vendors split into Clear, Watch and Out of scope, with reasons recorded.
+- [ ] Every Clear and Watch vendor has a signed, dated, recent W-9, or an open exception.
+- [ ] TIN matching set up, with named users and restricted access.
+- [ ] All forms on file validated, and mismatches in the exception queue.
+- [ ] Exception queue has owners, dates and decisions.
+- [ ] Unresolved cases reviewed with the accountant.
+- [ ] Duplicates merged and dormant vendors archived.
+- [ ] Changes to vendor tax and bank data need a second approver.
+- [ ] Onboarding collects the W-9 before the first payment.
+- [ ] Calendar reminders set for monthly, quarterly and year-end reviews.
+
+<ToolCard href="/tools/sop-builder" title="SOP builder">Turn this playbook into a written procedure for your own team, with owners, steps and review dates.</ToolCard>
+
+## Key takeaways
+
+- The weeks before year-end are the easiest time to fix vendor tax data, because vendors are reachable and your payment history is nearly complete.
+- Start from payments, not the vendor master, and sort vendors into Clear, Watch and Out of scope.
+- The IRS instructions (Rev. December 2026) report nonemployee compensation at $2,000 or more for the current period, with Form 1099-NEC due January 31 or the next business day. Confirm the exact date and any exceptions with the current instructions.
+- Collect signed W-9s through a secure channel, and check the legal name, not just the number.
+- The IRS TIN Matching program through e-Services lets registered payers check name and TIN combinations. Register early.
+- Run a documented exception queue, and take unresolved vendors to your accountant before deciding on backup withholding.
+- Make W-9 collection part of onboarding so next November is easier.
+
+## Sources and further reading
+
+The pages below are where we checked the facts in this guide. Tax rules change and have exceptions, so read the current version and talk to your accountant before relying on them. This is not tax advice. Written by Sam at OpsGrit with AI assistance and an automated editorial review. If you spot something wrong, [tell us](/contact).
+
+- [IRS: Instructions for Forms 1099-MISC and 1099-NEC (Rev. December 2026)](https://www.irs.gov/pub/irs-prior/i1099mec--2026.pdf). Reporting threshold, due dates, backup withholding references and TIN guidance.
+- [IRS: Taxpayer identification number (TIN) matching tools](https://www.irs.gov/node/44186). Who can use TIN Matching and the interactive and bulk limits.
+- [IRS: Helpful information for taxpayers on backup withholding](https://www.irs.gov/ht/newsroom/helpful-information-for-taxpayers-on-backup-withholding). An archived October 2020 tax tip. It may not reflect current rules, so confirm the rate and procedure in the current IRS publications.
+- [NATP: Form 1099 filing changes under the new $2,000 threshold](https://www.natptax.com/news-insights/blog/form-1099-filing-changes-under-the-new-2-000-threshold/). A professional-association summary of the threshold change and its exceptions.
+
+The buckets, tracker fields, exception queue, calendar and example are OpsGrit's own and are starting points. Adapt them with your accountant.
+
+## Related guides
+
+- [Vendor Onboarding SOP for Procurement](/blog/vendor-onboarding-sop-procurement)
+- [Procure-to-Pay Process: Steps and Controls](/blog/procure-to-pay-process-steps-controls)
+- [Year-End Close Checklist Template](/blog/year-end-close-checklist-template)
+- [Accounts Payable Automation Rollout Plan](/blog/accounts-payable-automation-rollout-plan)
+- [Three-Way Match Exceptions: Invoice Mismatch Causes](/blog/three-way-match-exceptions-invoice-mismatch-causes)
