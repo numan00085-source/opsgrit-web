@@ -1,0 +1,277 @@
+---
+title: "Enterprise AI Agent Platform Evaluation Scorecard: A Vendor-Neutral Guide for Operations Teams"
+seoTitle: "AI Agent Platform Evaluation Scorecard for Operations Teams"
+metaDescription: "Big vendors keep launching agent platforms. Use this vendor-neutral scorecard to compare them on governance, identity, interoperability, testing, cost and exit options."
+slug: "enterprise-ai-agent-platform-evaluation-scorecard-operations-teams"
+category: "AI Automation"
+excerpt: "On November 10, 2026, IBM and Microsoft announced a joint agent platform called Imagine Enterprise. Whatever you think of any one launch, operations teams now face a steady stream of them. This guide gives you a vendor-neutral scorecard, a pilot plan and a list of questions to ask before you commit to an enterprise AI agent platform."
+date: "2026-11-10"
+author: "Sam"
+coverImage: "/images/enterprise-ai-agent-platform-evaluation-scorecard-operations-teams-cover.webp"
+featured: false
+shortAnswer: "Judge an agent platform on what it lets you control, not on how many prebuilt agents it lists. Score it across eight areas: governance, identity and access, interoperability, testing and evaluation, observability, data handling, total cost and exit options. Then run a small paid pilot on one real workflow before you sign anything larger."
+faq:
+  - q: "What is an enterprise AI agent platform?"
+    a: "It is a product or bundle of products for building, running and governing AI agents that carry out business processes. Typical parts include a way to design agents, connect them to company systems, control what they can do, and monitor what they did."
+  - q: "What did IBM and Microsoft announce on November 10, 2026?"
+    a: "They announced Imagine Enterprise, described as an agentic platform for building, running and governing AI agents for industry-specific processes. According to the announcement, it combines IBM Consulting's prebuilt agents and assets with Microsoft and GitHub tools, and its initial industries are financial services, insurance and retail. The announcement gives no general availability date."
+  - q: "What should we compare when choosing an agent platform?"
+    a: "Compare governance and approvals, identity and permissions, support for open standards, testing and evaluation tools, logging, data handling, full cost including services, and how easily you can leave. A scorecard with weights keeps the discussion honest."
+  - q: "Do open standards like MCP and A2A matter?"
+    a: "They can. The Linux Foundation describes A2A as an open standard for agents to discover and communicate with each other across vendors, and says MCP covers how agents connect to tools and data. Support for them may reduce lock-in, but ask exactly which versions and features a platform supports."
+  - q: "How long should a pilot run?"
+    a: "Long enough to see real variation, often four to eight weeks on one workflow with clear success measures. Define the baseline first, include a test set of real cases, and decide in advance what result would make you stop."
+  - q: "Should a small team bother with an enterprise platform?"
+    a: "Often not at first. A few well-governed workflows on tools you already use can deliver value without a large platform commitment. Use this scorecard when the number of agents, teams or systems makes ad hoc control hard."
+---
+
+Every few weeks, a large vendor announces a platform for AI agents. On November 10, 2026, IBM and Microsoft announced one together, called Imagine Enterprise. According to the announcement, it is an agentic platform for building, running and governing AI agents that carry out industry-specific processes. It combines more than 6,000 prebuilt agents and assets from IBM Consulting with Microsoft and GitHub tools such as Microsoft Foundry, GitHub Copilot and Copilot Studio, supported by Microsoft's data, identity, security and cloud services. Its first industry frameworks cover financial services, insurance and retail, with manufacturing, energy, the public sector and others planned. The announcement does not state a general availability date.
+
+The point of this guide is not to judge that product. It is to help you judge any of them. If you run operations, finance-ops or IT-adjacent teams, you will be pitched agent platforms by cloud vendors, consulting firms, automation tools and start-ups, often in the same month. Every pitch will mention governance, security and speed. Very few will tell you what to check, what to ask for in writing, or what happens when you want out.
+
+This is a vendor-neutral scorecard. It gives you eight areas to score, a weighting method, questions to ask, a pilot plan, red flags and an example. It is a decision aid for process owners, not a security or legal review, so involve your security, legal and finance teams before any commitment.
+
+## What the market looks like right now
+
+Three facts shape the decision.
+
+**Platforms bundle services with software.** In the Imagine Enterprise announcement, clients can engage IBM Consulting to deploy and operate the platform for them, co-innovate on enterprise-scale implementations, or manage it themselves. CIO Dive reports that forward-deployed engineering programs now exist at Google, AWS, Microsoft and IBM, and that many vendors offer prebuilt agents with industry expertise. When people and software come as one bundle, the price you see may not be the price you pay, and it is harder to compare offers.
+
+**Organizations are not ready for the redesign.** CIO Dive cites a Gartner finding that only 4 percent of CIOs have implemented plans to adjust roles for a human-agent workforce. That is a single survey figure reported second-hand, but it points to an issue you can see in your own company: tools arrive faster than the role, approval and ownership changes that make them safe.
+
+**Standards are forming.** The Linux Foundation describes the Agent-to-Agent (A2A) protocol as an open standard that lets AI agents discover, communicate and transact across frameworks, vendors and platforms, and says more than 150 organizations supported it as of April 9, 2026. The same release says the Model Context Protocol (MCP), another Linux Foundation project, covers how agents connect to internal tools and data. Standards help, but support on a slide is not the same as support in your tenant.
+
+## Step 0: Know what you are buying for
+
+Before scoring anything, write down what the platform must do for you. Vendors will happily define the problem for you if you let them.
+
+1. **Name one to three workflows** you would run on it, such as invoice exception handling, support ticket triage or employee onboarding. If you cannot name them, you are not ready to buy a platform.
+2. **Write the baseline.** How long does the work take now, what does it cost, how often does it go wrong?
+3. **List the systems** the agents must touch, and the data they will see.
+4. **Say who owns it.** One named person for the platform and one for each workflow.
+5. **Set the risk tier.** Agents that read internal documents are different from agents that move money or change access. Our [connector access review guide](/blog/ai-agent-connector-access-review-oauth-scopes-owners) shows a four-tier model you can reuse here.
+
+If the answers are vague, start with [what to automate first](/blog/what-to-automate-first-process-prioritization) and come back.
+
+## The eight-area scorecard
+
+Score each area from 0 to 3. Use evidence, not claims.
+
+- **0:** Not offered, or the vendor could not answer.
+- **1:** Offered, but only on request, as an add-on, or with limits you cannot accept.
+- **2:** Offered and documented, but you have not tested it.
+- **3:** Offered, documented and demonstrated to you on your own use case.
+
+### 1. Governance and approvals
+
+Can you control what agents may do, and who must approve what?
+
+- Can you set boundaries per agent, such as allowed tools, data, spending limits and actions that need approval?
+- Is human approval a platform feature that you configure, or a prompt that you write and hope the model follows?
+- Is there a clear way to pause or stop an agent quickly?
+- Can you version agent definitions and see who changed what?
+
+OWASP's guidance on excessive agency in LLM applications lists excessive functionality, excessive permissions and excessive autonomy as root causes, and recommends controls such as minimizing the tools available to an agent, restricting permissions in downstream systems, requiring human approval for high-impact actions and enforcing authorization downstream, rather than relying on the model to decide. Check whether the platform makes those controls easy or hard. Our [human-in-the-loop approvals guide](/blog/human-in-the-loop-ai-approvals) covers how to design the approval step.
+
+### 2. Identity and access
+
+Who is the agent when it acts?
+
+- Does each agent have its own identity, or does it borrow a person's login?
+- Can permissions be narrow, by system, by data set and by action?
+- Does it work with your identity provider and your existing access reviews?
+- Can you list every connection an agent holds and revoke it quickly?
+
+Agents that inherit broad access are the quickest route to surprise. Treat each connection as a standing permission, as described in our [connector access review](/blog/ai-agent-connector-access-review-oauth-scopes-owners).
+
+### 3. Interoperability and lock-in
+
+How well does it fit with what you already run, and with what you might run later?
+
+- Which open standards does it support, and which versions? Ask specifically about MCP for tool connections and A2A for agent-to-agent communication, then ask for a demonstration.
+- Can agents built elsewhere run on it, and can agents built on it run elsewhere?
+- Can you export agent definitions, prompts, evaluation sets and logs in a usable format?
+- Does it work with models from more than one provider, or only the vendor's?
+
+The Imagine Enterprise announcement we reviewed does not mention MCP, A2A or any interoperability standard. That is not evidence that the platform lacks them, only that the announcement does not say. It shows why you should ask each vendor directly and get answers in writing. Our [MCP guide for operations teams](/blog/mcp-model-context-protocol-operations-teams-guide) explains what the standard is and how to adopt it safely.
+
+### 4. Testing and evaluation
+
+How will you know an agent works, and keeps working?
+
+- Can you build a test set of real cases and run it before every change?
+- Can you compare versions of an agent on the same cases?
+- Are results available as data you can analyze, not just a score?
+- Is there a way to review samples of live runs?
+
+Without this, you are relying on demos. Our guide to [evaluating AI workflows with a test set](/blog/evaluate-ai-workflow-test-set-accuracy) shows how to build one.
+
+### 5. Observability and audit
+
+Can you see what happened, and prove it later?
+
+- Are all agent actions logged, including inputs, tool calls, outputs and approvals?
+- Can you search and export logs, and for how long are they kept?
+- Can alerts reach the owner when something fails or behaves oddly?
+- Can an auditor reconstruct a decision from the log?
+
+Our guide to [automation monitoring and alerting](/blog/automation-monitoring-alerting-operations-teams) covers what to watch.
+
+### 6. Data handling and security
+
+Where does your data go?
+
+- Which data does the platform store, for how long, and where?
+- Is your data used to train models, and can that be contractually excluded?
+- What happens to data when you leave?
+- What certifications or audits does the vendor hold, and can you see the reports?
+- How does it deal with prompt injection from content that agents read? Controls need to sit outside the model, as described in our [prompt injection guide](/blog/securing-ai-workflows-prompt-injection-operations).
+
+Use a structured questionnaire. Our [AI tool vendor review questions](/blog/ai-tool-vendor-review-questions-business-data) give a starting list.
+
+### 7. Total cost
+
+What will it really cost to run, not just to buy?
+
+- Licenses, usage fees, model costs and cloud costs.
+- Services: implementation, forward-deployed engineers, managed operation and training.
+- Your own staff time to design, test, approve and maintain agents.
+- Costs that grow with volume, such as per-run or per-token charges.
+- Price changes at renewal, and limits on increases.
+
+Ask for a three-year cost model at your expected volume and at twice that. Our guide to [AI workflow cost and budget control](/blog/ai-workflow-cost-budget-control) shows how to set limits.
+
+### 8. Exit options
+
+Can you leave without breaking the business?
+
+- What do you own: agent definitions, evaluation sets, logs, data?
+- In what formats can you take them?
+- How long does the vendor support you during a transition?
+- Are there minimum terms, volume commitments or penalties?
+- What would you have to rebuild if you left?
+
+Vendors rarely volunteer this. Raise it early. A good partner will answer plainly. See our [build versus buy guide](/blog/build-vs-buy-operations-software) for how to weigh this.
+
+## Weighting the scorecard
+
+Not every area matters equally for every company. Assign weights before you score, so the scores do not drive the weights.
+
+| Area | Example weight when agents touch money or access | Example weight for internal lookups only |
+| --- | --- | --- |
+| Governance and approvals | 20 | 10 |
+| Identity and access | 20 | 10 |
+| Interoperability and lock-in | 10 | 15 |
+| Testing and evaluation | 15 | 20 |
+| Observability and audit | 15 | 10 |
+| Data handling and security | 10 | 15 |
+| Total cost | 5 | 15 |
+| Exit options | 5 | 5 |
+
+These weights are examples, not recommendations. Set your own with your security, finance and operations leads, and write the reasons down.
+
+**Calculate:** multiply each score by its weight, add the results, and compare with the maximum. Treat any area scored 0 in governance, identity or data handling as a stop, not a trade-off. A high total does not rescue a platform that cannot control what agents do.
+
+## Questions to ask every vendor
+
+Put these in writing and keep the answers.
+
+1. Show me a live demonstration on our use case, not a recorded demo.
+2. How do I limit an agent to specific tools and data, and require approval for specific actions?
+3. What identity does an agent use, and how do I revoke it?
+4. Which open standards do you support today, in which versions, and what is on your roadmap with dates?
+5. Can I export agent definitions, evaluation sets and logs? In what format?
+6. What do you store, for how long and where? Is customer data used for training?
+7. What is included in the price, and what is extra? Show me a three-year estimate at our volume.
+8. What happens on day one of leaving?
+9. Which parts of this are generally available today, and which are announced or in preview?
+10. Who are three customers in a situation like ours that I can speak to?
+
+Question 9 matters. Announcements often describe a direction, not a shipped product. Treat any feature without a date and a demonstration as a roadmap item.
+
+## A pilot plan that tells you something
+
+A scorecard narrows the field. A pilot decides.
+
+**Design it like this:**
+
+1. **One workflow, one owner.** Choose a real process of moderate volume and low to medium risk.
+2. **Baseline first.** Record time, cost and error rate before the pilot starts.
+3. **Test set.** Build a set of real past cases, including awkward ones, and keep it fixed.
+4. **Success measures.** Pick two or three: accuracy on the test set, time saved, exceptions routed correctly, cost per case.
+5. **Guardrails.** Run in a limited environment, with approvals on every consequential action.
+6. **Duration.** Four to eight weeks is typical, long enough to see variation.
+7. **Stop rules.** Decide in advance what result ends the pilot, such as an unacceptable error that approvals missed.
+8. **Pay for it.** A paid pilot with a written scope gives both sides a reason to be honest.
+
+At the end, score the platform again with evidence, and write a one-page decision record: what you tried, what you learned, what you chose and what you will revisit.
+
+## An illustrative example
+
+The numbers below are invented to show how the scorecard works.
+
+A 300-person company in the insurance sector shortlists two platforms for claims intake triage. Agents would read documents and propose routing but never pay claims. Using the "internal lookups only" weights above:
+
+- Platform A scores 3 on testing and observability, 2 on governance and identity, 1 on interoperability and 2 on cost and exit. It has a strong evaluation toolkit but supports few open standards.
+- Platform B scores 3 on interoperability, 2 on most areas, 1 on testing because evaluation is an add-on and 0 on exit because the vendor would not state export formats.
+
+Platform B has a zero in a key area, so the team marks it a stop until the vendor answers in writing. Platform A goes to a six-week pilot on one intake queue. The pilot shows good accuracy on routine cases and weak handling of scanned documents. The team decides to continue with a narrower scope, adds a human check on scanned documents and sets a review date. Neither the vendor's slide deck nor the biggest brand name made the decision. The evidence did.
+
+## Common mistakes to avoid
+
+- **Buying for the demo.** A smooth demo shows the happy path. Ask for your own cases.
+- **Counting prebuilt agents.** A large library says little about whether they fit your process or controls.
+- **Treating announcements as availability.** Check what is generally available, what is in preview and what is planned.
+- **Ignoring the services bundle.** Consulting and deployment can be most of the cost.
+- **Letting one team choose alone.** Security, finance, legal and the process owner all need a voice.
+- **Skipping exit questions.** The best time to ask about leaving is before you sign.
+- **Starting big.** A platform commitment before a successful pilot raises the cost of being wrong.
+- **No owner.** An agent platform without a named owner drifts, like any unowned system.
+
+## A one-page checklist
+
+Copy this into your runbook.
+
+- [ ] One to three target workflows named, with baselines and owners.
+- [ ] Risk tier set for each workflow.
+- [ ] Scorecard weights agreed and written down before scoring.
+- [ ] Each vendor scored on all eight areas, with evidence.
+- [ ] Any 0 in governance, identity or data handling treated as a stop.
+- [ ] Open standard support confirmed by demonstration, not slides.
+- [ ] Three-year cost model received at expected and double volume.
+- [ ] Export formats and exit terms confirmed in writing.
+- [ ] Security, legal, finance and process owner have reviewed.
+- [ ] Paid pilot scoped with a fixed test set, stop rules and an end date.
+- [ ] Decision record written and a review date set.
+
+<ToolCard href="/tools/stack-audit" title="Operations stack audit">Map the tools you already run before adding a platform, and spot overlaps that an agent platform might duplicate.</ToolCard>
+
+## Key takeaways
+
+- Announcements like IBM and Microsoft's Imagine Enterprise show how fast agent platforms are arriving. Judge them by the same criteria, not by brand or by the size of a prebuilt agent library.
+- Score eight areas: governance, identity, interoperability, testing, observability, data handling, total cost and exit. Weight them before scoring.
+- A zero in governance, identity or data handling is a stop, not a trade-off.
+- Open standards such as MCP and A2A may reduce lock-in, but ask which versions are supported and see a demonstration.
+- Separate what is generally available from what is announced.
+- Ask for a three-year cost model that includes services, and ask what leaving looks like on day one.
+- Run a paid pilot on one workflow with a fixed test set and stop rules before any larger commitment.
+
+## Sources and further reading
+
+The pages below are where we checked the facts in this guide. Product details change quickly, so read the current vendor documentation before relying on them. This is a decision aid, not security or legal advice. Written by Sam at OpsGrit with AI assistance and an automated editorial review. If you spot something wrong, [tell us](/contact).
+
+- [Microsoft Source: IBM and Microsoft announce a new AI agent platform designed for industry-specific transformation](https://news.microsoft.com/source/2026/11/10/ibm-and-microsoft-announce-a-new-ai-agent-platform-designed-for-industry-specific-transformation/). The announcement of Imagine Enterprise: components, industries and delivery options. A vendor press release.
+- [CIO Dive: Microsoft, IBM team up on AI agent platform](https://ciodive.com/news/microsoft-ibm-team-up-ai-agent-platform/874152). Trade-press coverage with executive quotes, the Gartner CIO finding and context on forward-deployed engineering programs.
+- [Linux Foundation: A2A protocol surpasses 150 organizations](https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year). What A2A is, how it relates to MCP and adoption facts as of April 2026.
+- [OWASP GenAI Security Project: LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025). Root causes and prevention steps for over-permissioned agents.
+- [NIST: AI Risk Management Framework](https://www.nist.gov/node/1731521). A voluntary framework for managing AI risk, built around the Govern, Map, Measure and Manage functions.
+
+The scorecard areas, scoring scale, example weights, vendor questions, pilot plan and example are OpsGrit's own and are starting points. Adapt them with your security, legal and finance teams.
+
+## Related guides
+
+- [AI Agent Connector Access Review: OAuth Scopes, Owners and a Quarterly Cleanup Routine](/blog/ai-agent-connector-access-review-oauth-scopes-owners)
+- [MCP for Operations Teams](/blog/mcp-model-context-protocol-operations-teams-guide)
+- [AI Agents vs Workflows for Operations](/blog/ai-agents-vs-workflows-operations)
+- [Build vs Buy Operations Software](/blog/build-vs-buy-operations-software)
+- [AI Automation Roadmap 2027 for Operations Teams](/blog/ai-automation-roadmap-2027-operations-teams)
