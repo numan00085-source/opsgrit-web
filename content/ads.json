@@ -1,6 +1,29 @@
 {
   "ads": [
     {
+      "id": "ad-mwbm4uqwigf",
+      "name": "ZeluxUs",
+      "sponsor": "ZeluxUs",
+      "images": [
+        {
+          "src": "/images/1791254879482-photo-1791254878511-mwbm1y9f.webp",
+          "alt": "",
+          "w": 1030,
+          "h": 1024
+        }
+      ],
+      "link": "https://www.zeluxus.com/products/ultimate-tech-mystery-box-random-premium-wireless-audio-accessories",
+      "placements": [
+        "article-end",
+        "article-top",
+        "sidebar",
+        "home"
+      ],
+      "enabled": true,
+      "start": "2026-11-11",
+      "end": "2026-11-20"
+    },
+    {
       "id": "ad-mv795y7phzk",
       "name": "ZeluxUs",
       "sponsor": "ZeluxUs",
