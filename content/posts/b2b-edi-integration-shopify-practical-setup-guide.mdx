@@ -1,0 +1,369 @@
+---
+title: "B2B EDI Integration with Shopify: A Practical Setup Guide for Operations Teams"
+slug: "b2b-edi-integration-shopify-practical-setup-guide"
+category: "Ops Stack"
+excerpt: "Step-by-step guide to connecting trading partners like Target and Walmart to Shopify B2B. Includes mapping spreadsheet template, onboarding checklist, testing protocol, and common failure fixes."
+date: "2026-11-15"
+author: "Sam"
+coverImage: "/images/b2b-edi-integration-shopify-practical-setup-guide-cover.webp"
+affiliate: "Jotform"
+featured: false
+---
+
+Your team receives 850 purchase orders from Target and Walmart by EDI, then rekeys them into Shopify because the native B2B portal cannot ingest the files. The manual step creates data mismatches, missed ship dates, and a backlog that grows every promotion cycle. 
+
+This guide gives you a repeatable setup: a mapping spreadsheet template, a partner onboarding checklist with realistic timelines, a sandbox-to-production testing protocol, and a decision table for choosing an iPaaS versus Shopify native B2B.
+
+## What B2B EDI Integration with Shopify Actually Requires
+
+You need three things in place before any code is written: the exact EDI document set the partner expects, the Shopify data model that will source or consume those documents, and the people who own each hand‑off. 
+
+**Document set**, Most wholesale buyers ask for the core five: purchase order (850), purchase order acknowledgement (855), advance ship notice (856), invoice (810) and inventory inquiry/advice (846). Add a functional acknowledgment (997) for every inbound file. Confirm the version (e.g., X12 004010) and any partner‑specific segments before you map anything. 
+
+**Shopify touchpoints**, | EDI doc | Shopify object | Typical trigger |
+|--------|----------------|-----------------|
+| 850 | Draft Order → Order | Partner sends PO |
+| 855 | Order → Fulfillment | You confirm receipt |
+| 856 | Fulfillment → Shipment | Carrier picks up |
+| 810 | Order → Transaction | Invoice generated |
+| 846 | Product → Inventory | Scheduled feed |
+| 997 | Any inbound file | Automatic ack |
+
+**Team roles**, - **EDI analyst**, owns mapping spreadsheet, validates segment‑level rules, runs test files. 
+- **Shopify admin**, configures B2B company, price lists, and webhook endpoints. 
+- **Operations lead**, defines SLA windows, exception routing, and sign‑off criteria. 
+- **Finance / AR**, approves invoice format, payment terms, and reconciliation rules. 
+
+**Scope checklist (copy‑paste into your project plan)** 
+- [ ] Partner‑provided EDI spec (PDF or Excel) collected 
+- [ ] Document list confirmed (850, 855, 856, 810, 846, 997) 
+- [ ] Shopify B2B company and price list created 
+- [ ] Webhook endpoints for Order Create, Fulfillment Create, Inventory Update provisioned 
+- [ ] Mapping spreadsheet template distributed to analyst 
+- [ ] Test‑environment credentials exchanged (AS2, SFTP, or VAN) 
+- [ ] SLA and exception escalation matrix signed by ops lead and finance 
+
+If any row is missing, pause the build. Adding a document or partner later forces a full re‑map, the most common source of scope creep.
+
+## Shopify B2B Architecture and EDI Touchpoints
+
+Shopify’s native B2B layer is built around **Companies**, **Company locations**, **Catalogs**, and **Draft orders**. Each object corresponds to a standard EDI transaction set: a Company location becomes the ship‑to party on an 850 purchase order, a Catalog drives the item master used in 846 inventory feeds, and a Draft order is the internal representation that turns into an 855 acknowledgment, an 856 advance ship notice, and finally an 810 invoice. The functional acknowledgment 997 is generated automatically by the EDI gateway for every inbound document.
+
+### Core Shopify B2B objects and EDI mapping
+
+| Shopify object | Primary EDI set(s) | Role in the flow |
+|----------------|-------------------|------------------|
+| Company | 850 (buyer), 810 (seller) | Legal entity and billing address |
+| Company location | 850 (ship‑to), 856 (ship‑from) | Physical delivery points |
+| Catalog | 846 (inventory inquiry/advice) | Price list and product availability |
+| Draft order | 855 (order acknowledgment), 856, 810 | Internal order record that triggers outbound EDI |
+
+### Where the integration layer sits
+
+1. **Shopify Admin API**, reads and writes Companies, Locations, Catalogs, Draft orders. 
+2. **iPaaS or middleware**, subscribes to Shopify webhooks (order create, fulfillment create, inventory change), translates JSON to X12/EDIFACT, routes to the partner VAN or AS2 endpoint, and writes back 997/855/856/810 status into Draft order notes. 
+3. **Partner EDI gateway**, validates envelopes, applies partner‑specific maps, and returns functional acknowledgments. 
+
+The iPaaS is the only component that touches both Shopify and the external EDI network; Shopify never sends raw EDI. 
+
+## Trading Partner Requirements: Target, Walmart, Specialty Distributors
+
+Big-box retailers and specialty distributors enforce strict electronic data interchange (EDI) specifications. Failing a single validation rule during testing delays production rollout by weeks. 
+
+Major retail partners differ sharply across transport, standards, identifiers, and compliance rules:
+
+* **Target (PartnerOnline / SPS Commerce framework):** Target requires ANSI X12 version 4010 or 5010 formats, using specific qualifiers like DP (Department Number) and SK (SKU) in the 850 Purchase Order. Testing takes place through Target's vendor portal, requiring 100% compliance on 856 Ship Notice/Manifest (ASN) carton-level GS1-128 barcode matching before granting production access.
+* **Walmart (Retail Link):** Walmart mandates direct AS2 connections or approved VAN routing, using X12 version 5010. Walmart heavily enforces strict turnaround times on the 855 Purchase Order Acknowledgment (typically within 24 hours) and precise line-item status codes (IA for Accepted, IR for Rejected). 
+* **Specialty Distributors:** Smaller regional distributors often accept simplified X12 version 4010 or XML-based EDI formats. They frequently allow looser testing timelines but may require custom line-item qualifiers, such as proprietary internal part numbers (VP) alongside standard UPCs (UP).
+
+To manage these variations across trading partners, operations leads should standardize their intake requirements before starting technical mapping.
+
+| Requirement Field | Target | Walmart | Specialty Distributor (Example) |
+| :--- | :--- | :--- | :--- |
+| **Primary Standard** | ANSI X12 (4010/5010) | ANSI X12 (5010) | ANSI X12 (4010) or XML |
+| **Transport Protocol** | AS2 or Approved VAN | AS2 Direct | VAN or Secure FTP (SFTP) |
+| **Product Identifiers** | UPC (UP), Target DPCI (SK) | UPC (UP), Walmart GTIN (EN) | UPC (UP), Vendor Part (VP) |
+| **ASN Barcode Rule** | GS1-128 (Container Level) | GS1-128 (Serial Shipping Container) | Standard SSCC-18 or Order-level |
+| **855 SLA** | 24 to 48 Hours | 24 Hours | 48 Hours |
+| **Certification Window** | 4 to 6 Weeks | 3 to 6 Weeks | 1 to 2 Weeks |
+
+ Documenting these values early prevents costly map re-writes once data starts flowing into Shopify. If your partner uses complex custom requirements across multiple sales channels, review your core architecture alongside a standard [Vendor Onboarding SOP: Due Diligence, Approvals and Controls](/blog/vendor-onboarding-sop-procurement) to keep setup on schedule.
+
+## EDI Document Mapping: 850, 855, 856, 810, 846, 997
+
+**Start with the mapping table**, it gives you a single view of every required transaction set, the EDI loops/segments that carry the data, and the Shopify objects that feed them. Treat the table as a living document; add a column for “partner‑specific qualifiers” when a retailer asks for a custom code.
+
+| Transaction | Core EDI loops / segments | Shopify source (object → field) | Typical qualifier / note |
+|-------------|---------------------------|--------------------------------|--------------------------|
+| **850 Purchase Order** | BEG (order header), N1 (buyer/seller), PO1 (line item), PID (product description), CTT (summary) | Order → `name`, `email`, `shipping_address`; LineItems → `variant_id`, `quantity`, `price`, `sku`; Variant → `barcode` (GTIN) | Use `PO102` = `EA` for each‑unit; `PO103` = unit price in cents |
+| **855 Purchase Order Acknowledgment** | BAK (ack header), PO1 (line echo), ACK (line status) | Same order/line data as 850; add `fulfillment_status` → `ACK01` (IA = accept, IR = reject, IP = partial) | Populate `ACK02` with original `PO1` line number for traceability |
+| **856 Advance Ship Notice** | BSN (ship notice header), HL (hierarchical loops: shipment → order → item), LIN (item), SN1 (quantity shipped), REF (tracking) | Fulfillment → `tracking_number`, `tracking_company`, `created_at`; FulfillmentLineItems → `variant_id`, `quantity`; Location → `address` (ship‑from) | `HL01` increments per level; `HL03` = `S` (shipment), `O` (order), `I` (item) |
+| **810 Invoice** | BIG (invoice header), N1 (remit‑to), IT1 (line), TXI (tax), TDS (total) | Order → `invoice_number` (use `order_number` + “‑INV”), `created_at`; LineItems → `price`, `quantity`, `tax_lines`; Shopify `tax_lines` → `TXI` | `BIG01` = invoice date (YYYYMMDD); `BIG02` = invoice number |
+| **846 Inventory Inquiry/Advice** | BIA (header), LIN (item), QTY (on‑hand, allocated, inbound) | ProductVariant → `inventory_quantity`, `incoming` (from purchase orders), `location_id` | Send per location if partner requires warehouse‑level visibility |
+| **997 Functional Acknowledgment** | AK1 (transaction set), AK2 (segment), AK3 (data element), AK4 (error code) | Generated automatically by your EDI translator; map `AK4` codes to internal error log for quick triage | No Shopify data needed, treat as health‑check signal |
+
+### Quick mapping checklist (copy into a shared sheet)
+
+- **Header fields**, order number, dates, partner IDs, currency code 
+- **Party loops (N1)**, buyer, seller, ship‑to, bill‑to, pull from Shopify `customer` and `shipping_address` 
+- **Line loops (PO1/IT1/LIN)**, variant SKU → GTIN, quantity, unit price, tax, discount 
+- **Fulfillment loops (HL/SN1)**, one HL per shipment, order, item; tracking number in `REF` 
+- **Inventory loops (LIN/QTY)**, run nightly per location; include `incoming` from open POs 
+- **Acknowledgment loops (AK1‑AK4)**, log every 997; alert on `AK4` ≠ “0” (see [How to Monitor Business Automations: Alerts, Checks and Reviews](/blog/automation-monitoring-alerting-operations-teams))
+
+### Field‑level example (850 → Shopify)
+
+```
+BEG*00*NE*PO12345*20240315~
+N1*BY*Acme Corp*92*123456789~
+N1*ST*Warehouse A*92*987654321~
+PO1*1*10*EA*12.50**VN*SKU-001~
+PID*F****Blue Widget, Size M~
+CTT*1*10~
+```
+
+- `BEG02` = `NE` (new order), constant 
+- `PO1` line number = 1, quantity = 10, UOM = `EA`, unit price = 1250 (cents) 
+- `VN` qualifier = vendor part number = Shopify `variant.sku` 
+- `PID` free‑form description = `variant.title` + `variant.option1` 
+
+Repeat the same pattern for each transaction set, swapping only the loop identifiers and the status codes. Keep the spreadsheet versioned; every partner change becomes a new row rather than a rewrite of the whole map.
+
+## Building Your EDI Mapping Spreadsheet
+
+Your mapping spreadsheet is the single source of truth for your integration. Build it before you write code or configure an iPaaS so that engineers, EDI coordinators, and retail compliance managers agree on field definitions.
+
+### Mandatory Sheet Structure
+
+Organize your workbook into five distinct tabs to keep standard logic separate from partner overrides:
+
+1. **Inbound Mappings (850, 860):** Maps partner EDI segments to Shopify API payloads and internal ERP fields.
+2. **Outbound Mappings (855, 856, 810, 846):** Maps Shopify webhook properties and fulfillment data to partner EDI segments.
+3. **Trading Partner Overrides:** Records vendor-specific segment exceptions, custom qualifiers, and mandatory notes.
+4. **Code Cross-Reference (Xref):** Translates internal data values to partner values, such as Shopify product variant IDs to partner SKU numbers or carrier codes to SCAC codes.
+5. **Validation Rules & Error Handling:** Defines regex patterns, required fields, and failure notifications for each document type.
+
+### Standard Field Definitions and Data Layout
+
+To evaluate integration patterns and payload structures across systems, reference our guide on [Webhooks, APIs and iPaaS for Operations Teams](/blog/webhooks-apis-ipaas-integration-patterns). 
+
+Use this unified table schema on both your Inbound and Outbound mapping tabs:
+
+| Source System | Source Segment / Field | Target System | Target Field / Attribute | Data Type & Format | Required? | Transformation / Default Rule |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Partner EDI (850)** | `BEG03` | Shopify API | `po_number` | String (Max 35) | Yes | Direct map |
+| **Partner EDI (850)** | `PO102` | Shopify API | `line_items.quantity` | Integer | Yes | Direct map |
+| **Shopify Webhook** | `fulfillment.tracking_number` | Partner EDI (856) | `REF02` (qualifier `2I`) | String (Max 30) | Yes | Required if carrier provides tracking |
+| **Shopify API** | `variant.sku` | Partner EDI (810) | `IT107` (qualifier `VP`) | String (Max 48) | Yes | Lookup via Code Xref tab |
+
+### Version Control and Sign-off Rules
+
+Store this file in a central repository with strict edit permissions. Treat any change to a mapping specification as an integration change:
+
+* **Header metadata block:** Every tab must include `Document Type`, `EDI Standard Version` (for example, 4010), `Last Updated Date`, and `Approved By`.
+* **Change log tab:** Maintain a dedicated revision log recording the date, change description, affected trading partner, and author for every edit.
+* **Sign-off requirement:** Both your internal EDI lead and the retail partner's integration contact must approve the sheet before you move mappings into production testing.
+
+## Partner Onboarding Checklist and Timeline
+
+Start with a phased checklist you can copy into a shared tracker. Assign an owner and a target date for every row. A step is done only when the pass criteria are met and the owner signs off.
+
+### Phase 1: Legal and Commercial (Week 1–2)
+
+| Step | Owner | Target | Pass Criteria |
+|------|-------|--------|---------------|
+| NDA executed | Legal | Day 3 | Signed copy in contract repo |
+| Trading partner agreement signed | Legal / Sales | Day 7 | Effective dates, SLAs, liability caps documented |
+| Data processing addendum reviewed | Legal / Security | Day 10 | DPA matches your privacy policy and partner requirements |
+| Pricing and payment terms confirmed | Finance / Sales | Day 10 | Net terms, discounts, chargeback rules in ERP |
+
+### Phase 2: Technical Setup (Week 2–4)
+
+| Step | Owner | Target | Pass Criteria |
+|------|-------|--------|---------------|
+| EDI connection method agreed (VAN, AS2, SFTP) | IT / Partner | Day 14 | Written confirmation from both sides |
+| Certificates and keys exchanged | IT / Security | Day 17 | Test handshake succeeds |
+| Shopify B2B company and location created | Ops / Shopify Admin | Day 18 | Partner visible in Companies with correct price list |
+| Document maps built for 850, 855, 856, 810, 846, 997 | IT / iPaaS | Day 25 | Sample files validate against partner spec |
+| Webhook endpoints registered for order, fulfillment, invoice events | IT | Day 25 | Test payloads arrive in staging |
+| Inventory feed (846) schedule configured | Ops / IT | Day 28 | Feed runs daily, quantities match ERP |
+
+### Phase 3: Operational Validation (Week 4–5)
+
+| Step | Owner | Target | Pass Criteria |
+|------|-------|--------|---------------|
+| End-to-end test order placed by partner | Partner / Ops | Day 30 | 850 → 855 → 856 → 810 flow completes without manual touch |
+| Exception handling documented (short ship, backorder, cancel) | Ops | Day 32 | Runbook linked in tracker |
+| Monitoring alerts configured for failed transactions, latency, missing ACKs | IT / Ops | Day 32 | Alerts fire in test, routed to on-call |
+| Go-live sign-off from Legal, IT, Finance, Partner | All leads | Day 35 | Written approval in tracker |
+
+### Phase 4: Go-Live and Hypercare (Week 6)
+
+| Step | Owner | Target | Pass Criteria |
+|------|-------|--------|---------------|
+| Production cutover completed | IT / Partner | Day 36 | First live 850 processes cleanly |
+| Daily reconciliation for first 10 business days | Finance / Ops | Day 46 | Zero unreconciled invoices |
+| Partner feedback loop established | Ops | Day 46 | Weekly 15-min sync scheduled |
+
+Use this tracker as the single source of truth. Link it to your [vendor onboarding SOP](/blog/vendor-onboarding-sop-procurement) for due-diligence steps and to the [change management checklist](/blog/change-management-checklist-for-operations) when maps or schedules change after go-live.
+
+If this step still runs through email or a spreadsheet, a form with an approval step is the usual fix, because it asks the same questions every time and keeps a record. Tools such as [Jotform](https://www.jotform.com/products/form-builder/?partner=getopsgrit) offer a drag-and-drop form builder and workflow approvals, where a request can go to one or several approvers who can leave comments. Any tool with those features works, so use what your team already has. Plan limits differ, so check the current plans before you rely on a feature.
+
+<PartnerCard href="https://www.jotform.com/products/workflows/?partner=getopsgrit" name="Jotform">Online forms for one intake point, with approval steps available through its Workflows product.</PartnerCard>
+
+## Testing Protocol: From Sandbox to Production
+
+Use a three‑phase test plan: sandbox validation, retailer certification, and production smoke test. Each phase has a defined data set, pass‑criteria, and sign‑off owner.
+
+### Phase 1, Sandbox Validation
+| Document | Test case | Sample data | Pass rule |
+|----------|-----------|-------------|-----------|
+| 850 Purchase Order | Happy path, 12 line items, mixed UOM | PO # 1001, 12 SKUs, qty 1‑50 | 997 FA returns 00 (accepted) |
+| 855 PO Acknowledgment | Partial accept, 3 lines rejected | Same PO, line 4‑6 qty 0 | 997 FA returns 00, 855 shows RD for rejected lines |
+| 856 Advance Ship Notice | Multi‑carton, serial numbers | 2 cartons, 5 serials each | 997 FA 00, 856 matches 850 line‑level |
+| 810 Invoice | Net‑30 terms, tax line | Invoice # 5001, tax $12.40 | 997 FA 00, totals reconcile to 850 |
+| 846 Inventory Inquiry | Real‑time stock snapshot | 200 units on hand | 997 FA 00, quantity matches ERP |
+| 997 Functional Ack | Negative, missing mandatory segment | Omit BEG segment | 997 FA returns 024 (segment missing) |
+
+### Phase 2, Retailer Certification
+1. **Submit the sandbox log** to the retailer’s EDI portal. 
+2. **Execute the retailer’s mandated test suite** (usually 5‑10 transactions per document type). 
+3. **Resolve any 997 error codes**, common codes: 024 (missing segment), 025 (invalid code), 027 (data element too long). 
+4. **Obtain written sign‑off** from the retailer’s EDI contact (email confirmation or portal status “Certified”). 
+
+### Phase 3, Production Smoke Test
+- Send a single live 850 for a low‑value order (e.g., $150). 
+- Confirm 855, 856, and 810 flow end‑to‑end within the SLA (typically &lt; 30 min). 
+- Verify that monitoring alerts (see [How to Monitor Business Automations: Alerts, Checks and Reviews](/blog/automation-monitoring-alerting-operations-teams)) fire only on true exceptions. 
+- Record the smoke‑test result and obtain final sign‑off from the operations lead.
+
+#### Reusable Test‑Run Checklist (copy into your run‑book)
+- **Scope**, Document types, partner, environment 
+- **Data set**, PO numbers, SKUs, quantities, dates 
+- **Execution**, Run each case, capture raw files 
+- **Validation**, 997 code, field‑level reconciliation 
+- **Defect log**, Error code, root cause, fix, retest result 
+- **Sign‑off**, Tester, EDI lead, retailer contact (if certification) 
+
+**Decision rule:** If any 997 returns a code other than 00 during Phase 1 or Phase 2, pause the rollout, update the mapping spreadsheet, and re‑run the full case set before proceeding. This rule prevents downstream invoice mismatches and chargebacks.
+
+## Common Failure Points and How to Fix Them
+
+ 
+
+Here are the top ten operational failure points, their root causes, and how to fix them before they trigger partner penalties:
+
+1. **Unacknowledged Purchase Orders (Missing 855s)**
+ * **Root cause:** The inbound 850 created an order in Shopify, but the confirmation event failed to fire, leaving the buyer's system hanging.
+ * **Fix:** Configure an automated fallback rule that alerts operations if an 850 sits in "Accepted" status for more than two hours without an outgoing 855 transmission.
+
+2. **Inventory Drift Causing Oversells (846 Misalignment)**
+ * **Root cause:** High-velocity Shopify direct-to-consumer sales consume safety stock reserved for EDI wholesale buyers between scheduled 846 inventory updates.
+ * **Fix:** Isolate wholesale inventory balances into dedicated virtual locations or trigger event-driven 846 delta updates whenever inventory crosses a defined safety threshold.
+
+3. **Advance Shipping Notice (856) Timing Violations**
+ * **Root cause:** The physical truck leaves the warehouse before the 856 completes its transmission, triggering an automatic chargeback at the retailer's distribution center.
+ * **Fix:** Require warehouse management systems to gate shipping label generation and gate pass printing on a confirmed 856 payload generation event.
+
+4. **Unit of Measure (UOM) Mismatches**
+ * **Root cause:** The retailer orders in "Cases of 12" (CA), but the Shopify order creation endpoint interprets the quantity as "12 Individual Units" (EA).
+ * **Fix:** Maintain strict translation tables at the integration layer. Never rely on manual order entry to adjust quantities after order creation.
+
+5. **Silent Webhook Drops**
+ * **Root cause:** Rate limits or temporary platform downtime cause fulfillment webhooks to fail, leaving the EDI middleware unaware that an order shipped.
+ * **Fix:** Implement solid, state-based polling routines to back up webhook listeners, ensuring system state sync even during transient drops. 
+
+6. **Invalid GS1-128 Barcode Generation**
+ * **Root cause:** Shipping container codes (SSCC-18) on pallet labels do not match the structure declared in the 856 Pick and Pack structure.
+ * **Fix:** Validate label data against your integration middleware outputs before printing. Scan a physical sample label during staging to ensure string alignment.
+
+7. **Pricing Mismatches on Invoices (810)**
+ * **Root cause:** Promotional discounts or tier pricing applied in Shopify do not match the static cost specified in the original purchase order.
+ * **Fix:** Invert the invoice validation rule: draft the 810 using the pricing agreed upon in the received 850, flagging line-item variances internally for finance review before transmission.
+
+8. **Unmapped Variant Additions**
+ * **Root cause:** Merchandising adds a new product SKU to Shopify without assigning the corresponding UPC, GTIN, or buyer item number in the EDI mapping table.
+ * **Fix:** Establish a strict catalog change management process where SKUs cannot be published to wholesale channels without required EDI identifiers.
+
+9. **Functional Acknowledgment (997) Rejections**
+ * **Root cause:** Syntax errors, missing mandatory segments, or control number mismatches cause the partner's translator to reject the entire document batch.
+ * **Fix:** Set up automated parsing of inbound 997s. If an "R" (Rejected) status code returns, route the raw EDI file directly to an integration manager for instant review.
+
+10. **Undetected Mapping Drift After Platform Updates**
+ * **Root cause:** Changes to custom Shopify metafields or API versions silently corrupt the payload structure sent to the translator.
+ * **Fix:** Audit data flows regularly and review system log histories using structured operational protocols like those in our guide on [monitoring business automations](/blog/automation-monitoring-alerting-operations-teams).
+
+## Ongoing Operations: Monitoring, Exceptions, and Partner Changes
+
+EDI monitoring fails when teams treat it as background noise until an order drops. Stable EDI operations require a daily triage of functional acknowledgments, weekly sync reconciliations across Shopify and your ERP, and a formal change management process for trading partner updates.
+
+### Monitoring Cadences
+
+Set clear operational boundaries for each monitoring window to catch standard API timeouts before they turn into chargebacks. Learn more about setting up system alerts in [How to Monitor Business Automations: Alerts, Checks and Reviews](/blog/automation-monitoring-alerting-operations-teams).
+
+* **Daily Cadence (Morning Operations):** Check for unacknowledged 850 Purchase Orders older than two hours. Verify all sent 856 ASNs received a matching 997 Functional Acknowledgment from the partner VAN. Clear trapped transactions in your translation middleware.
+* **Weekly Cadence (Reconciliation):** Compare Shopify B2B order counts against processed 810 Invoices and ERP ledger entries. Audit 846 Inventory Feed execution logs to ensure stock availability accurate within your partner's required threshold.
+* **Monthly Cadence (Performance Review):** Calculate chargeback ratios, document rejection percentages by partner, and review system throughput limits.
+
+### Exception Handling Matrix
+
+Assign explicit owners to operational failures so issues do not sit in an unmonitored inbox.
+
+| Issue Type | Trigger Condition | Primary Owner | Resolution Action |
+| :--- | :--- | :--- | :--- |
+| **Missing 997** | Outbound 856 has no receipt acknowledgment within 12 hours | EDI Ops Lead | Re-send document header via middleware or open ticket with trading partner VAN. |
+| **Mapping Failure** | Inbound 850 drops due to unmapped SKU or payment term | Revenue Ops | Update cross-reference table in Shopify B2B catalog, reprocess payload. |
+| **Inventory Out of Sync** | Partner rejects 850 order due to zero stock | Logistics Manager | Issue immediate 855 Purchase Order Acknowledgement with revised quantities. |
+
+### Trading Partner Change Request Workflow
+
+When a retail buyer or distributor updates their implementation guide, use a structured intake process to prevent mapping breaks. Refer to our [Change Management Checklist for Operations Workflows](/blog/change-management-checklist-for-operations) to guide your team through updates.
+
+1. **Intake and Impact Assessment:** Obtain the updated EDI specification guide from the buyer. Identify affected document types, new mandatory segments, or updated code lists.
+2. **Staging Update:** Clone the existing mapping schema in your translation tool or middleware. Apply field updates in the sandbox environment without touching production pipelines.
+3. **Parallel Testing:** Request a test window from the partner. Pass dummy 850 orders and 856 test payloads to validate segment alignment.
+4. **Production Cutover:** Schedule the schema deployment outside peak order processing hours. Perform a live order test run and verify 997 generation before closing the change ticket.
+
+## When to Use an iPaaS vs Native Shopify B2B
+
+Start with the decision rule: if you process fewer than 500 EDI orders per month with one or two trading partners and your team can maintain scripts, Shopify native plus a lightweight middleware layer is usually enough. Once you cross 1,000 orders monthly, add a third partner, or need real-time inventory sync across multiple warehouses, a full iPaaS pays for itself in reduced manual exception handling.
+
+Use this scoring table to decide. Score each row 1 (low) to 5 (high). Add the total.
+
+| Factor | 1–2: Stay native | 3: Add middleware | 4–5: Buy iPaaS |
+|---|---|---|---|
+| Monthly EDI order volume | &lt; 500 | 500–2,000 | > 2,000 |
+| Active trading partners | 1–2 | 3–4 | 5+ |
+| Document types per partner | 850, 855 only | + 856, 810 | + 846, 997, custom |
+| Inventory locations synced | 1 warehouse | 2–3 | 4+ or dropship |
+| In-house integration engineers | 0 | 1 part-time | 1+ full-time |
+| SLA penalties for late ASNs | None | Minor fees | Chargebacks > 2% revenue |
+| Custom business logic per partner | None | 1–2 rules | 3+ rules |
+
+**Interpret the total:**
+- **6–12**: Shopify native B2B plus a scheduled export/import script. Review quarterly.
+- **13–22**: Middleware layer (e.g., a hosted EDI translator with webhook bridge). Plan 4–6 weeks to implement.
+- **23–35**: Full iPaaS. Budget for onboarding and a dedicated owner. See [Build vs. Buy for Operations Software: A Decision Framework](/blog/build-vs-buy-operations-software) for the business case template.
+
+**Quick gate checklist before you commit:**
+- **Map first**: Complete the mapping spreadsheet from Section 5. If you have more than 15 custom field transformations per partner, native will not scale.
+- **Test the edge**: Run a weekend load test at 2x peak volume. If error rates exceed 0.5%, you need middleware at minimum.
+- **Owner assigned**: No tool works without a named person who receives alerts and owns the partner relationship.
+
+<ToolCard href="/tools/readiness-scorecard" title="Automation readiness scorecard">Answer ten questions about one process and see whether it is ready to automate and what to fix first.</ToolCard>
+
+## Key takeaways
+
+- Verify the core document set, partner X12 version, and data ownership before building any integration logic.
+- Map Shopify native objects to specific standard EDI transactions to maintain clear system boundaries.
+- Document partner requirements early for major retailers to account for different identifiers, SLAs, and testing portals.
+- Maintain a centralized, version-controlled mapping spreadsheet to align standard data elements with partner-specific overrides.
+- Follow a phased onboarding checklist with defined pass criteria to avoid scope creep and missed cutover dates.
+- Execute a three-stage testing protocol across sandbox, retailer certification, and production smoke tests before full launch.
+- Set up automated monitoring for functional acknowledgments to catch segment errors, unit mismatches, and delayed 855 notices early.
+
+Begin by auditing your current purchase order flow and selecting one high-volume retail partner for initial document mapping. Download your partner's exact EDI specifications, complete the mapping spreadsheet template with your engineering team, and establish clear operational SLAs before configuring middleware connections.
+
+## A note on sources
+
+This guide is written by Sam at OpsGrit from common operating practice, with AI assistance and an automated editorial review. It does not cite outside statistics or studies, and the templates and examples are starting points, so test them against your own data before you rely on them. If you spot something that looks wrong, [tell us](/contact).
